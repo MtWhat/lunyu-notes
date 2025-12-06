@@ -190,7 +190,7 @@
             "冉有"
         ],
         "category": "孔門諸賢",
-        "relation": "孔子弟子，以政事見長，曾任季氏宰",
+        "relation": "孔子弟子，以政事見長。後來到季康子底下任職。在齊魯稷曲之戰出有出場。",
         "wikipedia": "https://zh.wikipedia.org/wiki/冉求"
     },
     {
@@ -271,14 +271,13 @@
         "name": "須",
         "style": "子遲",
         "searchKeys": [
-            "樊須",
-            "樊遲"
+            "遲"
         ],
         "aliases": [
             "樊須"
         ],
         "category": "孔門諸賢",
-        "relation": "孔子弟子，曾問孔子種菜種花的事情。孔子超不爽，在背後罵他不適合當官。",
+        "relation": "孔子弟子，曾問孔子種菜種花的事情。孔子超不爽，在背後罵他不適合當官。雖然他在《論語》裡面看起來很廢，但在齊魯稷曲之戰時，他成功頂住上司(季康子)的壓力並穩定士卒的軍心，最後成功使軍隊度過難關。",
         "wikipedia": "https://zh.wikipedia.org/wiki/樊遲"
     },
     {
@@ -793,10 +792,11 @@
             "桓魋"
         ],
         "aliases": [
-            "向魋"
+            "向魋",
+            "司馬魋"
         ],
         "category": "外國人",
-        "relation": "宋國司馬，曾欲殺孔子。《論語》不知為何稱他為桓魋。",
+        "relation": "宋國公室貴族向氏。曾任司馬。孔子來宋國時，他拔起大樹作勢要殺孔子。但孔子根本不屌他。《論語》不知為何稱他為桓魋。",
         "wikipedia": "https://zh.wikipedia.org/wiki/桓魋"
     },
     {
@@ -1093,6 +1093,43 @@
         "category": "古人",
         "relation": "夏代寒浞之子。大力士。據說能「陸地行舟」(但其實沒人知道這是什麼意思。或許是加拿大人愛的野外活動「portage」?)。《論語》把他的名字寫作「奡」，應該是因為上古漢語的「奡」和「澆」發音相似。",
         "wikipedia": "https://zh.wikipedia.org/wiki/寒澆"
+    },
+
+
+    {
+        "id": "mongzhifan",
+        "goBy": "孟之反",
+        "surname": "孟孫",
+        "cadet": "孟",
+        "name": "之反",
+        "style": "仲",
+        "searchKeys": [
+            "孟之反"
+        ],
+        "aliases": [
+            "孟之側"
+        ],
+        "category": "魯國人",
+        "relation": "孟孫氏的支系。在齊魯交戰的稷曲之戰中殿後。成功後卻謙虛的說「不是我敢殿後啦，是我馬跑不到前面」。受孔子讚賞。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/孟之側"
+    },
+    {
+        "id": "simanou",
+        "goBy": "司馬牛",
+        "surname": "子",
+        "cadet": "向",
+        "name": "耕",
+        "style": "子牛",
+        "searchKeys": [
+            "司馬牛"
+        ],
+        "aliases": [
+            "向耕",
+            "司馬耕"
+        ],
+        "category": "外國人",
+        "relation": "宋國公室貴族向氏的一員。按照稱謂推測可能擔任過司馬。因桓魋(向魋)專權而逃到齊國。後來桓魋失勢逃到齊國，司馬牛只好又逃到吳國。說來他跟孔子也是有緣，畢竟孔子也被桓魋雷過。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/司馬耕"
     },
     {
         "id": "guanzhong",
