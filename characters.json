@@ -1144,11 +1144,57 @@
         "wikipedia": "https://zh.wikipedia.org/wiki/陽虎"
     },
     {
+        "id": "zhongtuyu",
+        "goBy": "仲叔圉",
+        "surname": "",
+        "cadet": "孔",
+        "name": "圉",
+        "style": "",
+        "searchKeys": [
+            "仲叔圉",
+            "孔文子"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "衛國卿。諡號「文」。子爵。他兒子就是子路誓死捍衛的孔悝。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/孔圉"
+    },
+    {
+        "id": "zhutuo",
+        "goBy": "祝鮀",
+        "surname": "",
+        "cadet": "",
+        "name": "佗",
+        "style": "",
+        "searchKeys": [
+            "祝鮀"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "衛國太祝。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/祝佗"
+    },
+    {
+        "id": "wangsunji",
+        "goBy": "王孫賈治",
+        "surname": "王孫",
+        "cadet": "",
+        "name": "賈",
+        "style": "",
+        "searchKeys": [
+            "王孫賈"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "衛國大夫。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/王孫賈"
+    },
+    {
         "id": "qihuangong",
         "goBy": "齊桓公",
         "surname": "姜",
         "name": "小白",
-        "style": "桓公",
+        "style": "",
         "searchKeys": [
             "齊桓公",
             "小白"
@@ -1157,7 +1203,7 @@
             "姜小白"
         ],
         "category": "古人",
-        "relation": "春秋五霸之首。",
+        "relation": "春秋五霸之首。諡號「桓」。公爵。",
         "wikipedia": "https://zh.wikipedia.org/wiki/齊桓公"
     }
 ]
