@@ -224,3 +224,24 @@ document.addEventListener('keydown', (e) => {
         closeAboutModal();
     }
 });
+
+// Header Auto-Hide on Scroll
+let lastScrollY = window.scrollY;
+const header = document.getElementById('mainHeader');
+
+window.addEventListener('scroll', () => {
+    if (!header) return;
+
+    const currentScrollY = window.scrollY;
+
+    // Always show at top or if scrolling up
+    if (currentScrollY < lastScrollY || currentScrollY < 50) {
+        header.classList.remove('header-hidden');
+    }
+    // Hide if scrolling down and not at top
+    else if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        header.classList.add('header-hidden');
+    }
+
+    lastScrollY = currentScrollY;
+}, { passive: true });

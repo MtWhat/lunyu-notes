@@ -299,13 +299,22 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        button:focus {
+            outline: none;
+        }
+
+        /* Auto-hide header */
+        .header-hidden {
+            transform: translateY(-100%);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center">
 
     <!-- Header & Search -->
     <!-- Header & Search -->
-    <header class="w-full max-w-4xl sticky top-0 z-40 search-container shadow-sm border-b border-stone-300 transition-all">
+    <header id="mainHeader" class="w-full max-w-4xl sticky top-0 z-40 search-container shadow-sm border-b border-stone-300 transition-transform duration-300">
         <!-- Top Row: Title, Nav Buttons -->
         <!-- Hidden on Mobile (< md), Visible on Desktop (>= md) -->
         <div class="hidden md:flex flex-wrap justify-between items-center p-4">
