@@ -74,44 +74,10 @@ document.addEventListener('click', hideTooltip);
 window.addEventListener('scroll', hideTooltip);
 
 // Search Bar Expansion Logic
-const searchContainer = document.getElementById('searchContainer');
-const searchInputWrapper = document.getElementById('searchInputWrapper');
+// Search Bar Expansion Logic (Removed - Static Search Bar)
+// const searchContainer = document.getElementById('searchContainer');
+// const searchInputWrapper = document.getElementById('searchInputWrapper');
 const searchInput = document.getElementById('searchInput'); // Used here for focus
-
-function toggleSearch() {
-    const isExpanded = searchInputWrapper.classList.contains('w-full');
-
-    if (isExpanded) {
-        if (!searchInput.value.trim()) {
-            collapseSearch();
-        } else {
-            searchInput.focus();
-        }
-    } else {
-        expandSearch();
-    }
-}
-
-function expandSearch() {
-    searchInputWrapper.classList.remove('w-0', 'opacity-0');
-    searchInputWrapper.classList.add('w-full', 'opacity-100');
-    searchContainer.classList.add('flex-grow');
-    setTimeout(() => searchInput.focus(), 50);
-}
-
-function collapseSearch() {
-    searchInputWrapper.classList.remove('w-full', 'opacity-100');
-    searchInputWrapper.classList.add('w-0', 'opacity-0');
-    searchContainer.classList.remove('flex-grow');
-}
-
-function checkCollapseSearch() {
-    setTimeout(() => {
-        if (!searchInput.value.trim() && document.activeElement !== searchInput) {
-            collapseSearch();
-        }
-    }, 200);
-}
 
 function toggleMobileMenu() {
     const navMenu = document.getElementById('navMenu');
@@ -201,7 +167,6 @@ document.addEventListener('keydown', (e) => {
     if(e.key === 'Escape') {
         if (document.activeElement === searchInput) {
             searchInput.blur();
-            collapseSearch();
         }
         closeCharacterModal();
         closeAskModal();
