@@ -148,7 +148,7 @@ function render(results, keyword = '') {
         return;
     }
 
-    resultCount.textContent = `顯示 ${results.length} 筆條目`;
+    resultCount.textContent = `${results.length} 條`;
 
     const fragment = document.createDocumentFragment();
 

@@ -4,19 +4,34 @@ let showTranslations = false;
 
 function toggleTranslations() {
     showTranslations = !showTranslations;
-    const btn = document.getElementById('translationToggleBtn');
+    const desktopBtn = document.getElementById('translationToggleBtn');
+    const mobileBtn = document.getElementById('mobileTranslationBtn');
     const contentList = document.getElementById('contentList');
 
     if (showTranslations) {
         contentList.classList.add('show-translations');
-        btn.innerHTML = '📖 隱藏翻譯';
-        btn.classList.remove('bg-stone-200', 'text-stone-700');
-        btn.classList.add('bg-stone-800', 'text-white');
+        if(desktopBtn) {
+            desktopBtn.innerHTML = '📖 隱藏翻譯';
+            desktopBtn.classList.remove('bg-stone-200', 'text-stone-700');
+            desktopBtn.classList.add('bg-stone-800', 'text-white');
+        }
+        if(mobileBtn) {
+            mobileBtn.innerHTML = '📖 隱藏註解';
+            mobileBtn.classList.remove('text-stone-200');
+            mobileBtn.classList.add('text-yellow-400');
+        }
     } else {
         contentList.classList.remove('show-translations');
-        btn.innerHTML = '📖 顯示翻譯';
-        btn.classList.remove('bg-stone-800', 'text-white');
-        btn.classList.add('bg-stone-200', 'text-stone-700');
+        if(desktopBtn) {
+            desktopBtn.innerHTML = '📖 顯示翻譯';
+            desktopBtn.classList.remove('bg-stone-800', 'text-white');
+            desktopBtn.classList.add('bg-stone-200', 'text-stone-700');
+        }
+        if(mobileBtn) {
+            mobileBtn.innerHTML = '📖 顯示註解';
+            mobileBtn.classList.remove('text-yellow-400');
+            mobileBtn.classList.add('text-stone-200');
+        }
     }
 }
 
@@ -114,7 +129,7 @@ function checkCollapseSearch() {
 }
 
 function toggleMobileMenu() {
-    const navMenu = document.getElementById('navMenu');
+    const navMenu = document.getElementById('mobileNavMenu');
     navMenu.classList.toggle('hidden');
 }
 
