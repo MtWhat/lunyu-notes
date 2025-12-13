@@ -356,18 +356,19 @@
         </div>
 
         <!-- Bottom Row: Search Toolbar -->
-        <div class="px-4 pb-3 flex flex-wrap items-center gap-3 border-t border-stone-200 pt-3">
-            <!-- Static Search Bar -->
-            <div class="relative flex-grow md:flex-grow-0 md:w-64">
-                <div class="flex items-center bg-stone-100 rounded-lg border border-stone-300 focus-within:ring-2 focus-within:ring-stone-400 focus-within:border-stone-400 transition-all">
-                    <div class="pl-3 text-stone-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
-                    <input type="text" id="searchInput" placeholder="搜尋..."
-                        class="w-full bg-transparent border-none focus:ring-0 text-stone-700 font-sans text-sm py-1.5 pl-2 pr-8">
-                    <button id="searchClearBtn" class="hidden pr-2 text-stone-400 hover:text-stone-600">
+        <div class="px-4 pb-3 flex flex-wrap items-center gap-3 border-t border-stone-200 pt-3 relative">
+            <!-- Expanding Search Bar -->
+            <div id="searchContainer" class="relative flex items-center transition-all duration-300 ease-in-out">
+                <button id="searchIconBtn" onclick="toggleSearch()" class="text-stone-600 hover:text-stone-800 p-2 rounded-full hover:bg-stone-200 transition-colors z-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+                <div id="searchInputWrapper" class="absolute left-0 top-0 h-full flex items-center overflow-hidden transition-all duration-300 ease-in-out w-0 opacity-0 bg-stone-100 rounded-full border border-stone-300 shadow-sm z-20">
+                     <input type="text" id="searchInput" placeholder="搜尋..."
+                        class="w-full h-full bg-transparent border-none focus:ring-0 px-10 text-stone-700 font-sans text-sm"
+                        onblur="checkCollapseSearch()">
+                    <button id="searchClearBtn" class="absolute right-2 text-stone-400 hover:text-stone-600 hidden p-1">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -388,7 +389,7 @@
             <div class="flex-grow"></div>
 
             <!-- Result Count -->
-             <div id="resultCount" class="text-sm text-stone-500 font-sans whitespace-nowrap">顯示全部條目</div>
+             <div id="resultCount" class="text-sm text-stone-500 font-sans whitespace-nowrap z-0">顯示全部條目</div>
         </div>
 
         <!-- Character Biography Container -->
