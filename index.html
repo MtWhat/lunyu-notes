@@ -132,6 +132,35 @@
             line-height: 1.5;
         }
 
+        #dictPopup {
+            position: absolute;
+            background-color: #292524; /* stone-800 */
+            color: #f5f5f4; /* stone-100 */
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-family: 'Noto Sans TC', sans-serif;
+            z-index: 1000;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: none;
+            user-select: none;
+            white-space: nowrap;
+        }
+        #dictPopup:hover {
+            background-color: #1c1917; /* stone-900 */
+        }
+        #dictPopup::after {
+             content: '';
+             position: absolute;
+             top: 100%;
+             left: 50%;
+             margin-left: -5px;
+             border-width: 5px;
+             border-style: solid;
+             border-color: #292524 transparent transparent transparent;
+         }
+
         .rare-char {
             cursor: help;
             border-bottom: 1px dotted #a8a29e;
@@ -563,6 +592,8 @@
 
     <!-- Tooltip Element -->
     <div id="tooltip"></div>
+    <!-- Dictionary Popup -->
+    <div id="dictPopup" onmousedown="event.preventDefault()">📖 查字典</div>
     <script src="lunyu_data.js"></script>
     <script src="js/api.js"></script>
     <script src="js/data.js"></script>
