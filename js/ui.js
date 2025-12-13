@@ -122,6 +122,7 @@ function toggleMobileMenu() {
 const characterModal = document.getElementById('characterModal');
 const askModal = document.getElementById('askModal');
 const hashtagModal = document.getElementById('hashtagModal');
+const aboutModal = document.getElementById('aboutModal');
 const aiChatResponse = document.getElementById('aiChatResponse');
 const askInput = document.getElementById('askInput');
 
@@ -140,6 +141,14 @@ function closeAskModal() {
 
 function closeHashtagModal() {
     hashtagModal.classList.add('hidden');
+}
+
+function openAboutModal() {
+    aboutModal.classList.remove('hidden');
+}
+
+function closeAboutModal() {
+    aboutModal.classList.add('hidden');
 }
 
 // Card Scrolling
@@ -181,6 +190,12 @@ characterModal.addEventListener('click', function(e) {
     }
 });
 
+aboutModal.addEventListener('click', function(e) {
+    if (e.target === aboutModal) {
+        closeAboutModal();
+    }
+});
+
 // Close on Escape key
 document.addEventListener('keydown', (e) => {
     if(e.key === 'Escape') {
@@ -191,5 +206,6 @@ document.addEventListener('keydown', (e) => {
         closeCharacterModal();
         closeAskModal();
         closeHashtagModal();
+        closeAboutModal();
     }
 });

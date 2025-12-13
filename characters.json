@@ -555,6 +555,23 @@
         "wikipedia": "https://zh.wikipedia.org/wiki/臧文仲"
     },
     {
+        "id": "zangwuzhong",
+        "goBy": "臧武仲",
+        "surname": "姬",
+        "cadet": "臧孫",
+        "name": "紇",
+        "style": "",
+        "searchKeys": [
+            "臧武仲"
+        ],
+        "aliases": [
+            ""
+        ],
+        "category": "魯國人",
+        "relation": "魯國政治人物。諡號「武」。臧文仲的孫子。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/臧武仲"
+    },
+    {
         "id": "gongboliao",
         "goBy": "公伯寮",
         "surname": "公伯",
@@ -825,8 +842,66 @@
         ],
         "aliases": [],
         "category": "魯國人",
-        "relation": "",
+        "relation": "只出現在《論語》和《莊子》的神祕人物",
         "wikipedia": "https://zh.wikipedia.org/wiki/子桑伯子"
+    },
+    {
+        "id": "shencheng",
+        "goBy": "申棖",
+        "surname": "申",
+        "name": "棖",
+        "style": "",
+        "searchKeys": [
+            "申棖"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "來歷不明。有人認為是孔子的弟子。唯一能確定的是他總之是個孔子認識的人。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/申黨"
+    },
+    {
+        "id": "yangfu",
+        "goBy": "陽膚",
+        "surname": "",
+        "name": "",
+        "style": "",
+        "searchKeys": [
+            "陽膚"
+        ],
+        "aliases": [],
+        "category": "其他",
+        "relation": "出現在論語但來歷不明的人。",
+        "wikipedia": ""
+    },
+    {
+        "id": "biantangzi",
+        "goBy": "卞莊子",
+        "surname": "",
+        "cadet": "",
+        "name": "",
+        "style": "",
+        "searchKeys": [
+            "卞莊子"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "卞邑的大夫，有勇名。出現於《韓師外傳》、《戰國策》中。是成語「卞莊刺虎」的典故",
+        "wikipedia": "https://zh.wikipedia.org/wiki/卞莊子"
+    },
+    {
+        "id": "menggongchuo",
+        "goBy": "孟公綽",
+        "surname": "姬",
+        "cadet": "孟",
+        "name": "公綽",
+        "style": "",
+        "searchKeys": [
+            "公綽"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "孟孫氏人。孔子讚揚過他。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/孟公綽"
     },
     {
         "id": "chensibai",
@@ -1145,7 +1220,7 @@
             "管夷吾"
         ],
         "category": "古人",
-        "relation": "齊桓公名相。管仲政績很好，後人(例如諸葛亮)自我褒獎時常拿他來當典範。",
+        "relation": "齊桓公名相。管仲政績很好，後人(例如諸葛亮)自我褒獎時常拿他來當典範。管仲的時代大約早於孔子100年。",
         "wikipedia": "https://zh.wikipedia.org/wiki/管仲"
     },
     {
