@@ -1,36 +1,22 @@
 // js/ui.js
 
-let showTranslations = false;
+// function toggleTranslations removed
 
-function toggleTranslations() {
-    showTranslations = !showTranslations;
-    const desktopBtn = document.getElementById('translationToggleBtn');
-    const mobileBtn = document.getElementById('mobileTranslationBtn');
-    const contentList = document.getElementById('contentList');
+function toggleEntryTranslation(btn) {
+    const card = btn.closest('.verse-card');
+    const translationDiv = card.querySelector('.translation-text');
 
-    if (showTranslations) {
-        contentList.classList.add('show-translations');
-        if(desktopBtn) {
-            desktopBtn.innerHTML = '📖 隱藏翻譯';
-            desktopBtn.classList.remove('bg-stone-200', 'text-stone-700');
-            desktopBtn.classList.add('bg-stone-800', 'text-white');
-        }
-        if(mobileBtn) {
-            mobileBtn.innerHTML = '📖 隱藏註解';
-            mobileBtn.classList.remove('text-stone-200');
-            mobileBtn.classList.add('text-yellow-400');
-        }
-    } else {
-        contentList.classList.remove('show-translations');
-        if(desktopBtn) {
-            desktopBtn.innerHTML = '📖 顯示翻譯';
-            desktopBtn.classList.remove('bg-stone-800', 'text-white');
-            desktopBtn.classList.add('bg-stone-200', 'text-stone-700');
-        }
-        if(mobileBtn) {
-            mobileBtn.innerHTML = '📖 顯示註解';
-            mobileBtn.classList.remove('text-yellow-400');
-            mobileBtn.classList.add('text-stone-200');
+    if (translationDiv) {
+        if (translationDiv.style.display === 'block') {
+            translationDiv.style.display = 'none';
+            btn.innerHTML = '📖 顯示註解';
+            btn.classList.remove('bg-stone-800', 'text-white');
+            btn.classList.add('bg-stone-100', 'text-stone-600');
+        } else {
+            translationDiv.style.display = 'block';
+            btn.innerHTML = '📖 隱藏註解';
+            btn.classList.remove('bg-stone-100', 'text-stone-600');
+            btn.classList.add('bg-stone-800', 'text-white');
         }
     }
 }
@@ -314,7 +300,7 @@ dictPopup.addEventListener('click', (e) => {
     const word = dictPopup.dataset.word;
     if (word) {
         const encodedWord = encodeURIComponent(word);
-        const url = `https://dict.revised.moe.edu.tw/search.jsp?md=1&word=${encodedWord}`;
+        const url = `https://www.moedict.tw/${encodedWord}`;
         window.open(url, '_blank');
         dictPopup.style.display = 'none';
         window.getSelection().removeAllRanges(); // Clear selection after lookup

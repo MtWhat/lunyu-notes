@@ -148,7 +148,7 @@ function render(results, keyword = '') {
         return;
     }
 
-    resultCount.textContent = `${results.length} 條`;
+    resultCount.textContent = `共 ${results.length} 條`;
 
     const fragment = document.createDocumentFragment();
 
@@ -194,9 +194,15 @@ function render(results, keyword = '') {
                         ${hashtagsHtml}
                     </div>
                 </div>
-                <button onclick="explainVerse(this, '${item.citation}', '${item.rawText.replace(/'/g, "\\'")}')" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded transition-colors flex items-center gap-1 font-sans border border-stone-200 whitespace-nowrap self-start sm:self-auto flex-shrink-0">
-                    ✨ AI 白話解讀
-                </button>
+            <div class="flex gap-2 self-start sm:self-auto flex-shrink-0">
+                    ${item.translation ? `
+                    <button onclick="toggleEntryTranslation(this)" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded transition-colors flex items-center gap-1 font-sans border border-stone-200 whitespace-nowrap">
+                        📖 顯示註解
+                    </button>` : ''}
+                    <button onclick="explainVerse(this, '${item.citation}', '${item.rawText.replace(/'/g, "\\'")}')" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded transition-colors flex items-center gap-1 font-sans border border-stone-200 whitespace-nowrap">
+                        ✨ AI 白話解讀
+                    </button>
+                </div>
             </div>
             <div class="text-xl leading-loose text-gray-800 tracking-wide mt-2 pl-1 border-l-2 border-stone-100 break-words text-justify">${displayText}</div>
             ${item.translation ? `<div class="translation-text">${item.translation}</div>` : ''}
