@@ -12,17 +12,15 @@
             "仲尼"
         ],
         "aliases": [
-            "至聖先師",
-            "萬世師表"
         ],
         "category": "孔門諸賢",
-        "relation": "殷商王室後裔(子姓)。父親早亡，早年打過很多雜工。後來從政，多年後爬上高位，卻仍鬥不過魯國的既得利益者「三桓」。政治家生涯被迫結束後，轉職為教育家。門徒眾多，被後世尊稱為「至聖先師」。言行大多紀載後人編纂的《論語》。",
+        "relation": "殷商王室後裔(子姓)。非婚生子女。還沒出生，父親就死了；因此，孔子早年打過很多雜工。史書對於他怎麼回到孔家沒有記載。他後來從政多年，並後爬上高位，卻仍鬥不過魯國公爵家族、既得利益者「三桓」。中年失業、政治家生涯被迫結束後，開始壯遊，轉職為教育家。門徒眾多，被後世尊稱為「至聖先師」。言行大多紀載後人編纂的《論語》。",
         "wikipedia": "https://zh.wikipedia.org/wiki/孔子"
     },
     {
         "id": "yanhui",
         "goBy": "顏回",
-        "surname": "姬",
+        "surname": "曹",
         "cadet": "顏",
         "name": "回",
         "style": "子淵",
@@ -37,7 +35,7 @@
             "顏子"
         ],
         "category": "孔門諸賢",
-        "relation": "孔子最得意的弟子。就算在「子畏於匡」的衰事中，也還敢跟老師嘴砲說「你沒死我怎麼敢死」(子在，回何敢死？)。可惜他很窮，長期營養不良(一簞食一瓢飲)，40歲就死了。孔子聞其死訊爆哭，直呼「老天真要我的命啊」(天喪予)",
+        "relation": "孔子最得意的弟子。就算在「子畏於匡」的衰事中，也還敢跟老師嘴砲說「你沒死我怎麼敢死」(子在，回何敢死？)。可惜他很窮，長期營養不良(一簞食一瓢飲)，很年輕就死了(29或40歲)。孔子聞其死訊爆哭，直呼「老天真要我的命啊」(天喪予)",
         "wikipedia": "https://zh.wikipedia.org/wiki/顏回"
     },
     {
@@ -97,7 +95,7 @@
             "端木賜"
         ],
         "category": "孔門諸賢",
-        "relation": "孔子弟子，以言語見長，善於經商與外交。孔子對他評價很好，把他形容成珊瑚。",
+        "relation": "孔子弟子。投資高手，身家不斷累積。以言語見長，善於經商與外交。孔子對他評價很高，把他形容成珊瑚。",
         "wikipedia": "https://zh.wikipedia.org/wiki/端木賜"
     },
     {
@@ -490,8 +488,8 @@
             "季氏"
         ],
         "category": "魯國人",
-        "relation": "魯國三桓之一，子爵。和孔子的政治生涯重疊最多的季孫家族人。在政治鬥爭中鬥走孔子，害他去壯遊。",
-        "wikipedia": "https://zh.wikipedia.org/wiki/季孫氏"
+        "relation": "魯國三桓之一，子爵。和孔子的政治生涯重疊最多的季孫家族人。在政治鬥爭中鬥走孔子，害他去壯遊。《史記》說他死前交代繼承人季康子一定要召孔子回國重用。不過季康子最後召回了冉求而非孔子。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/季桓子"
     },
     {
         "id": "jikangzi",
@@ -533,8 +531,8 @@
         "searchKeys": [
             "林放"
         ],
-        "category": "孔門諸賢",
-        "relation": "孔子弟子，問禮於孔子。",
+        "category": "魯國人",
+        "relation": "曾問禮於孔子。雖然有人因此將他載為孔子弟子，但聽起來不太可信。",
         "wikipedia": "https://zh.wikipedia.org/wiki/林放"
     },
     {
@@ -551,7 +549,7 @@
             "臧孫辰"
         ],
         "category": "魯國人",
-        "relation": "魯國政治人物。諡號「文」",
+        "relation": "魯國政治人物。諡號「文」。臧孫氏是魯國公爵家的旁系，源自一位字「子臧」的公子。其子孫因而以「臧孫」為氏。",
         "wikipedia": "https://zh.wikipedia.org/wiki/臧文仲"
     },
     {
@@ -607,16 +605,15 @@
         "goBy": "衛靈公",
         "surname": "姬",
         "name": "元",
-        "style": "靈公",
+        "style": "",
+        "nickname": "靈",
+        "title": "公",
         "searchKeys": [
-            "衛靈公",
             "靈公"
         ],
-        "aliases": [
-            "姬元"
-        ],
+        "aliases": [],
         "category": "外國人",
-        "relation": "衛國國君，孔子曾居衛。",
+        "relation": "衛國國君。孔子曾居衛。",
         "wikipedia": "https://zh.wikipedia.org/wiki/衛靈公"
     },
     {
@@ -632,6 +629,63 @@
         "category": "外國人",
         "relation": "衛國大夫，曾問子貢孔子學於何人。",
         "wikipedia": "https://zh.wikipedia.org/wiki/公孫朝"
+    },
+    {
+        "id": "gongsunwenzi",
+        "goBy": "公叔文子",
+        "surname": "",
+        "cadet": "公叔",
+        "name": "發",
+        "style": "",
+        "searchKeys": [
+            "公叔文子"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "公叔是衛國公爵家的旁系。衛國的卿。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/公叔文子"
+    },
+    {
+        "id": "daiju",
+        "goBy": "大夫僎",
+        "surname": "",
+        "name": "",
+        "style": "僎",
+        "searchKeys": [
+            "大夫僎"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "衛國公叔文子的大夫。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/大夫僎"
+    },
+    {
+        "id": "gongzijing",
+        "goBy": "公子荊",
+        "surname": "",
+        "name": "荊",
+        "style": "",
+        "searchKeys": [
+            "公子荊"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "衛獻公的兒子。衛獻公是衛靈公的祖父。",
+        "wikipedia": ""
+    },
+    {
+        "id": "gongmingjia",
+        "goBy": "公明賈",
+        "surname": "公明",
+        "name": "賈",
+        "style": "",
+        "searchKeys": [
+            "公明賈"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "衛國大夫。但並不是賈國的國君「賈伯公明」。",
+        "wikipedia": ""
     },
     {
         "id": "aigong",
@@ -789,13 +843,13 @@
         "name": "弗擾",
         "style": "",
         "searchKeys": [
-            "公山弗擾"
+            "公山"
         ],
         "aliases": [
             "公山不狃"
         ],
         "category": "魯國人",
-        "relation": "魯國季孫氏家臣。",
+        "relation": "魯國季孫氏家臣。《史記》作「公山不狃」。不狃和弗擾的上古漢語發音很可能相似。",
         "wikipedia": "https://zh.wikipedia.org/wiki/公山弗擾"
     },
     {
@@ -955,8 +1009,7 @@
         "name": "瑗",
         "style": "伯玉",
         "searchKeys": [
-            "蘧伯玉",
-            "蘧瑗"
+            "蘧"
         ],
         "aliases": [
             "蘧瑗"
@@ -1234,7 +1287,7 @@
             "子服景伯"
         ],
         "aliases": [],
-        "category": "古人",
+        "category": "魯國人",
         "relation": "魯國大夫。諡號「景」。伯爵。《論語》中，他兩度向孔子報告所聽到的孔門壞話，感覺他跟孔子麻吉麻吉。",
         "wikipedia": "https://zh.wikipedia.org/wiki/子服景伯"
     },
@@ -1252,7 +1305,7 @@
             "陽虎"
         ],
         "category": "魯國人",
-        "relation": "魯國野心家。陽虎的老闆季桓子過世後，他把繼承人季康子關起來，並聯合其他的權臣，想把持朝政。但最終失敗，逃出國去。陽虎的名聲不太好。感覺孔子知道跟他扯上關係就沒好事，所以一直想躲他。但陽虎最終還是堵到了孔子，把孔子訓了一頓。《史記》說孔子在壯遊途中，被匡人誤認成陽虎，因而被圍困五天，是為「子畏於匡」事件。上古漢語的「貨」和「虎」發音可能相似，推測因此《論語》才把他名字寫作陽貨。",
+        "relation": "魯國野心家。《史記》作「陽虎」。陽虎趁老闆季平子過世後，把繼承人季桓子關起來，並聯合其他的權臣，把持朝政。但最終失敗，逃出國去。陽虎的名聲不太好。感覺孔子知道跟他扯上關係就沒好事，所以一直想躲他。但陽虎最終還是堵到了孔子，把孔子訓了一頓。《史記》說孔子在壯遊途中，被匡人誤認成陽虎，因而被圍困五天，是為「子畏於匡」事件。上古漢語的「貨」和「虎」發音可能相似，推測因此《論語》才把他名字寫作陽貨。",
         "wikipedia": "https://zh.wikipedia.org/wiki/陽虎"
     },
     {
@@ -1289,8 +1342,8 @@
     {
         "id": "wangsunji",
         "goBy": "王孫賈治",
-        "surname": "王孫",
-        "cadet": "",
+        "surname": "",
+        "cadet": "王孫",
         "name": "賈",
         "style": "",
         "searchKeys": [
