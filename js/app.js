@@ -348,9 +348,6 @@ function renderCharacterCards() {
     }
 
     container.innerHTML = filteredChars.map(char => {
-        const rareness = calculateRareness(char.relation || "");
-        const stars = "★".repeat(rareness) + "☆".repeat(5 - rareness);
-
         const categoryColors = {
             '孔門諸賢': 'bg-amber-100 text-amber-800',
             '魯國人': 'bg-lime-100 text-lime-800',
@@ -375,35 +372,41 @@ function renderCharacterCards() {
         const nameStr = char.name ? `<span class="text-stone-400 text-[0.7rem] mr-0.5">名</span><span class="mr-2">${char.name}</span>` : '';
         const styleStr = char.style ? `<span class="text-stone-400 text-[0.7rem] mr-0.5">字</span><span>${char.style}</span>` : '';
 
-        const nameDisplayHtml = `<div class="flex flex-wrap items-baseline text-sm font-bold text-stone-700">
+        const nameDisplayHtml = `<div class="flex flex-wrap items-baseline text-sm font-bold text-stone-700 mt-1">
             ${surnameStr}${cadetStr}${nameStr}${styleStr}
         </div>`;
 
-        return `
-        <div class="pokemon-card rare-${rareness}">
-            <div class="card-header">
-                <span class="font-bold text-xl text-stone-800 font-serif">${char.goBy}</span>
-                <span class="text-yellow-500 text-sm tracking-widest" title="稀有度: ${rareness}">${stars}</span>
-            </div>
+        const aliasesHtml = (char.aliases && char.aliases.length > 0)
+            ? `<div class="text-xs text-stone-500 mt-1">又稱: ${char.aliases.join('、')}</div>`
+            : '';
 
+        const imageHtml = char.picture ? `
             <div class="card-image-container">
                 <div class="w-full h-full flex flex-col justify-center items-center ${colorClass} opacity-80">
-                    <span class="text-4xl mb-2">👤</span>
-                    <span class="text-xs font-bold uppercase tracking-wider">${char.category || '人物'}</span>
+                    <img src="${char.picture}" alt="${char.goBy}" class="w-full h-full object-cover">
                 </div>
-            </div>
+            </div>` : '';
 
-            <div class="card-content scrollbar-hide">
-                <div class="mb-2 flex justify-between items-start border-b border-stone-200 pb-2">
-                    ${nameDisplayHtml}
+        return `
+        <div class="pokemon-card">
+            <div class="card-header flex-col items-start !pb-2">
+                <div class="flex justify-between w-full items-center">
+                    <span class="font-bold text-xl text-stone-800 font-serif">${char.goBy}</span>
                     ${wikiLink}
                 </div>
+                ${nameDisplayHtml}
+                ${aliasesHtml}
+            </div>
+
+            ${imageHtml}
+
+            <div class="card-content scrollbar-hide pt-2">
                 <p class="text-stone-700 text-sm leading-relaxed text-justify">
                     ${char.relation || "暫無簡介"}
                 </p>
             </div>
 
-            <div class="card-footer">
+            <div class="card-footer mt-auto">
                 <span class="text-xs font-mono text-stone-400">NO.${String(filteredChars.indexOf(char) + 1).padStart(3, '0')}</span>
                 <button onclick="filterByChar('${char.goBy}')" class="text-xs bg-stone-800 text-white px-3 py-1 rounded-full hover:bg-stone-600 transition-colors">
                     查看條目
