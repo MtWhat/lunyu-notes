@@ -271,6 +271,13 @@ function filterByChar(charName) {
         characterBio.classList.add('hidden');
     }
 
+    // Also update the category filter buttons to reflect the category of the selected character
+    if (charData) {
+         filterCharacterList(charData.category);
+    } else {
+         filterCharacterList('all');
+    }
+
     const filtered = flatIndex.filter(item => item.charTags.includes(charName));
     render(filtered);
 
@@ -322,13 +329,27 @@ function filterCharacterList(category) {
 
     // Update button styles
     const buttons = document.querySelectorAll('#categoryFilterContainer button');
+
+    const categoryStyles = {
+        '孔門諸賢': { inactive: 'bg-amber-100 text-amber-800 hover:bg-amber-200', active: 'bg-amber-600 text-white' },
+        '魯國人': { inactive: 'bg-lime-100 text-lime-800 hover:bg-lime-200', active: 'bg-lime-600 text-white' },
+        '外國人': { inactive: 'bg-sky-100 text-sky-800 hover:bg-sky-200', active: 'bg-sky-600 text-white' },
+        '古人': { inactive: 'bg-slate-100 text-slate-800 hover:bg-slate-200', active: 'bg-slate-600 text-white' },
+        '其他': { inactive: 'bg-stone-100 text-stone-600 hover:bg-stone-200', active: 'bg-stone-600 text-white' },
+        'all': { inactive: 'bg-stone-200 text-stone-800 hover:bg-stone-300', active: 'bg-stone-800 text-white' }
+    };
+
     buttons.forEach(btn => {
-        if (btn.dataset.category === category) {
-            btn.classList.remove('bg-stone-200', 'text-stone-600');
-            btn.classList.add('bg-stone-800', 'text-white');
+        const cat = btn.dataset.category;
+        const style = categoryStyles[cat] || categoryStyles['all'];
+
+        // Remove all possible classes first to be safe
+        btn.className = "flex-shrink-0 px-3 py-1 rounded-full text-sm font-sans transition-colors border border-stone-300 shadow-sm";
+
+        if (cat === category) {
+            btn.className += ` ${style.active}`;
         } else {
-            btn.classList.add('bg-stone-200', 'text-stone-600');
-            btn.classList.remove('bg-stone-800', 'text-white');
+            btn.className += ` ${style.inactive}`;
         }
     });
 
@@ -336,9 +357,18 @@ function filterCharacterList(category) {
 }
 
 function renderCharacterCards() {
-    const filteredChars = activeCategoryFilter === 'all'
+const filteredChars = activeCategoryFilter === 'all'
         ? charactersDB
         : charactersDB.filter(char => char.category === activeCategoryFilter);
+
+    const categoryColors = {
+        '孔門諸賢': { bg: 'bg-amber-100', text: 'text-amber-800', activeBg: 'bg-amber-600', activeText: 'text-white', border: 'border-amber-200' },
+        '魯國人': { bg: 'bg-lime-100', text: 'text-lime-800', activeBg: 'bg-lime-600', activeText: 'text-white', border: 'border-lime-200' },
+        '外國人': { bg: 'bg-sky-100', text: 'text-sky-800', activeBg: 'bg-sky-600', activeText: 'text-white', border: 'border-sky-200' },
+        '古人': { bg: 'bg-slate-100', text: 'text-slate-800', activeBg: 'bg-slate-600', activeText: 'text-white', border: 'border-slate-200' },
+        '其他': { bg: 'bg-stone-100', text: 'text-stone-600', activeBg: 'bg-stone-600', activeText: 'text-white', border: 'border-stone-200' },
+        'all': { bg: 'bg-stone-200', text: 'text-stone-800', activeBg: 'bg-stone-800', activeText: 'text-white', border: 'border-stone-300' }
+    };
 
     const container = document.getElementById('characterCardContainer');
 
@@ -348,14 +378,10 @@ function renderCharacterCards() {
     }
 
     container.innerHTML = filteredChars.map(char => {
-        const categoryColors = {
-            '孔門諸賢': 'bg-amber-100 text-amber-800',
-            '魯國人': 'bg-lime-100 text-lime-800',
-            '外國人': 'bg-sky-100 text-sky-800',
-            '古人': 'bg-slate-100 text-slate-800',
-            '其他': 'bg-stone-100 text-stone-800'
-        };
-        const colorClass = categoryColors[char.category] || 'bg-stone-200 text-stone-600';
+        const colors = categoryColors[char.category] || categoryColors['其他'];
+        const cardBgClass = colors.bg;
+        const borderColor = colors.border;
+        const colorClass = `${colors.bg} ${colors.text}`;
 
         const wikiLink = char.wikipedia ?
             `<a href="${char.wikipedia}" target="_blank" class="text-stone-500 hover:text-stone-800 transition-colors" title="維基百科" onclick="event.stopPropagation()">
@@ -388,7 +414,7 @@ function renderCharacterCards() {
             </div>` : '';
 
         return `
-        <div class="pokemon-card">
+        <div class="pokemon-card ${cardBgClass} border-2 ${borderColor}">
             <div class="card-header flex-col items-start !pb-2">
                 <div class="flex justify-between w-full items-center">
                     <span class="font-bold text-xl text-stone-800 font-serif">${char.goBy}</span>
@@ -406,9 +432,9 @@ function renderCharacterCards() {
                 </p>
             </div>
 
-            <div class="card-footer mt-auto">
-                <span class="text-xs font-mono text-stone-400">NO.${String(filteredChars.indexOf(char) + 1).padStart(3, '0')}</span>
-                <button onclick="filterByChar('${char.goBy}')" class="text-xs bg-stone-800 text-white px-3 py-1 rounded-full hover:bg-stone-600 transition-colors">
+            <div class="card-footer mt-auto bg-white/40 border-t ${borderColor}">
+                <span class="text-xs font-mono text-stone-500">NO.${String(filteredChars.indexOf(char) + 1).padStart(3, '0')}</span>
+                <button onclick="filterByChar('${char.goBy}')" class="text-xs ${colors.activeBg} text-white px-3 py-1 rounded-full hover:opacity-90 transition-opacity">
                     查看條目
                 </button>
             </div>
