@@ -148,7 +148,7 @@ function render(results, keyword = '') {
         return;
     }
 
-    resultCount.textContent = `${results.length} 條`;
+    resultCount.textContent = `共 ${results.length} 條`;
 
     const fragment = document.createDocumentFragment();
 
@@ -194,9 +194,15 @@ function render(results, keyword = '') {
                         ${hashtagsHtml}
                     </div>
                 </div>
-                <button onclick="explainVerse(this, '${item.citation}', '${item.rawText.replace(/'/g, "\\'")}')" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded transition-colors flex items-center gap-1 font-sans border border-stone-200 whitespace-nowrap self-start sm:self-auto flex-shrink-0">
-                    ✨ AI 白話解讀
-                </button>
+            <div class="flex gap-2 self-start sm:self-auto flex-shrink-0">
+                    ${item.translation ? `
+                    <button onclick="toggleEntryTranslation(this)" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded transition-colors flex items-center gap-1 font-sans border border-stone-200 whitespace-nowrap">
+                        📖 顯示註解
+                    </button>` : ''}
+                    <button onclick="explainVerse(this, '${item.citation}', '${item.rawText.replace(/'/g, "\\'")}')" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded transition-colors flex items-center gap-1 font-sans border border-stone-200 whitespace-nowrap">
+                        ✨ AI 白話解讀
+                    </button>
+                </div>
             </div>
             <div class="text-xl leading-loose text-gray-800 tracking-wide mt-2 pl-1 border-l-2 border-stone-100 break-words text-justify">${displayText}</div>
             ${item.translation ? `<div class="translation-text">${item.translation}</div>` : ''}
@@ -265,6 +271,13 @@ function filterByChar(charName) {
         characterBio.classList.add('hidden');
     }
 
+    // Also update the category filter buttons to reflect the category of the selected character
+    if (charData) {
+         filterCharacterList(charData.category);
+    } else {
+         filterCharacterList('all');
+    }
+
     const filtered = flatIndex.filter(item => item.charTags.includes(charName));
     render(filtered);
 
@@ -316,13 +329,27 @@ function filterCharacterList(category) {
 
     // Update button styles
     const buttons = document.querySelectorAll('#categoryFilterContainer button');
+
+    const categoryStyles = {
+        '孔門諸賢': { inactive: 'bg-amber-100 text-amber-800 hover:bg-amber-200', active: 'bg-amber-600 text-white' },
+        '魯國人': { inactive: 'bg-lime-100 text-lime-800 hover:bg-lime-200', active: 'bg-lime-600 text-white' },
+        '外國人': { inactive: 'bg-sky-100 text-sky-800 hover:bg-sky-200', active: 'bg-sky-600 text-white' },
+        '古人': { inactive: 'bg-slate-100 text-slate-800 hover:bg-slate-200', active: 'bg-slate-600 text-white' },
+        '其他': { inactive: 'bg-stone-100 text-stone-600 hover:bg-stone-200', active: 'bg-stone-600 text-white' },
+        'all': { inactive: 'bg-stone-200 text-stone-800 hover:bg-stone-300', active: 'bg-stone-800 text-white' }
+    };
+
     buttons.forEach(btn => {
-        if (btn.dataset.category === category) {
-            btn.classList.remove('bg-stone-200', 'text-stone-600');
-            btn.classList.add('bg-stone-800', 'text-white');
+        const cat = btn.dataset.category;
+        const style = categoryStyles[cat] || categoryStyles['all'];
+
+        // Remove all possible classes first to be safe
+        btn.className = "flex-shrink-0 px-3 py-1 rounded-full text-sm font-sans transition-colors border border-stone-300 shadow-sm";
+
+        if (cat === category) {
+            btn.className += ` ${style.active}`;
         } else {
-            btn.classList.add('bg-stone-200', 'text-stone-600');
-            btn.classList.remove('bg-stone-800', 'text-white');
+            btn.className += ` ${style.inactive}`;
         }
     });
 
@@ -330,9 +357,18 @@ function filterCharacterList(category) {
 }
 
 function renderCharacterCards() {
-    const filteredChars = activeCategoryFilter === 'all'
+const filteredChars = activeCategoryFilter === 'all'
         ? charactersDB
         : charactersDB.filter(char => char.category === activeCategoryFilter);
+
+    const categoryColors = {
+        '孔門諸賢': { bg: 'bg-amber-100', text: 'text-amber-800', activeBg: 'bg-amber-600', activeText: 'text-white', border: 'border-amber-200' },
+        '魯國人': { bg: 'bg-lime-100', text: 'text-lime-800', activeBg: 'bg-lime-600', activeText: 'text-white', border: 'border-lime-200' },
+        '外國人': { bg: 'bg-sky-100', text: 'text-sky-800', activeBg: 'bg-sky-600', activeText: 'text-white', border: 'border-sky-200' },
+        '古人': { bg: 'bg-slate-100', text: 'text-slate-800', activeBg: 'bg-slate-600', activeText: 'text-white', border: 'border-slate-200' },
+        '其他': { bg: 'bg-stone-100', text: 'text-stone-600', activeBg: 'bg-stone-600', activeText: 'text-white', border: 'border-stone-200' },
+        'all': { bg: 'bg-stone-200', text: 'text-stone-800', activeBg: 'bg-stone-800', activeText: 'text-white', border: 'border-stone-300' }
+    };
 
     const container = document.getElementById('characterCardContainer');
 
@@ -342,17 +378,10 @@ function renderCharacterCards() {
     }
 
     container.innerHTML = filteredChars.map(char => {
-        const rareness = calculateRareness(char.relation || "");
-        const stars = "★".repeat(rareness) + "☆".repeat(5 - rareness);
-
-        const categoryColors = {
-            '孔門諸賢': 'bg-amber-100 text-amber-800',
-            '魯國人': 'bg-lime-100 text-lime-800',
-            '外國人': 'bg-sky-100 text-sky-800',
-            '古人': 'bg-slate-100 text-slate-800',
-            '其他': 'bg-stone-100 text-stone-800'
-        };
-        const colorClass = categoryColors[char.category] || 'bg-stone-200 text-stone-600';
+        const colors = categoryColors[char.category] || categoryColors['其他'];
+        const cardBgClass = colors.bg;
+        const borderColor = colors.border;
+        const colorClass = `${colors.bg} ${colors.text}`;
 
         const wikiLink = char.wikipedia ?
             `<a href="${char.wikipedia}" target="_blank" class="text-stone-500 hover:text-stone-800 transition-colors" title="維基百科" onclick="event.stopPropagation()">
@@ -369,37 +398,43 @@ function renderCharacterCards() {
         const nameStr = char.name ? `<span class="text-stone-400 text-[0.7rem] mr-0.5">名</span><span class="mr-2">${char.name}</span>` : '';
         const styleStr = char.style ? `<span class="text-stone-400 text-[0.7rem] mr-0.5">字</span><span>${char.style}</span>` : '';
 
-        const nameDisplayHtml = `<div class="flex flex-wrap items-baseline text-sm font-bold text-stone-700">
+        const nameDisplayHtml = `<div class="flex flex-wrap items-baseline text-sm font-bold text-stone-700 mt-1">
             ${surnameStr}${cadetStr}${nameStr}${styleStr}
         </div>`;
 
-        return `
-        <div class="pokemon-card rare-${rareness}">
-            <div class="card-header">
-                <span class="font-bold text-xl text-stone-800 font-serif">${char.goBy}</span>
-                <span class="text-yellow-500 text-sm tracking-widest" title="稀有度: ${rareness}">${stars}</span>
-            </div>
+        const aliasesHtml = (char.aliases && char.aliases.length > 0)
+            ? `<div class="text-xs text-stone-500 mt-1">又稱: ${char.aliases.join('、')}</div>`
+            : '';
 
+        const imageHtml = char.picture ? `
             <div class="card-image-container">
                 <div class="w-full h-full flex flex-col justify-center items-center ${colorClass} opacity-80">
-                    <span class="text-4xl mb-2">👤</span>
-                    <span class="text-xs font-bold uppercase tracking-wider">${char.category || '人物'}</span>
+                    <img src="${char.picture}" alt="${char.goBy}" class="w-full h-full object-cover">
                 </div>
-            </div>
+            </div>` : '';
 
-            <div class="card-content scrollbar-hide">
-                <div class="mb-2 flex justify-between items-start border-b border-stone-200 pb-2">
-                    ${nameDisplayHtml}
+        return `
+        <div class="pokemon-card ${cardBgClass} border-2 ${borderColor}">
+            <div class="card-header flex-col items-start !pb-2">
+                <div class="flex justify-between w-full items-center">
+                    <span class="font-bold text-xl text-stone-800 font-serif">${char.goBy}</span>
                     ${wikiLink}
                 </div>
+                ${nameDisplayHtml}
+                ${aliasesHtml}
+            </div>
+
+            ${imageHtml}
+
+            <div class="card-content scrollbar-hide pt-2">
                 <p class="text-stone-700 text-sm leading-relaxed text-justify">
                     ${char.relation || "暫無簡介"}
                 </p>
             </div>
 
-            <div class="card-footer">
-                <span class="text-xs font-mono text-stone-400">NO.${String(filteredChars.indexOf(char) + 1).padStart(3, '0')}</span>
-                <button onclick="filterByChar('${char.goBy}')" class="text-xs bg-stone-800 text-white px-3 py-1 rounded-full hover:bg-stone-600 transition-colors">
+            <div class="card-footer mt-auto bg-white/40 border-t ${borderColor}">
+                <span class="text-xs font-mono text-stone-500">NO.${String(filteredChars.indexOf(char) + 1).padStart(3, '0')}</span>
+                <button onclick="filterByChar('${char.goBy}')" class="text-xs ${colors.activeBg} text-white px-3 py-1 rounded-full hover:opacity-90 transition-opacity">
                     查看條目
                 </button>
             </div>

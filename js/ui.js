@@ -1,36 +1,22 @@
 // js/ui.js
 
-let showTranslations = false;
+// function toggleTranslations removed
 
-function toggleTranslations() {
-    showTranslations = !showTranslations;
-    const desktopBtn = document.getElementById('translationToggleBtn');
-    const mobileBtn = document.getElementById('mobileTranslationBtn');
-    const contentList = document.getElementById('contentList');
+function toggleEntryTranslation(btn) {
+    const card = btn.closest('.verse-card');
+    const translationDiv = card.querySelector('.translation-text');
 
-    if (showTranslations) {
-        contentList.classList.add('show-translations');
-        if(desktopBtn) {
-            desktopBtn.innerHTML = '📖 隱藏翻譯';
-            desktopBtn.classList.remove('bg-stone-200', 'text-stone-700');
-            desktopBtn.classList.add('bg-stone-800', 'text-white');
-        }
-        if(mobileBtn) {
-            mobileBtn.innerHTML = '📖 隱藏註解';
-            mobileBtn.classList.remove('text-stone-200');
-            mobileBtn.classList.add('text-yellow-400');
-        }
-    } else {
-        contentList.classList.remove('show-translations');
-        if(desktopBtn) {
-            desktopBtn.innerHTML = '📖 顯示翻譯';
-            desktopBtn.classList.remove('bg-stone-800', 'text-white');
-            desktopBtn.classList.add('bg-stone-200', 'text-stone-700');
-        }
-        if(mobileBtn) {
-            mobileBtn.innerHTML = '📖 顯示註解';
-            mobileBtn.classList.remove('text-yellow-400');
-            mobileBtn.classList.add('text-stone-200');
+    if (translationDiv) {
+        if (translationDiv.style.display === 'block') {
+            translationDiv.style.display = 'none';
+            btn.innerHTML = '📖 顯示註解';
+            btn.classList.remove('bg-stone-800', 'text-white');
+            btn.classList.add('bg-stone-100', 'text-stone-600');
+        } else {
+            translationDiv.style.display = 'block';
+            btn.innerHTML = '📖 隱藏註解';
+            btn.classList.remove('bg-stone-100', 'text-stone-600');
+            btn.classList.add('bg-stone-800', 'text-white');
         }
     }
 }
@@ -245,3 +231,78 @@ window.addEventListener('scroll', () => {
 
     lastScrollY = currentScrollY;
 }, { passive: true });
+
+// Dictionary Lookup Logic
+const dictPopup = document.getElementById('dictPopup');
+
+function handleSelection() {
+    const selection = window.getSelection();
+    const selectedText = selection.toString().trim();
+
+    if (selectedText.length > 0 && selectedText.length < 10) { // Limit length for sane lookups
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+        const popupHeight = dictPopup.offsetHeight || 34; // Approx height if not visible yet
+        const popupWidth = dictPopup.offsetWidth || 80;
+
+        let top = rect.top + scrollTop - popupHeight - 10;
+        let left = rect.left + scrollLeft + (rect.width / 2) - (popupWidth / 2);
+
+        // Prevent going off screen
+        if (left < 10) left = 10;
+        if (left + popupWidth > window.innerWidth - 10) {
+            left = window.innerWidth - popupWidth - 10;
+        }
+
+        dictPopup.style.top = `${top}px`;
+        dictPopup.style.left = `${left}px`;
+        dictPopup.style.display = 'block';
+
+        // Store the word for lookup
+        dictPopup.dataset.word = selectedText;
+    } else {
+        dictPopup.style.display = 'none';
+    }
+}
+
+// document.addEventListener('selectionchange', () => {
+//     // Optional: Hide immediately if selection is lost?
+//     // Often better to handle on mouseup to avoid flickering while selecting
+//     if (!window.getSelection().toString().trim()) {
+//          dictPopup.style.display = 'none';
+//     }
+// });
+
+document.addEventListener('mouseup', (e) => {
+    // Wait a brief moment to ensure selection is processed
+    setTimeout(handleSelection, 10);
+});
+
+// For mobile touch selection
+document.addEventListener('touchend', (e) => {
+    setTimeout(handleSelection, 10);
+});
+
+// Close popup when clicking elsewhere (handled by selection clearing usually, but just in case)
+document.addEventListener('mousedown', (e) => {
+    if (e.target !== dictPopup) {
+         // If we click anywhere else, and we aren't selecting text, the selection usually clears.
+         // But if we click the popup itself, we don't want to clear immediately or hide it before action.
+         // dictPopup has onmousedown="event.preventDefault()" to prevent focus loss/selection clear on click.
+    }
+});
+
+dictPopup.addEventListener('click', (e) => {
+    const word = dictPopup.dataset.word;
+    if (word) {
+        const encodedWord = encodeURIComponent(word);
+        const url = `https://www.moedict.tw/${encodedWord}`;
+        window.open(url, '_blank');
+        dictPopup.style.display = 'none';
+        window.getSelection().removeAllRanges(); // Clear selection after lookup
+    }
+});
