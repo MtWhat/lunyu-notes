@@ -562,9 +562,6 @@
         "searchKeys": [
             "臧武仲"
         ],
-        "aliases": [
-            ""
-        ],
         "category": "魯國人",
         "relation": "魯國政治人物。諡號「武」。臧文仲的孫子。",
         "wikipedia": "https://zh.wikipedia.org/wiki/臧武仲"
@@ -588,13 +585,9 @@
         "goBy": "齊景公",
         "surname": "姜",
         "name": "杵臼",
-        "style": "景公",
+        "style": "",
         "searchKeys": [
-            "齊景公",
             "景公"
-        ],
-        "aliases": [
-            "姜杵臼"
         ],
         "category": "外國人",
         "relation": "齊國國君，曾問政於孔子。",
