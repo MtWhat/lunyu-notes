@@ -2,6 +2,7 @@
 
 let activeCharFilter = null;
 let activeHashtagFilter = null;
+let activeIdiomFilter = null;
 let currentSortType = 'hashtag';
 let activeCategoryFilter = 'all';
 
@@ -13,6 +14,7 @@ const mainFilterText = document.getElementById('mainFilterText');
 const characterBio = document.getElementById('characterBio');
 const searchClearBtn = document.getElementById('searchClearBtn');
 const hashtagListContainer = document.getElementById('hashtagListContainer');
+const idiomListContainer = document.getElementById('idiomListContainer');
 
 // Note: searchInput is defined in ui.js scope if we used modules, but in raw scripts it shares global scope.
 // However, I will use document.getElementById inside functions to be safe and avoid relying on load order for variable assignment (though functions render fine).
@@ -24,6 +26,7 @@ function initApp() {
 
             let verseText = "";
             let manualTags = [];
+            let idioms = [];
             let translation = "";
 
             if (typeof verseData === 'string') {
@@ -31,6 +34,7 @@ function initApp() {
             } else {
                 verseText = verseData.text;
                 manualTags = verseData.tags || [];
+                idioms = verseData.idiom || [];
                 translation = verseData.translation || "";
             }
 
@@ -46,6 +50,7 @@ function initApp() {
                 rubyText: rubyText,
                 charTags: charTags,
                 manualTags: manualTags,
+                idioms: idioms,
                 translation: translation,
                 tags: [...charTags]
             });
@@ -68,6 +73,8 @@ function handleSortChange(sortType) {
         filterByChar(activeCharFilter);
     } else if (activeHashtagFilter) {
         filterByHashtag(activeHashtagFilter);
+    } else if (activeIdiomFilter) {
+        filterByIdiom(activeIdiomFilter);
     } else {
         render(flatIndex);
     }
@@ -78,9 +85,10 @@ function updateMainIndicator() {
     const keyword = searchInput.value.trim();
     const hasCharFilter = !!activeCharFilter;
     const hasHashtagFilter = !!activeHashtagFilter;
+    const hasIdiomFilter = !!activeIdiomFilter;
     const hasSearch = !!keyword;
 
-    if (!hasCharFilter && !hasHashtagFilter && !hasSearch) {
+    if (!hasCharFilter && !hasHashtagFilter && !hasIdiomFilter && !hasSearch) {
         mainFilterIndicator.classList.add('hidden');
         return;
     }
@@ -92,6 +100,7 @@ function updateMainIndicator() {
     if (hasSearch) parts.push(`搜尋: ${keyword}`);
     if (hasCharFilter) parts.push(`人物: ${activeCharFilter}`);
     if (hasHashtagFilter) parts.push(`標籤: #${activeHashtagFilter}`);
+    if (hasIdiomFilter) parts.push(`成語: ${activeIdiomFilter}`);
 
     text = parts.join(' + ');
 
@@ -183,6 +192,10 @@ function render(results, keyword = '') {
             return `<span class="hashtag ${activeHashtagFilter === tag ? 'active' : ''}" onclick="filterByHashtag('${tag}')">#${tag}</span>`;
         }).join(' ');
 
+        const idiomsHtml = item.idioms.map(idiom => {
+             return `<span class="hashtag !bg-emerald-100 !text-emerald-800 hover:!bg-emerald-600 hover:!text-white ${activeIdiomFilter === idiom ? '!bg-emerald-600 !text-white' : ''}" onclick="filterByIdiom('${idiom}')">💬 ${idiom}</span>`;
+        }).join(' ');
+
         card.innerHTML = `
             <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-3">
                 <div class="flex flex-col gap-1 w-full">
@@ -192,6 +205,7 @@ function render(results, keyword = '') {
                     <div class="flex flex-wrap gap-2 mt-1">
                         ${charTagsHtml}
                         ${hashtagsHtml}
+                        ${idiomsHtml}
                     </div>
                 </div>
             <div class="flex gap-2 self-start sm:self-auto flex-shrink-0">
@@ -249,6 +263,8 @@ async function explainVerse(btn, citation, text) {
 // Filtering functions
 function filterByChar(charName) {
     activeCharFilter = charName;
+    activeHashtagFilter = null;
+    activeIdiomFilter = null;
     const searchInput = document.getElementById('searchInput');
     searchInput.value = '';
 
@@ -288,6 +304,7 @@ function filterByChar(charName) {
 function filterByHashtag(tag) {
     activeHashtagFilter = tag;
     activeCharFilter = null;
+    activeIdiomFilter = null;
     const searchInput = document.getElementById('searchInput');
     searchInput.value = '';
 
@@ -300,9 +317,26 @@ function filterByHashtag(tag) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function filterByIdiom(idiom) {
+    activeIdiomFilter = idiom;
+    activeCharFilter = null;
+    activeHashtagFilter = null;
+    const searchInput = document.getElementById('searchInput');
+    searchInput.value = '';
+
+    updateMainIndicator();
+
+    const filtered = flatIndex.filter(item => item.idioms.includes(idiom));
+    render(filtered);
+
+    closeIdiomModal();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function clearFilter() {
     activeCharFilter = null;
     activeHashtagFilter = null;
+    activeIdiomFilter = null;
     const searchInput = document.getElementById('searchInput');
     searchInput.value = '';
 
@@ -472,6 +506,27 @@ function openHashtagModal() {
 
     const hashtagModal = document.getElementById('hashtagModal');
     hashtagModal.classList.remove('hidden');
+}
+
+function openIdiomModal() {
+    const allIdioms = new Set();
+    flatIndex.forEach(item => {
+        item.idioms.forEach(idiom => allIdioms.add(idiom));
+    });
+
+    if (allIdioms.size === 0) {
+        idiomListContainer.innerHTML = '<div class="text-stone-500 w-full text-center">目前沒有收錄成語。</div>';
+    } else {
+        idiomListContainer.innerHTML = Array.from(allIdioms).map(idiom => `
+            <button onclick="filterByIdiom('${idiom}')"
+                class="px-4 py-2 rounded-full text-base font-sans bg-emerald-100 text-emerald-800 hover:bg-emerald-200 transition-colors border border-emerald-200 shadow-sm">
+                💬 ${idiom}
+            </button>
+        `).join('');
+    }
+
+    const idiomModal = document.getElementById('idiomModal');
+    idiomModal.classList.remove('hidden');
 }
 
 // Ask AI Logic
