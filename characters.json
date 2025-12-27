@@ -14,7 +14,7 @@
         "aliases": [
         ],
         "category": "孔門諸賢",
-        "relation": "殷商王室後裔(子姓)。非婚生子女。還沒出生，父親就死了；因此，孔子早年打過很多雜工。史書對於他怎麼回到孔家沒有記載。他後來從政多年，並後爬上高位，卻仍鬥不過魯國公爵家族、既得利益者「三桓」。中年失業、政治家生涯被迫結束後，開始壯遊，轉職為教育家。門徒眾多，被後世尊稱為「至聖先師」。言行大多紀載後人編纂的《論語》。",
+        "relation": "殷商王室後裔(子姓)。貴族父親與平民顏氏所出的非婚生子女。由於父親在還沒見過面之前就死了，孔子早年很可能是以平民的身分打過很多雜工(吾少也賤)。史書對於他怎麼回到孔家沒有記載，但他後來拿回貴族身分且開始從政，並在多年後爬上高位。不過他鬥不過魯國公爵家族兼既得利益者「三桓」。中年失業、政治家生涯被迫結束後，開始壯遊，轉職為教育家。門徒眾多，被後世尊稱為「至聖先師」。言行大多紀載後人編纂的《論語》。",
         "wikipedia": "https://zh.wikipedia.org/wiki/孔子"
     },
     {
@@ -178,7 +178,7 @@
         "name": "季",
         "style": "子產",
         "searchKeys": [
-            "子產"
+            "子謂子產"
         ],
         "aliases": [
             "冉季"
@@ -186,6 +186,21 @@
         "category": "孔門諸賢",
         "relation": "孔子弟子。不是那個鄭國著名的政治家子產。",
         "wikipedia": "https://zh.wikipedia.org/wiki/冉季"
+    },
+    {
+        "id": "zicang",
+        "goBy": "鄭國子產",
+        "surname": "姬",
+        "cadet": "國",
+        "name": "僑",
+        "style": "子產",
+        "searchKeys": [
+            "或問子產",
+            "東里子產"
+        ],
+        "category": "外國人",
+        "relation": "鄭穆公之孫。鄭國出名的政治家。孔子對他的評價很好。住在東里，所以時人稱他為東里子產。附帶一提，鄭國的國政被鄭穆公後代的七大家族把持，人稱「七穆」。和魯國三桓的情況簡直如出一轍。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/子產"
     },
     {
         "id": "ranboniu",
@@ -267,7 +282,7 @@
             "葉公高"
         ],
         "category": "外國人",
-        "relation": "楚國大夫，曾問政於孔子。他是公爵，退休後住在「葉」，所以後人稱他為葉公。「葉公好龍」這個成語來自漢朝的劉向在《新序·雜事》用葉公的名義寫的一則假新聞。葉公看了都震驚了。",
+        "relation": "楚國王族、大夫。曾問政於孔子。他在楚昭王期間任官，昭王死後的白公之亂也是由他平定。他退休後住在「葉」，所以後人稱他為葉公。「葉公好龍」這個成語來自漢朝的劉向在《新序·雜事》用葉公的名義寫的一則假新聞。葉公看了都震驚了。",
         "wikipedia": "https://zh.wikipedia.org/wiki/葉公"
     },
     {
@@ -300,7 +315,7 @@
             "南容"
         ],
         "category": "孔門諸賢",
-        "relation": "孔子弟子，孔子以兄之子妻之",
+        "relation": "孔子弟子，孔子以兄之子妻之。适或作括，發音相同。注意：周朝開國時期也有一位同名人物。",
         "wikipedia": "https://zh.wikipedia.org/wiki/南宮适"
     },
     {
@@ -450,9 +465,10 @@
     {
         "id": "shusunwushu",
         "goBy": "叔孫武叔",
-        "surname": "叔孫",
+        "surname": "姬",
+        "cadet": "叔孫",
         "name": "州仇",
-        "style": "武叔",
+        "style": "",
         "searchKeys": [
             "叔孫武叔",
             "叔孫州仇"
@@ -461,7 +477,7 @@
             "叔孫州仇"
         ],
         "category": "魯國人",
-        "relation": "魯國大夫，曾毀謗孔子。",
+        "relation": "魯國大夫。諡號「武」。曾毀謗孔子。",
         "wikipedia": "https://zh.wikipedia.org/wiki/叔孫武叔"
     },
     {
@@ -536,8 +552,8 @@
         "aliases": [
             "臧孫辰"
         ],
-        "category": "魯國人",
-        "relation": "魯國政治人物。諡號「文」。臧孫氏是魯國公爵家的旁系，源自一位字「子臧」的公子。其子孫因而以「臧孫」為氏。",
+        "category": "古人",
+        "relation": "魯國政治人物。諡號「文」。臧孫氏是魯國公爵家的旁系，源自魯孝公的兒子；他封在「臧」，故其子孫因而以「臧孫」為氏。如果有英文名字，應該叫Johnson 😉",
         "wikipedia": "https://zh.wikipedia.org/wiki/臧文仲"
     },
     {
@@ -550,14 +566,14 @@
         "searchKeys": [
             "臧武仲"
         ],
-        "category": "魯國人",
-        "relation": "魯國政治人物。諡號「武」。臧文仲的孫子。",
+        "category": "古人",
+        "relation": "魯國政治人物。諡號「武」。臧文仲的孫子。臧孫氏本來是與三桓同樣強勢的公室，但臧武仲在政治爭中敗給季孫家，因而出逃。從此臧孫氏在魯國就沒落了。",
         "wikipedia": "https://zh.wikipedia.org/wiki/臧武仲"
     },
     {
         "id": "gongboliao",
         "goBy": "公伯寮",
-        "surname": "公伯",
+        "surname": "",
         "name": "寮",
         "style": "子周",
         "searchKeys": [
@@ -701,15 +717,11 @@
     },
     {
         "id": "ziyu",
-        "goBy": "子羽",
+        "goBy": "澹臺滅明",
         "surname": "澹臺",
         "name": "滅明",
         "style": "子羽",
         "searchKeys": [
-            "子羽",
-            "澹臺滅明"
-        ],
-        "aliases": [
             "澹臺滅明"
         ],
         "category": "孔門諸賢",
@@ -1062,7 +1074,7 @@
         "id": "boyi",
         "goBy": "伯夷",
         "surname": "",
-        "name": "伯夷",
+        "name": "夷",
         "style": "",
         "searchKeys": [
             "伯夷"
@@ -1076,7 +1088,7 @@
         "id": "shuqi",
         "goBy": "叔齊",
         "surname": "",
-        "name": "叔齊",
+        "name": "齊",
         "style": "",
         "searchKeys": [
             "叔齊"
@@ -1093,14 +1105,13 @@
         "name": "放勳",
         "style": "",
         "searchKeys": [
-            "堯",
-            "唐堯"
+            "堯"
         ],
         "aliases": [
             "唐堯"
         ],
         "category": "其他",
-        "relation": "上古聖王。",
+        "relation": "傳說中的君主。",
         "wikipedia": "https://zh.wikipedia.org/wiki/堯"
     },
     {
@@ -1117,7 +1128,7 @@
             "虞舜"
         ],
         "category": "其他",
-        "relation": "上古聖王。",
+        "relation": "傳說中的君主。儒家總是把堯舜禹湯當作理想中的聖王。但是在法家和竹書紀年等其他觀點的紀載看來，堯根本沒有把王位禪讓給舜。《韓非子》：「舜逼堯，禹逼舜，湯放桀，武王伐紂，此四人者，人臣弒其君者也。」言下之意：這四個人都是下剋上的僭主。對照後來的歷史，這樣的劇情倒是合理多了。",
         "wikipedia": "https://zh.wikipedia.org/wiki/舜"
     },
     {
@@ -1134,7 +1145,7 @@
             "大禹"
         ],
         "category": "其他",
-        "relation": "夏朝開國君主，治水有功。",
+        "relation": "傳說中的夏朝開國君主。傳說因為治水有功而得到舜的禪讓。但其實這種政治A片般的劇情，鬼才會相信。",
         "wikipedia": "https://zh.wikipedia.org/wiki/大禹"
     },
     {
@@ -1208,10 +1219,10 @@
     {
         "id": "mongzhifan",
         "goBy": "孟之反",
-        "surname": "孟孫",
-        "cadet": "孟",
+        "surname": "姬",
+        "cadet": "孟孫",
         "name": "之反",
-        "style": "仲",
+        "style": "",
         "searchKeys": [
             "孟之反"
         ],
@@ -1219,7 +1230,7 @@
             "孟之側"
         ],
         "category": "魯國人",
-        "relation": "孟孫氏的支系。在齊魯交戰的稷曲之戰中殿後。成功後卻謙虛的說「不是我敢殿後啦，是我馬跑不到前面」。受孔子讚賞。",
+        "relation": "孟孫氏人。在齊魯交戰的稷曲之戰中殿後。成功後卻謙虛的說「不是我敢殿後啦，是我馬跑不到前面」。受孔子讚賞。",
         "wikipedia": "https://zh.wikipedia.org/wiki/孟之側"
     },
     {
@@ -1233,8 +1244,7 @@
             "司馬牛"
         ],
         "aliases": [
-            "向耕",
-            "司馬耕"
+            "向耕"
         ],
         "category": "外國人",
         "relation": "宋國公室貴族向氏的一員。按照稱謂推測可能擔任過司馬。因桓魋(向魋)專權而逃到齊國。後來桓魋失勢逃到齊國，司馬牛只好又逃到吳國。說來他跟孔子也是有緣，畢竟孔子也被桓魋雷過。",
@@ -1250,8 +1260,36 @@
             "管仲"
         ],
         "category": "古人",
-        "relation": "齊桓公名相。管仲政績很好，後人(例如諸葛亮)自我褒獎時常拿他來當典範。管仲的時代大約早於孔子100年。",
+        "relation": "齊桓公名相。管仲本來是公子糾的人馬，曾在齊國公爵爭奪戰中射中齊桓公一箭。齊桓公奪位成功，輔佐他的鮑叔牙要求魯國處決庇護中的公子糾，並力保好朋友管仲回齊國。管仲後來成為宰相，政績很好。所以像諸葛亮等後人才會「自比管仲」。管仲的時代大約早於孔子100年。",
         "wikipedia": "https://zh.wikipedia.org/wiki/管仲"
+    },
+    {
+        "id": "gongxujiu",
+        "goBy": "公子糾",
+        "surname": "姜",
+        "name": "糾",
+        "style": "",
+        "searchKeys": [
+            "公子糾"
+        ],
+        "aliases": [],
+        "category": "古人",
+        "relation": "齊襄公(妹控)的弟弟、齊桓公的哥哥。在管仲和召忽地擁立下，從陷入內亂的齊國逃到魯國。齊國暫時掌權的公孫無知被殺後，公子糾和公子小白都搶著回齊國奪位，但小白搶先繼位，並強迫魯國處決公子糾。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/公子糾"
+    },
+    {
+        "id": "zhaohu",
+        "goBy": "召忽",
+        "surname": "召",
+        "name": "忽",
+        "style": "",
+        "searchKeys": [
+            "召忽"
+        ],
+        "aliases": [],
+        "category": "古人",
+        "relation": "齊國大夫。在內亂中將公子糾帶到魯國。但後來公子糾派在奪取齊國公爵寶座的行動中失敗，公子糾被殺，召忽也跟著自盡。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/召忽"
     },
     {
         "id": "zifujingbo",
@@ -1347,5 +1385,88 @@
         "category": "古人",
         "relation": "春秋五霸之首。諡號「桓」。公爵。",
         "wikipedia": "https://zh.wikipedia.org/wiki/齊桓公"
+    },
+    {
+        "id": "zhougong",
+        "goBy": "周公",
+        "surname": "姬",
+        "name": "旦",
+        "style": "",
+        "searchKeys": [
+            "周公"
+        ],
+        "aliases": [],
+        "category": "古人",
+        "relation": "周武王的親弟弟。武王攻克殷商後分封親族，周公旦封到魯國，後人尊他為魯國的開國君主。由於武王執政三年就死了，因此13歲的兒子周成王繼位初期是由周公旦、太公望等人攝政，處理所有的麻煩事。其中最知名的，便是武王其他弟弟發動的管蔡/三監之亂。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/周公"
+    },
+    {
+        "id": "taibo",
+        "goBy": "泰伯",
+        "surname": "姬",
+        "name": "",
+        "style": "",
+        "searchKeys": [
+            "泰伯"
+        ],
+        "category": "古人",
+        "relation": "古公亶父(周還是部落時代的領袖)的長子。古公亶父把家督之位傳給三子，並希望之後由三子的兒子姬昌(後來的周文王)繼位。泰伯於是和弟弟仲雍逃到江南，紋身斷髮。其實這樣做就是希望家督不要來殺他們，因為他們在法理上有繼承權。他們後來就被視為吳國的開國君主。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/泰伯"
+    },
+    {
+        "id": "zhongyong",
+        "goBy": "虞仲",
+        "surname": "姬",
+        "name": "雍",
+        "style": "",
+        "searchKeys": [
+            "虞仲"
+        ],
+        "aliases": ["仲雍"],
+        "category": "古人",
+        "relation": "古公亶父的次子。和哥哥泰伯一起逃到江南，躲避繼承人鬥爭。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/仲雍"
+    },
+    {
+        "id": "zuoqiuming",
+        "goBy": "左丘明",
+        "surname": "",
+        "name": "明",
+        "style": "",
+        "searchKeys": [
+            "左丘明"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "魯國史官。世代擔任「左史」的職位。據說喪失視力。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/左丘明"
+    },
+    {
+        "id": "zixi",
+        "goBy": "子西",
+        "surname": "羋",
+        "name": "申",
+        "style": "",
+        "searchKeys": [
+            "子西"
+        ],
+        "aliases": ["公子申"],
+        "category": "外國人",
+        "relation": "楚國王族。楚昭王的異母兄。楚昭王本來想迎接孔子來楚國，甚至封遞給他，但受到子西勸阻而打消念頭。楚昭王死後，子西捲入政爭，被自己召回來的姪子白公勝所殺。順帶一提，這場內亂最後是由葉公(沈諸梁)所平定。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/子西"
+    },
+    {
+        "id": "zixu",
+        "goBy": "子羽",
+        "surname": "姬",
+        "name": "揮",
+        "style": "子羽",
+        "searchKeys": [
+            "子羽"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "鄭穆公的兒子。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/%E5%AD%90%E7%BE%BD_(%E9%83%91%E7%A9%86%E5%85%AC%E4%B9%8B%E5%AD%90)"
     }
 ]
