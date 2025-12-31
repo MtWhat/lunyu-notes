@@ -337,6 +337,18 @@
         "wikipedia": "https://zh.wikipedia.org/wiki/晏嬰"
     },
     {
+        "id": "lvzhaoGong",
+        "goBy": "魯昭公",
+        "surname": "姬",
+        "name": "稠",
+        "searchKeys": [
+            "昭公"
+        ],
+        "category": "魯國人",
+        "relation": "魯國第24代君主。和季平子的政治鬥爭演變成「鬥雞之變」，最後昭公失敗逃到齊國。齊國還攻下了魯國的鄆給他住。孔子也因此追隨魯昭公去了齊國。後來魯昭公去晉國討救兵時，鄆被魯國收復。昭公變成無地公爵，最後死在晉國的乾侯。昭公的妻子是吳國公主。由於吳國公氏也姓姬，同姓不能通婚，魯昭公便稱她為「吳孟子」來混水摸魚。這件事在論語中被陳司敗靠北，導致認可魯昭公的孔子風評被害。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/魯昭公"
+    },
+    {
         "id": "zhonggong",
         "goBy": "仲弓",
         "surname": "姬",
@@ -961,7 +973,7 @@
         ],
         "aliases": [],
         "category": "外國人",
-        "relation": "陳國司敗(官名)，曾問昭公知禮乎。",
+        "relation": "陳國司敗(官名)，只出現在論語的一個條目中。",
         "wikipedia": "https://zh.wikipedia.org/wiki/陳司敗"
     },
     {
@@ -985,14 +997,13 @@
         "name": "施",
         "style": "子期",
         "searchKeys": [
-            "巫馬期",
-            "巫馬施"
+            "巫馬期"
         ],
         "aliases": [
             "巫馬施"
         ],
-        "category": "孔門諸賢",
-        "relation": "孔子弟子。",
+        "category": "魯國人",
+        "relation": "陳國的司敗曾向他抱怨孔子袒護魯昭公，他將此事轉述給孔子。",
         "wikipedia": "https://zh.wikipedia.org/wiki/巫馬施"
     },
     {
@@ -1428,6 +1439,18 @@
         "wikipedia": "https://zh.wikipedia.org/wiki/仲雍"
     },
     {
+        "id": "zhouwenwang",
+        "goBy": "周文王",
+        "surname": "姬",
+        "name": "昌",
+        "searchKeys": [
+            "文王"
+        ],
+        "category": "古人",
+        "relation": "周武王、周公旦、管叔、蔡叔的父親。商朝的伯爵，領地在西方，又被稱為「西伯昌」，Netflix影集《三體》將他的稱謂譯為Count of the West。他很受後人喜愛，生平屢遭二創。先是有人說他寫了《周易》，後來又有明朝人把他寫進充滿神魔的《封神演義》。香港漫畫《天子傳奇》也有他出場的戲份。真的很忙。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/周文王"
+    },
+    {
         "id": "zuoqiuming",
         "goBy": "左丘明",
         "surname": "",
@@ -1438,7 +1461,7 @@
         ],
         "aliases": [],
         "category": "魯國人",
-        "relation": "魯國史官。世代擔任「左史」的職位。據說喪失視力。",
+        "relation": "魯國史官。世代擔任「左史」的職位。據說是盲人。",
         "wikipedia": "https://zh.wikipedia.org/wiki/左丘明"
     },
     {
