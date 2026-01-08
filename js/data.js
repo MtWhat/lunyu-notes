@@ -104,19 +104,23 @@ function sortData(data, sortType) {
     } else if (sortType === 'sequential') {
         data.sort((a, b) => a.globalId - b.globalId);
     } else if (sortType === 'hashtag') {
-        // 1. Split into two groups
+        const withTranslation = [];
         const withTags = [];
-        const withoutTags = [];
+        const withIdioms = [];
+        const others = [];
 
         data.forEach(item => {
-            if (item.manualTags && item.manualTags.length > 0) {
+            if (item.translation && item.translation.trim().length > 0) {
+                withTranslation.push(item);
+            } else if (item.manualTags && item.manualTags.length > 0) {
                 withTags.push(item);
+            } else if (item.idioms && item.idioms.length > 0) {
+                withIdioms.push(item);
             } else {
-                withoutTags.push(item);
+                others.push(item);
             }
         });
 
-        // 2. Shuffle both groups (Fisher-Yates)
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -125,15 +129,15 @@ function sortData(data, sortType) {
             return array;
         }
 
+        shuffle(withTranslation);
         shuffle(withTags);
-        shuffle(withoutTags);
+        shuffle(withIdioms);
+        shuffle(others);
 
-        // 3. Combine and update original array
-        const sorted = [...withTags, ...withoutTags];
-
-        // Update the input array in-place
+        const sorted = [...withTranslation, ...withTags, ...withIdioms, ...others];
         for (let i = 0; i < data.length; i++) {
             data[i] = sorted[i];
         }
     }
 }
+

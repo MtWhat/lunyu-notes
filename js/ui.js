@@ -123,6 +123,7 @@ function toggleMobileMenu() {
 const characterModal = document.getElementById('characterModal');
 const askModal = document.getElementById('askModal');
 const hashtagModal = document.getElementById('hashtagModal');
+const idiomModal = document.getElementById('idiomModal');
 const aboutModal = document.getElementById('aboutModal');
 const aiChatResponse = document.getElementById('aiChatResponse');
 const askInput = document.getElementById('askInput');
@@ -142,6 +143,10 @@ function closeAskModal() {
 
 function closeHashtagModal() {
     hashtagModal.classList.add('hidden');
+}
+
+function closeIdiomModal() {
+    idiomModal.classList.add('hidden');
 }
 
 function openAboutModal() {
@@ -197,6 +202,12 @@ aboutModal.addEventListener('click', function(e) {
     }
 });
 
+idiomModal.addEventListener('click', function(e) {
+    if (e.target === idiomModal) {
+        closeIdiomModal();
+    }
+});
+
 // Close on Escape key
 document.addEventListener('keydown', (e) => {
     if(e.key === 'Escape') {
@@ -207,6 +218,7 @@ document.addEventListener('keydown', (e) => {
         closeCharacterModal();
         closeAskModal();
         closeHashtagModal();
+        closeIdiomModal();
         closeAboutModal();
     }
 });
