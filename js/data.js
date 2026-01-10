@@ -97,17 +97,19 @@ function processTextWithRuby(text) {
 }
 
 function identifyCharacters(text) {
-    const tags = new Set();
+    const tags = new Map();
     charactersDB.forEach(char => {
-        const searchKeys = [...char.searchKeys];
+        const searchKeys = char.searchKeys || [];
         for (const alias of searchKeys) {
             if (text.includes(alias)) {
-                tags.add(char.goBy);
+                if (!tags.has(char.goBy)) {
+                    tags.set(char.goBy, alias);
+                }
                 break;
             }
         }
     });
-    return Array.from(tags);
+    return Array.from(tags.entries()).map(([goBy, matched]) => ({ goBy, matched }));
 }
 
 function sortData(data, sortType) {

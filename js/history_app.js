@@ -101,9 +101,17 @@ function renderHistory(data, keyword = '') {
         }).join('');
 
         // Identify characters and filter out "孔子"
-        const charTags = identifyCharacters(item.content).filter(tag => tag !== "孔子");
+        const charTags = identifyCharacters(item.content).filter(t => {
+            const name = (typeof t === 'object' && t !== null) ? t.goBy : t;
+            return name !== "孔子";
+        });
         const charTagsHtml = charTags.map(tag => {
-            const charData = charactersDB.find(c => c.goBy === tag);
+            const name = (typeof tag === 'object' && tag !== null) ? tag.goBy : tag;
+            const matchedName = (typeof tag === 'object' && tag !== null) ? tag.matched : tag;
+
+            if (!name) return "";
+
+            const charData = charactersDB.find(c => c.goBy === name);
             let categoryClass = '';
             if (charData) {
                 if (charData.category === '孔門諸賢') categoryClass = 'tag-confucian';
@@ -112,7 +120,9 @@ function renderHistory(data, keyword = '') {
                 else if (charData.category === '魯國人') categoryClass = 'tag-lu';
                 else if (charData.category === '外國人') categoryClass = 'tag-foreign';
             }
-            return `<span class="char-tag ${categoryClass}" onclick="filterByChar('${tag}')">${tag}</span>`;
+
+            const tagDisplay = name === matchedName ? name : `${name} (${matchedName})`;
+            return `<span class="char-tag ${categoryClass}" onclick="filterByChar('${name}')">${tagDisplay}</span>`;
         }).join(' ');
 
         itemDiv.innerHTML = `
@@ -148,7 +158,10 @@ function filterByChar(charName) {
     hlActiveCharFilter = charName;
     if (hlSearchInput) hlSearchInput.value = '';
 
-    const filtered = HISTORY_DATA.filter(item => identifyCharacters(item.content).includes(charName));
+    const filtered = HISTORY_DATA.filter(item => identifyCharacters(item.content).some(t => {
+        const name = (typeof t === 'object' && t !== null) ? t.goBy : t;
+        return name === charName;
+    }));
     renderHistory(filtered);
 
     const charData = charactersDB.find(c => c.goBy === charName);

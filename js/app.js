@@ -136,7 +136,10 @@ searchInputRef.addEventListener('input', (e) => {
     updateMainIndicator();
 
     let baseList = activeCharFilter
-        ? flatIndex.filter(item => item.tags.includes(activeCharFilter))
+        ? flatIndex.filter(item => item.tags.some(t => {
+            const name = (typeof t === 'object' && t !== null) ? t.goBy : t;
+            return name === activeCharFilter;
+          }))
         : flatIndex;
 
     if (!keyword) {
@@ -157,7 +160,10 @@ searchClearBtn.addEventListener('click', () => {
     updateMainIndicator();
 
     let baseList = activeCharFilter
-        ? flatIndex.filter(item => item.tags.includes(activeCharFilter))
+        ? flatIndex.filter(item => item.tags.some(t => {
+            const name = (typeof t === 'object' && t !== null) ? t.goBy : t;
+            return name === activeCharFilter;
+          }))
         : flatIndex;
     render(baseList);
 });
@@ -190,7 +196,13 @@ function render(results, keyword = '') {
         }
 
         const charTagsHtml = item.charTags.map(tag => {
-            const charData = charactersDB.find(c => c.goBy === tag);
+            // Defensive: handle both string (legacy/bug) and object (new) formats
+            const name = (typeof tag === 'object' && tag !== null) ? tag.goBy : tag;
+            const matchedName = (typeof tag === 'object' && tag !== null) ? tag.matched : tag;
+
+            if (!name) return ""; // Skip if name is still undefined
+
+            const charData = charactersDB.find(c => c.goBy === name);
             let categoryClass = '';
             if (charData) {
                 if (charData.category === '孔門諸賢') categoryClass = 'tag-confucian';
@@ -200,7 +212,8 @@ function render(results, keyword = '') {
                 else if (charData.category === '外國人') categoryClass = 'tag-foreign';
             }
 
-            return `<span class="char-tag ${categoryClass} ${activeCharFilter === tag ? 'active' : ''}" onclick="filterByChar('${tag}')">${tag}</span>`;
+            const tagDisplay = name === matchedName ? name : `${name} (${matchedName})`;
+            return `<span class="char-tag ${categoryClass} ${activeCharFilter === name ? 'active' : ''}" onclick="filterByChar('${name}')">${tagDisplay}</span>`;
         }).join(' ');
 
         const hashtagsHtml = item.manualTags.map(tag => {
@@ -309,7 +322,10 @@ function filterByChar(charName) {
          filterCharacterList('all');
     }
 
-    const filtered = flatIndex.filter(item => item.charTags.includes(charName));
+    const filtered = flatIndex.filter(item => item.charTags.some(t => {
+        const name = (typeof t === 'object' && t !== null) ? t.goBy : t;
+        return name === charName;
+    }));
     render(filtered);
 
     closeCharacterModal();
