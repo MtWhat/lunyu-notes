@@ -1546,5 +1546,438 @@
         "category": "外國人",
         "relation": "齊國田氏的第8代家主。田氏本來是陳國的統治家族的一員(田與陳古音相近，古書以田代陳)，因內亂而逃奔到齊國。後來到BC 481年，田恆弒殺齊悼公，開始獨攬大權，殘殺齊國本來的統治家族(姜姓、晏氏、鮑氏等)，被視為「田陳代齊」的開端。由於田恆弒君違反禮法，孔子因此建議魯哀公發兵討伐田恆。但魯哀公踢皮球，叫孔子去問季康子。季康子怎麼可能答應出兵討伐比魯國強大的齊國？孔子當然因此碰了一鼻子灰。",
         "wikipedia": "https://zh.wikipedia.org/wiki/田成子"
+    },
+    {
+        "id": "nangongjingshu",
+        "goBy": "南宮敬叔",
+        "surname": "姬",
+        "cadet": "南宮",
+        "name": "閱",
+        "searchKeys": [
+            "南宮敬叔"
+        ],
+        "aliases": [
+            "南宮縚", "南宮閱"
+        ],
+        "category": "魯國人",
+        "relation": "魯國大夫，諡號「敬」。孟僖子的兒子，孟懿子的弟弟。前518年，孟僖子臨終前，讓孟懿子和南宮敬叔拜孔子為師。孔子曾帶南宮敬叔前往王城洛邑向老聃請教禮儀。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/南宮敬叔"
+    },
+    {
+        "id": "jiwuzi",
+        "goBy": "季武子",
+        "surname": "姬",
+        "cadet": "季孫",
+        "name": "宿",
+        "style": "",
+        "searchKeys": [
+            "季武子"
+        ],
+        "aliases": [
+            "季孫宿"
+        ],
+        "category": "魯國人",
+        "relation": "魯國貴族。季孫行父(季文子)之子。任內實行「作三軍」和「舍中軍」，使三桓勢力架空魯國公室，掌握軍政大權。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/季武子"
+    },
+    {
+        "id": "ji pingzi",
+        "goBy": "季平子",
+        "surname": "姬",
+        "cadet": "季孫",
+        "name": "意如",
+        "style": "",
+        "searchKeys": [
+            "季平子"
+        ],
+        "aliases": [
+            "季孫意如"
+        ],
+        "category": "魯國人",
+        "relation": "魯國貴族。季武子之孫。在鬥雞之亂後打跑魯昭公。不過季平子死後，家臣陽虎攬權，還囚禁了季孫家的繼承人季桓子長達三年。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/季平子"
+    },
+    {
+        "id": "mengxizi",
+        "goBy": "孟僖子",
+        "surname": "姬",
+        "cadet": "仲孫",
+        "name": "貜",
+        "style": "",
+        "searchKeys": [
+            "孟僖子", "孟釐子"
+        ],
+        "aliases": [
+            "仲孫貜"
+        ],
+        "category": "魯國人",
+        "relation": "魯國孟孫氏第8代宗主。臨終前叮囑兒子孟懿子和南宮敬叔務必拜孔子為師學禮。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/孟僖子"
+    },
+    {
+        "id": "luxianggong",
+        "goBy": "魯襄公",
+        "surname": "姬",
+        "cadet": "",
+        "name": "午",
+        "style": "",
+        "searchKeys": [
+            "魯襄公"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "魯國君主。魯成公之子。即位時年僅四歲，由季武子等三桓攝政，三桓勢力在其任內進一步膨脹。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/魯襄公"
+    },
+    {
+        "id": "laozi",
+        "goBy": "老子",
+        "surname": "李",
+        "cadet": "",
+        "name": "耳",
+        "style": "聃",
+        "searchKeys": [
+            "老子"
+        ],
+        "aliases": [
+            "老聃"
+        ],
+        "category": "外國人",
+        "relation": "周國的國家圖書館館長。據《史記》記載，孔子曾千里迢迢前往周地向老子請教禮儀。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/老子"
+    },
+    {
+        "id": "houzhaobo",
+        "goBy": "郈昭伯",
+        "surname": "姬",
+        "cadet": "郈",
+        "name": "",
+        "style": "",
+        "searchKeys": [
+            "郈昭伯"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "魯國大夫。諡號「昭」。因與季平子鬥雞結怨，勸誘魯昭公起兵討伐季氏。行動失敗後，魯昭公流亡，郈昭伯被殺。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/郈昭伯"
+    },
+    {
+        "id": "taizaipi",
+        "goBy": "太宰嚭",
+        "surname": "羋",
+        "cadet": "伯",
+        "name": "嚭",
+        "style": "",
+        "searchKeys": [
+            "太宰嚭", "伯嚭"
+        ],
+        "aliases": [
+            "伯嚭"
+        ],
+        "category": "外國人",
+        "relation": "吳國太宰。楚國貴族之後，逃到吳國避禍，得到吳王闔閭寵信。與伍子胥不合。吳國擊敗越國後，越國卿文種用重金賄賂伯嚭，讓越王勾踐免於一死。更誣陷伍子胥勾串齊國，害伍子胥自刎。被認為是導致吳國滅亡的主因之一。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/伯嚭"
+    },
+    {
+        "id": "shulianghe",
+        "goBy": "叔梁紇",
+        "surname": "子",
+        "cadet": "孔",
+        "name": "紇",
+        "style": "叔梁",
+        "searchKeys": [
+            "叔梁紇"
+        ],
+        "aliases": [
+            "孔紇", "郰人紇"
+        ],
+        "category": "魯國人",
+        "relation": "孔子的父親。魯國陬邑大夫，以勇力聞名。曾參與陬邑的防禦，單手托起城門讓同僚撤退。後人推測他身強體壯、可能身形高大，並遺傳給孔子，因此孔子才得以認祖歸宗回到貴族孔家。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/叔梁紇"
+    },
+    {
+        "id": "zhonglianghuai",
+        "goBy": "仲梁懷",
+        "surname": "",
+        "cadet": "仲梁",
+        "name": "懷",
+        "style": "",
+        "searchKeys": [
+            "仲梁懷"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "春秋時期魯國季孫氏的家臣。與陽虎有嫌隙，後被陽虎所執扣。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/仲梁懷"
+    },
+    {
+        "id": "weichugong",
+        "goBy": "衛出公",
+        "surname": "姬",
+        "cadet": "",
+        "name": "輒",
+        "style": "",
+        "searchKeys": [
+            "衛出公", "姬輒"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "衛國君主。衛靈公之孫、蒯聵之子。即位後與其父爭奪權力。在位期間經歷多次動盪與流亡。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/衛出公"
+    },
+    {
+        "id": "gongzhiyu",
+        "goBy": "公之魚",
+        "surname": "",
+        "cadet": "",
+        "name": "",
+        "style": "",
+        "searchKeys": [
+            "公之魚"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "春秋時期魯國大夫。季桓子死後，季康子想要延攬孔子時，他建議康子應先選用冉求，因為他擔心孔子不會被輕易任用。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/公之魚"
+    },
+    {
+        "id": "jinpinggong",
+        "goBy": "晉平公",
+        "surname": "姬",
+        "cadet": "",
+        "name": "彪",
+        "style": "",
+        "searchKeys": [
+            "晉平公"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "晉國君主。他在位時晉國國力尚強，但六卿勢力開始架空公室。曾與齊國等諸侯會盟。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/晉平公"
+    },
+    {
+        "id": "zhulingwang",
+        "goBy": "楚靈王",
+        "surname": "羋",
+        "cadet": "",
+        "name": "圍",
+        "style": "",
+        "searchKeys": [
+            "楚靈王", "熊圍", "熊虔"
+        ],
+        "aliases": [
+            "熊圍", "熊虔"
+        ],
+        "category": "外國人",
+        "relation": "楚國君主。好大喜功，建築了宏偉的章華臺。後因國內叛亂與兄弟逼宮而自殺。他是個G8人，曾叫矮子晏嬰從狗門進來，但被對方用智化解。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/楚靈王"
+    },
+    {
+        "id": "bigan",
+        "goBy": "比干",
+        "surname": "子",
+        "cadet": "",
+        "name": "比干",
+        "style": "",
+        "searchKeys": [
+            "比干"
+        ],
+        "aliases": [],
+        "category": "古人",
+        "relation": "商朝末年的忠臣，紂王的叔父。傳說因直言進諫被紂王剖心而死。孔子稱「殷有三仁」，比干其一也。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/比干"
+    },
+    {
+        "id": "zhuzhaowang",
+        "goBy": "楚昭王",
+        "surname": "羋",
+        "cadet": "",
+        "name": "珍",
+        "style": "",
+        "searchKeys": [
+            "楚昭王", "羋珍"
+        ],
+        "aliases": [
+            "熊珍"
+        ],
+        "category": "外國人",
+        "relation": "楚國君主。在位時被伍子胥率領的吳國大軍破首都郢而逃亡。後來申包胥去秦國哭來救兵，楚國才得以復國。孔子困於陳蔡就是因為捲入吳、陳、楚之間的戰爭中。後來楚昭王來救孔子，甚至想封地給他，但最終沒有真的付諸行動。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/楚昭王"
+    },
+    {
+        "id": "caizhaogong",
+        "goBy": "蔡昭公",
+        "surname": "姬",
+        "cadet": "蔡",
+        "name": "申",
+        "style": "",
+        "searchKeys": [
+            "蔡昭公"
+        ],
+        "aliases": [
+            "蔡昭侯"
+        ],
+        "category": "外國人",
+        "relation": "蔡國君主。曾被楚國囚禁三年。回國後將外交策略倒向晉、吳，娶吳王闔閭的女兒，並加入伍子胥的復仇戰爭攻滅楚國郢都。後來楚國回來報仇，蔡昭侯因試圖遷都依附吳國，而被其大臣公孫翩等人殺害。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/蔡昭侯"
+    },
+    {
+        "id": "gongsunpian",
+        "goBy": "公孫翩",
+        "surname": "",
+        "cadet": "公孫",
+        "name": "翩",
+        "style": "",
+        "searchKeys": [
+            "公孫翩"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "蔡國大夫。在蔡昭侯試圖遷都往吳國時，聯合其他家臣將其弒殺。其後也被文之階殺死。",
+        "wikipedia": ""
+    },
+    {
+        "id": "fangfengshi",
+        "goBy": "防風氏",
+        "surname": "",
+        "cadet": "",
+        "name": "",
+        "style": "",
+        "searchKeys": [
+            "防風氏"
+        ],
+        "aliases": [],
+        "category": "其他",
+        "relation": "古代傳說中的巨人之國首領。傳說大禹在會稽大會群神，防風氏遲到，被禹處死。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/防風氏"
+    },
+    {
+        "id": "lichu",
+        "goBy": "黎鉏",
+        "surname": "",
+        "cadet": "",
+        "name": "",
+        "style": "",
+        "searchKeys": [
+            "黎鉏"
+        ],
+        "aliases": [
+            "犁彌"
+        ],
+        "category": "外國人",
+        "relation": "齊國大夫。或作「犁彌」。設局邀魯定公來齊魯之間的夾谷之會面，企圖脅持魯定公來獲取領土，結果孔子建議魯定公帶軍隊去，導致黎鉏計畫失敗，連之前併吞的領土都被迫吐了回去。不過後來黎鉏初賤招，送女樂給魯定公，導致魯國掌權者沉迷女色，孔子因此離開魯國。可說是非常成功的陰招。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/犁彌"
+    },
+    {
+        "id": "chushang",
+        "goBy": "鉏商",
+        "surname": "",
+        "cadet": "",
+        "name": "鉏商",
+        "style": "",
+        "searchKeys": [
+            "鉏商"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "魯國叔孫氏的車夫。春秋哀公十四年，他在西狩時獵到可能是長頸鹿科的生物，孔子看了以後認為是麒麟，並因此哀呼「我完蛋了」，即「傷麟怨道窮」事件。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/%E8%8E%B7%E9%BA%9F"
+    },
+    {
+        "id": "yiyi",
+        "goBy": "夷逸",
+        "surname": "",
+        "cadet": "",
+        "name": "",
+        "style": "",
+        "searchKeys": [
+            "夷逸"
+        ],
+        "aliases": [],
+        "category": "其他",
+        "relation": "《論語·微子》中提到的隱逸之士。與虞仲相似。孔子稱讚他們「隱居放言，行中清，廢中權」。",
+        "wikipedia": ""
+    },
+    {
+        "id": "zhaoyang",
+        "goBy": "趙簡子",
+        "surname": "嬴",
+        "cadet": "趙",
+        "name": "鞅",
+        "searchKeys": [
+            "趙簡子"
+        ],
+        "aliases": [
+            "趙鞅", "趙志父"
+        ],
+        "category": "外國人",
+        "relation": "晉國上卿，趙氏領袖。他在晉國實行改革，強化趙氏家臣勢力，為後來的「三家分晉」打下基礎。他殺害幫助自己上位的臣子，孔子因為聽到這個新聞而沒有度過黃河去晉國。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/趙簡子"
+    },
+    {
+        "id": "kuaikui",
+        "goBy": "蒯聵",
+        "surname": "姬",
+        "cadet": "",
+        "name": "蒯聵",
+        "style": "",
+        "searchKeys": [
+            "蒯聵", "衛莊公"
+        ],
+        "aliases": [
+            "衛後莊公"
+        ],
+        "category": "外國人",
+        "relation": "衛靈公太子。因欲弒庶母南子未遂而外逃晉國。後在外十九年後回國繼位，史稱衛後莊公。其在位時期發生了強逼其子爭位的悲劇。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/衛後莊公"
+    },
+    {
+        "id": "doumingdu",
+        "goBy": "竇鳴犢",
+        "surname": "竇",
+        "cadet": "",
+        "name": "犨",
+        "style": "鳴犢",
+        "searchKeys": [
+            "竇鳴犢"
+        ],
+        "aliases": [
+            "竇犨"
+        ],
+        "category": "外國人",
+        "relation": "晉國賢大夫。趙簡子得志後將其殺害。孔子聞其死訊後在黃河岸邊感嘆，遂打消入晉從政的念頭。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/竇犨"
+    },
+    {
+        "id": "shunhua",
+        "goBy": "舜華",
+        "surname": "",
+        "cadet": "",
+        "name": "",
+        "style": "",
+        "searchKeys": [
+            "舜華"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "晉國賢大夫。與竇鳴犢一同被趙簡子殺害，使得孔子不願進入晉國。",
+        "wikipedia": ""
+    },
+    {
+        "id": "shixiangzi",
+        "goBy": "師襄子",
+        "surname": "",
+        "cadet": "",
+        "name": "襄",
+        "style": "",
+        "searchKeys": [
+            "師襄子", "師襄"
+        ],
+        "aliases": [
+            "擊磬襄", "師襄"
+        ],
+        "category": "其他",
+        "relation": "春秋時期著名的樂官。曾教授孔子彈琴。孔子從其學得《文王操》，並能以此推知曲作者的為人。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/師襄"
     }
 ]
