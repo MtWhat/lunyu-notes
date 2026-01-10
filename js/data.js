@@ -45,39 +45,55 @@ async function loadData() {
 }
 
 function processTextWithRuby(text) {
+    if (!text) return "";
     let processed = text;
 
-    // 1. 處理詞組 (優先)
-    for (const [phrase, parts] of Object.entries(rarePhrasesMap)) {
-        if (processed.includes(phrase)) {
-            let rubyHtml = "<ruby>";
-            for(let i=0; i<parts.length; i+=2) {
-                rubyHtml += `${parts[i]}<rt>${parts[i+1]}</rt>`;
+    // 1. 處理刪除線 (~~文字~~)
+    processed = processed.replace(/~~([\s\S]*?)~~/g, '<s>$1</s>');
+
+    // 2. 使用分段處理邏輯，確保不替換 HTML 標籤內部的屬性或名稱
+    // 將文本分割為 HTML 標籤和純文本段
+    const tokens = processed.split(/(<[^>]+>)/g);
+    const result = tokens.map(token => {
+        if (token.startsWith('<') && token.endsWith('>')) {
+            return token; // 標籤不處理
+        }
+
+        // 僅處理純文本段
+        let part = token;
+
+        // 處理詞組
+        for (const [phrase, parts] of Object.entries(rarePhrasesMap)) {
+            if (part.includes(phrase)) {
+                let rubyHtml = "<ruby>";
+                for(let i=0; i<parts.length; i+=2) {
+                    rubyHtml += `${parts[i]}<rt>${parts[i+1]}</rt>`;
+                }
+                rubyHtml += "</ruby>";
+                part = part.split(phrase).join(rubyHtml);
             }
-            rubyHtml += "</ruby>";
-            processed = processed.split(phrase).join(rubyHtml);
-        }
-    }
-
-    // 2. 處理單字 (排除已經在 ruby 標籤內的字)
-    for (const [char, info] of Object.entries(rareWordsMap)) {
-         // 簡單的正則：替換不在 < > 內的字
-         const regex = new RegExp(`(?<!<[^>]*)(${char})(?![^<]*>)`, 'g');
-
-        const zhuyin = info.zhuyin || "";
-        const definition = info.definition ? info.definition.replace(/'/g, "\\'") : "";
-
-        let replacement = "";
-        if (zhuyin) {
-            replacement = `<ruby class="rare-char" onclick="showTooltip(event, this, '${char}', '${zhuyin}', '${definition}')">${char}<rt>${zhuyin}</rt></ruby>`;
-        } else {
-            replacement = `<span class="rare-char" onclick="showTooltip(event, this, '${char}', '', '${definition}')">${char}</span>`;
         }
 
-         processed = processed.replace(regex, replacement);
-    }
+        // 處理單字
+        for (const [char, info] of Object.entries(rareWordsMap)) {
+            // 在純文本段中直接全局替換
+            const zhuyin = info.zhuyin || "";
+            const definition = info.definition ? info.definition.replace(/'/g, "\\'") : "";
 
-    return processed;
+            let replacement = "";
+            if (zhuyin) {
+                replacement = `<ruby class="rare-char" onclick="showTooltip(event, this, '${char}', '${zhuyin}', '${definition}')">${char}<rt>${zhuyin}</rt></ruby>`;
+            } else {
+                replacement = `<span class="rare-char" onclick="showTooltip(event, this, '${char}', '', '${definition}')">${char}</span>`;
+            }
+
+            part = part.split(char).join(replacement);
+        }
+
+        return part;
+    });
+
+    return result.join('');
 }
 
 function identifyCharacters(text) {

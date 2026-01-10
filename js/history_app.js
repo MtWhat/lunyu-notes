@@ -9,6 +9,8 @@ const hlResultCount = document.getElementById('resultCount');
 const hlSearchInput = document.getElementById('searchInput');
 const hlCharacterBio = document.getElementById('characterBio');
 
+const hlFloatingAge = document.getElementById('floatingAge');
+
 function initApp() {
     renderHistory(HISTORY_DATA);
 
@@ -23,6 +25,37 @@ function initApp() {
             );
             renderHistory(filtered, keyword);
         });
+    }
+
+    // Scroll listener for floating age
+    window.addEventListener('scroll', updateFloatingAge);
+}
+
+function updateFloatingAge() {
+    if (!hlFloatingAge) return;
+
+    const items = document.querySelectorAll('.timeline-item');
+    let currentAge = null;
+    let targetLeft = null;
+    const threshold = 150; // Offset from top to trigger the change
+
+    items.forEach(item => {
+        const rect = item.getBoundingClientRect();
+        const ageEl = item.querySelector('.age-label');
+        if (ageEl && rect.top < threshold) {
+            currentAge = ageEl.textContent;
+            // Get the actual horizontal position of the marker
+            const ageRect = ageEl.getBoundingClientRect();
+            targetLeft = ageRect.left;
+        }
+    });
+
+    if (currentAge && targetLeft !== null) {
+        hlFloatingAge.textContent = `> ${currentAge}`;
+        hlFloatingAge.style.left = `${targetLeft}px`;
+        hlFloatingAge.classList.add('visible');
+    } else {
+        hlFloatingAge.classList.remove('visible');
     }
 }
 
@@ -46,10 +79,8 @@ function renderHistory(data, keyword = '') {
         let markerHtml = '';
         if (item.age !== null) {
             markerHtml = `
-                <div class="age-marker">
-                    <span class="font-bold text-stone-700">${item.age}</span>
-                    <span class="year-marker">(${item.year})</span>
-                </div>
+                <div class="year-label">${item.year}</div>
+                <div class="age-label">${item.age}歲</div>
             `;
         }
 
@@ -62,15 +93,15 @@ function renderHistory(data, keyword = '') {
             } catch(e) {}
         }
 
-        // Links to Lunyu
+        // Links to Lunyu (Remove margin for top-row integration)
         const linksHtml = item.links.map(link => {
-            return `<a href="index.html?q=${encodeURIComponent(link.ref)}" class="inline-block mt-2 text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded border border-indigo-100 hover:bg-indigo-600 hover:text-white transition-colors mr-2">
+            return `<a href="index.html?q=${encodeURIComponent(link.ref)}" class="inline-block text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded border border-indigo-100 hover:bg-indigo-600 hover:text-white transition-colors">
                 📖 參照論語 ${link.ref}
             </a>`;
         }).join('');
 
-        // Identify characters in content for dynamic tags
-        const charTags = identifyCharacters(item.content);
+        // Identify characters and filter out "孔子"
+        const charTags = identifyCharacters(item.content).filter(tag => tag !== "孔子");
         const charTagsHtml = charTags.map(tag => {
             const charData = charactersDB.find(c => c.goBy === tag);
             let categoryClass = '';
@@ -85,25 +116,32 @@ function renderHistory(data, keyword = '') {
         }).join(' ');
 
         itemDiv.innerHTML = `
-            ${markerHtml}
             <div class="timeline-dot"></div>
+            ${markerHtml}
             <div class="verse-card bg-white p-6 rounded shadow-sm border-l-4 border-stone-300 hover:shadow-md transition-shadow relative">
-                <div class="text-xs font-mono text-stone-400 mb-2">#${item.id}</div>
+                <div class="flex flex-wrap items-center gap-3 mb-3">
+                    <div class="text-xs font-mono text-stone-400">#${item.id}</div>
+                    <div class="flex flex-wrap gap-2 items-center">
+                        ${linksHtml}
+                    </div>
+                    <div class="flex flex-wrap gap-2 items-center">
+                        ${charTagsHtml}
+                    </div>
+                </div>
                 <div class="text-lg leading-relaxed text-gray-800 tracking-wide text-justify">
                     ${displayText}
                 </div>
-                <div class="mt-3 flex flex-wrap gap-2">
-                    ${charTagsHtml}
-                </div>
-                <div class="mt-1">
-                    ${linksHtml}
-                </div>
+                ${item.note ? `
+                <div class="mt-4 p-3 bg-amber-50 border-l-2 border-amber-200 text-sm text-stone-600 italic font-sans">
+                    ${processTextWithRuby(item.note)}
+                </div>` : ''}
             </div>
         `;
         fragment.appendChild(itemDiv);
     });
 
     hlContentList.appendChild(fragment);
+    updateFloatingAge();
 }
 
 function filterByChar(charName) {
