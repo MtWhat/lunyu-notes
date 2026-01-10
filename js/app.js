@@ -59,6 +59,21 @@ function initApp() {
 
     // Initial sort
     sortData(flatIndex, currentSortType);
+
+    // URL Query support
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+    if (query) {
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.value = query;
+            const filtered = flatIndex.filter(item => item.rawText.includes(query) || item.shortCitation.includes(query) || (item.idioms.includes(query)) || (item.manualTags.includes(query)));
+            render(filtered, query);
+            updateMainIndicator();
+            return; // Skip default render
+        }
+    }
+
     render(flatIndex);
 }
 

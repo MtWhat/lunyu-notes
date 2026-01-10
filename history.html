@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>孔子年譜 - Vibe論語</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #f5f5f0;
+            color: #2d2a26;
+        }
+        /* Ruby Text Styling */
+        ruby {
+            ruby-position: over;
+            font-family: 'Noto Serif TC', serif;
+        }
+        rt {
+            font-size: 0.6em;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-weight: normal;
+            color: #57534e;
+            transform: translateY(-2px);
+        }
+
+        .highlight {
+            background-color: #fde047;
+            font-weight: bold;
+            border-radius: 2px;
+            padding: 0 2px;
+        }
+        .search-container {
+            backdrop-filter: blur(10px);
+            background-color: rgba(245, 245, 240, 0.95);
+        }
+
+        /* Timeline Styles */
+        .timeline-container {
+            position: relative;
+            padding-left: 2rem;
+            margin-left: 1.5rem;
+            border-left: 2px solid #d6d3d1;
+        }
+        @media (min-width: 768px) {
+            .timeline-container {
+                padding-left: 4rem;
+                margin-left: 4rem;
+            }
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -2.075rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background-color: #78716c;
+            border-radius: 50%;
+            border: 2px solid #f5f5f0;
+            z-index: 10;
+        }
+        @media (min-width: 768px) {
+            .timeline-dot {
+                left: -4.075rem;
+            }
+        }
+
+        .age-marker {
+            position: absolute;
+            left: -3rem;
+            top: -0.5rem;
+            width: 3rem;
+            text-align: right;
+            padding-right: 0.75rem;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 0.875rem;
+            color: #57534e;
+        }
+        @media (min-width: 768px) {
+            .age-marker {
+                left: -8rem;
+                width: 7.5rem;
+                padding-right: 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        .year-marker {
+            display: block;
+            font-size: 0.75rem;
+            color: #a8a29e;
+            font-weight: 300;
+        }
+
+        /* Original index.html Styles */
+        .char-tag {
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            background-color: #e7e5e4;
+            color: #44403c;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+        }
+        .tag-confucian { background-color: #fef3c7; color: #92400e; }
+        .tag-other { background-color: #f5f5f4; color: #a8a29e; }
+        .tag-ancient { background-color: #f1f5f9; color: #94a3b8; }
+        .tag-lu { background-color: #ecfccb; color: #3f6212; }
+        .tag-foreign { background-color: #e0f2fe; color: #075985; }
+
+        .serial-num {
+            font-family: 'Noto Sans TC', sans-serif;
+            color: #a8a29e;
+            font-weight: 300;
+        }
+
+        #tooltip, #dictPopup {
+            position: absolute;
+            background-color: #292524;
+            color: #f5f5f4;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-family: 'Noto Sans TC', sans-serif;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .rare-char {
+            cursor: help;
+            border-bottom: 1px dotted #a8a29e;
+        }
+
+        /* Modal & Cards copy from index.html */
+        .card-scroll-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 1.5rem;
+            padding: 2rem;
+            height: 100%;
+        }
+        .pokemon-card {
+            flex: 0 0 auto;
+            width: 300px;
+            height: 480px;
+            scroll-snap-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #a8a29e;
+            background-color: white;
+        }
+        .card-header { padding: 12px 16px; }
+        .card-image-container { margin: 4px 16px; height: 180px; background-color: #f5f5f4; display: flex; justify-content: center; align-items: center; }
+        .card-content { padding: 8px 16px; flex-grow: 1; overflow-y: auto; font-size: 0.9rem; }
+        .card-footer { padding: 12px 16px; border-top: 1px solid #d6d3d1; display: flex; justify-content: space-between; align-items: center; }
+
+        .header-hidden { transform: translateY(-100%); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center">
+
+    <!-- Header & Search -->
+    <header id="mainHeader" class="w-full max-w-4xl sticky top-0 z-40 search-container shadow-sm border-b border-stone-300 transition-transform duration-300">
+        <div class="hidden md:flex flex-wrap justify-between items-center p-4">
+            <div class="flex items-center gap-4">
+                <h1 class="text-3xl font-bold tracking-widest text-stone-800 cursor-pointer" onclick="location.href='index.html'">Vibe論語</h1>
+                <span class="text-stone-400 font-serif">/ 孔子年譜</span>
+            </div>
+            <div id="navMenu" class="hidden md:flex items-center gap-2">
+                <button onclick="openCharacterModal()" class="whitespace-nowrap bg-stone-200 text-stone-700 px-3 py-2 rounded-lg hover:bg-stone-300 transition-colors text-sm font-sans">
+                    🧑 人物列表
+                </button>
+                <button onclick="location.href='index.html'" class="whitespace-nowrap bg-stone-800 text-white px-3 py-2 rounded-lg hover:bg-stone-700 transition-colors text-sm font-sans flex items-center gap-1">
+                    📚 返回正文
+                </button>
+            </div>
+        </div>
+
+        <div class="md:hidden flex justify-between items-center p-4">
+            <h1 class="text-2xl font-bold tracking-widest text-stone-800" onclick="location.href='index.html'">Vibe論語</h1>
+            <button onclick="toggleMobileMenu()" class="text-stone-700 p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileNavMenu" class="hidden fixed inset-0 bg-stone-900/95 z-50 flex flex-col items-center justify-center gap-8 md:hidden">
+            <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-stone-400 hover:text-white text-4xl">&times;</button>
+            <button onclick="location.href='index.html'; toggleMobileMenu()" class="text-2xl text-stone-200 hover:text-white font-sans">📚 返回正文</button>
+            <button onclick="openCharacterModal(); toggleMobileMenu()" class="text-2xl text-stone-200 hover:text-white font-sans">🧑 人物列表</button>
+        </div>
+
+        <div class="px-4 pb-3 flex flex-wrap items-center gap-3 border-t border-stone-200 pt-3 md:border-t-0 md:pt-0">
+             <div id="searchContainer" class="relative flex items-center flex-grow transition-all duration-300 ease-in-out">
+                <div id="searchInputWrapper" class="relative w-full transition-all duration-300">
+                    <input type="text" id="searchInput" placeholder="搜尋年譜內容..."
+                        class="w-full bg-stone-100 border border-stone-300 rounded-full px-10 py-2 text-stone-700 font-sans text-sm focus:outline-none focus:ring-2 focus:ring-stone-500">
+                    <button id="searchClearBtn" class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <div class="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+             <div id="resultCount" class="text-sm text-stone-500 font-sans whitespace-nowrap">顯示全部 85 條</div>
+        </div>
+
+        <div id="characterBio" class="hidden mx-4 mb-3 p-4 bg-stone-100 rounded-lg border border-stone-200 text-stone-700 text-sm leading-relaxed font-sans shadow-inner"></div>
+    </header>
+
+    <!-- Main Content Timeline -->
+    <main class="w-full max-w-4xl p-4 md:p-8 mt-6">
+        <div class="timeline-container" id="contentList">
+            <!-- Populated by JS -->
+            <div class="text-center text-gray-500 py-10">資料載入中...</div>
+        </div>
+    </main>
+
+    <!-- Character Modal -->
+    <div id="characterModal" class="fixed inset-0 bg-black bg-opacity-50 z-[60] hidden flex justify-center items-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-6xl w-full max-h-[95vh] flex flex-col overflow-hidden">
+            <div class="p-4 border-b border-gray-200 flex flex-col md:flex-row justify-between items-center bg-stone-50 gap-4 relative">
+                <h3 class="text-xl font-bold text-stone-800 font-sans">論語人物誌</h3>
+                <div id="categoryFilterContainer" class="flex gap-2 flex-wrap justify-center md:justify-start">
+                    <!-- Buttons will be styled by JS -->
+                    <button onclick="filterCharacterList('all')" data-category="all">全部</button>
+                    <button onclick="filterCharacterList('孔門諸賢')" data-category="孔門諸賢">孔門諸賢</button>
+                    <button onclick="filterCharacterList('魯國人')" data-category="魯國人">魯國人</button>
+                    <button onclick="filterCharacterList('外國人')" data-category="外國人">外國人</button>
+                    <button onclick="filterCharacterList('古人')" data-category="古人">古人</button>
+                    <button onclick="filterCharacterList('其他')" data-category="其他">其他</button>
+                </div>
+                <button onclick="closeCharacterModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+            </div>
+            <div class="flex-grow bg-stone-800/80 backdrop-blur-sm overflow-hidden relative">
+                <div id="characterCardContainer" class="card-scroll-container"></div>
+                <!-- Scroll Buttons -->
+                <button onclick="scrollCards('left')" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-stone-700/50 text-white p-3 rounded-full z-10">&lt;</button>
+                <button onclick="scrollCards('right')" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-stone-700/50 text-white p-3 rounded-full z-10">&gt;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full text-center py-6 text-stone-400 text-sm border-t border-stone-300 font-sans mt-auto">
+        <p>Vibe論語 &copy; 2025</p>
+    </footer>
+
+    <div id="tooltip"></div>
+    <div id="dictPopup">📖 查字典</div>
+
+    <!-- Hidden Modals required by UI scripts -->
+    <div id="hashtagModal" class="hidden">
+        <div id="hashtagListContainer"></div>
+    </div>
+    <div id="idiomModal" class="hidden">
+        <div id="idiomListContainer"></div>
+    </div>
+    <div id="aboutModal" class="hidden"></div>
+    <div id="askModal" class="hidden">
+        <input type="text" id="askInput" class="hidden">
+        <div id="aiChatResponse" class="hidden"></div>
+    </div>
+
+    <script src="lunyu_data.js"></script>
+    <script src="history_data.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/history_app.js"></script>
+</body>
+</html>
