@@ -16,8 +16,16 @@ function initApp() {
 
     // Search listener
     if (hlSearchInput) {
+        const searchClearBtn = document.getElementById('searchClearBtn');
         hlSearchInput.addEventListener('input', (e) => {
             const keyword = e.target.value.trim().toLowerCase();
+
+            if (keyword) {
+                if (searchClearBtn) searchClearBtn.classList.remove('hidden');
+            } else {
+                if (searchClearBtn) searchClearBtn.classList.add('hidden');
+            }
+
             const filtered = HISTORY_DATA.filter(item =>
                 item.content.toLowerCase().includes(keyword) ||
                 (item.age && String(item.age).includes(keyword)) ||
@@ -25,6 +33,15 @@ function initApp() {
             );
             renderHistory(filtered, keyword);
         });
+
+        if (searchClearBtn) {
+            searchClearBtn.addEventListener('click', () => {
+                hlSearchInput.value = '';
+                searchClearBtn.classList.add('hidden');
+                hlSearchInput.focus();
+                renderHistory(HISTORY_DATA);
+            });
+        }
     }
 
     // Scroll listener for floating age
