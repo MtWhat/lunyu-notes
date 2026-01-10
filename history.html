@@ -53,12 +53,17 @@
 
         .timeline-item {
             position: relative;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
         .timeline-dot {
             position: absolute;
-            left: -2.075rem;
-            top: 0.5rem;
+            left: -1.0375rem; /* Exactly on the 2px border (left border of container is at margin-left 1.5rem + 2rem padding) Wait. */
+            /* Container border is left-border of .timeline-container.
+               .timeline-container margin-left is 1.5rem.
+               The .timeline-item is inside .timeline-container.
+               So the dot at -2rem (padding-left) is right on the line. */
+            left: -2.375rem; /* -2rem padding + half of dot width (12px/2=6px=0.375rem) */
+            top: 1.5rem;
             width: 12px;
             height: 12px;
             background-color: #78716c;
@@ -68,35 +73,41 @@
         }
         @media (min-width: 768px) {
             .timeline-dot {
-                left: -4.075rem;
+                left: -4.375rem; /* -4rem padding */
             }
         }
 
-        .age-marker {
+        .year-label {
             position: absolute;
-            left: -3rem;
-            top: -0.5rem;
-            width: 3rem;
+            left: -7rem; /* Left of the axis */
+            width: 4.5rem;
             text-align: right;
-            padding-right: 0.75rem;
-            font-family: 'Noto Sans TC', sans-serif;
+            top: 1.25rem;
+            color: #a8a29e;
             font-size: 0.875rem;
-            color: #57534e;
+            font-weight: 300;
+            font-family: 'Noto Sans TC', sans-serif;
         }
         @media (min-width: 768px) {
-            .age-marker {
-                left: -8rem;
-                width: 7.5rem;
-                padding-right: 1.5rem;
-                font-size: 1rem;
+            .year-label {
+                left: -9rem;
             }
         }
 
-        .year-marker {
-            display: block;
-            font-size: 0.75rem;
-            color: #a8a29e;
-            font-weight: 300;
+        .age-label {
+            position: absolute;
+            left: -1.5rem; /* Right of the axis/dot */
+            top: 1.25rem;
+            font-weight: 700;
+            color: #78716c;
+            font-size: 1.125rem;
+            font-family: 'Noto Sans TC', sans-serif;
+            white-space: nowrap;
+        }
+        @media (min-width: 768px) {
+            .age-label {
+                left: -3.5rem;
+            }
         }
 
         /* Original index.html Styles */
@@ -141,6 +152,42 @@
         .rare-char {
             cursor: help;
             border-bottom: 1px dotted #a8a29e;
+        }
+
+        s {
+            text-decoration: line-through;
+            color: #a8a29e;
+            opacity: 0.7;
+        }
+
+        /* Floating Age Label */
+        #floatingAge {
+            position: fixed;
+            /* left is set dynamically by JS */
+            top: 5rem;
+            z-index: 30;
+            background-color: #78716c;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-family: 'Noto Sans TC', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: opacity 0.3s, transform 0.3s;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px) translateX(-12px); /* Offset padding for perfect text overlap */
+        }
+        #floatingAge.visible {
+            opacity: 1;
+            transform: translateY(0) translateX(-12px);
+        }
+        @media (min-width: 768px) {
+            #floatingAge {
+                top: 6rem;
+                font-size: 1.125rem;
+            }
         }
 
         /* Modal & Cards copy from index.html */
@@ -272,6 +319,7 @@
 
     <div id="tooltip"></div>
     <div id="dictPopup">📖 查字典</div>
+    <div id="floatingAge"></div>
 
     <!-- Hidden Modals required by UI scripts -->
     <div id="hashtagModal" class="hidden">
