@@ -873,7 +873,7 @@
         "name": "弗擾",
         "style": "",
         "searchKeys": [
-            "公山"
+            "公山弗擾", "公山不狃"
         ],
         "aliases": [
             "公山不狃"
@@ -1978,5 +1978,129 @@
         "category": "其他",
         "relation": "春秋時期著名的樂官。曾教授孔子彈琴。孔子從其學得《文王操》，並能以此推知曲作者的為人。",
         "wikipedia": "https://zh.wikipedia.org/wiki/師襄"
+    },
+    {
+        "id": "songligong",
+        "goBy": "宋厲公",
+        "surname": "子",
+        "cadet": "",
+        "name": "鮒祀",
+        "style": "",
+        "searchKeys": [
+            "宋厲公", "鮒祀"
+        ],
+        "aliases": [],
+        "category": "古人",
+        "relation": "宋國國君。殺害其叔父煬公自立。曾將其長兄「弗父何」封於栗。弗父何是孔子的遠祖。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/宋厲公"
+    },
+    {
+        "id": "fufuhe",
+        "goBy": "弗父何",
+        "surname": "子",
+        "cadet": "",
+        "name": "何",
+        "style": "",
+        "searchKeys": [
+            "弗父何"
+        ],
+        "aliases": [],
+        "category": "古人",
+        "relation": "孔子的遠祖。被宋厲公封於栗。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/弗父何"
+    },
+    {
+        "id": "yanzhuozou",
+        "goBy": "顏濁鄒",
+        "surname": "",
+        "cadet": "",
+        "name": "",
+        "style": "",
+        "searchKeys": [
+            "顏濁鄒", "顏涿聚", "顏燭鄒", "顏讎由"
+        ],
+        "aliases": [
+            "顏涿聚", "顏燭鄒", "顏讎由"
+        ],
+        "category": "其他",
+        "relation": "春秋時期人物。孔子在衛國時曾住在他的家。他曾直言勸諫齊國的田成子。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/顏涿聚"
+    },
+    {
+        "id": "shusunzhe",
+        "goBy": "叔孫輒",
+        "surname": "姬",
+        "cadet": "叔孫",
+        "name": "輒",
+        "style": "子張",
+        "searchKeys": [
+            "叔孫輒"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "魯國叔孫氏宗主叔孫州仇之子。曾與公山不狃一同叛亂，後逃亡齊、吳。後來支持吳國攻打魯國，反而公孫不狃認為不能傷害祖國而反對。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/叔孫輒"
+    },
+    {
+        "id": "shenjuxu",
+        "goBy": "申句須",
+        "surname": "",
+        "cadet": "申",
+        "name": "句須",
+        "style": "",
+        "searchKeys": [
+            "申句須"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "魯國大夫。孔子任大司寇時，曾命其率軍討伐公山不狃與叔孫輒的叛亂，成功平叛。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/申句須"
+    },
+    {
+        "id": "leqi",
+        "goBy": "樂頎",
+        "surname": "",
+        "cadet": "樂",
+        "name": "頎",
+        "style": "",
+        "searchKeys": [
+            "樂頎"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "魯國大夫。孔子任大司寇時，曾命其與申句須一同率軍平定費邑之亂。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/樂頎"
+    },
+    {
+        "id": "gonglianchufu",
+        "goBy": "公斂處父",
+        "surname": "",
+        "cadet": "公斂",
+        "name": "陽",
+        "style": "",
+        "searchKeys": [
+            "公斂處父"
+        ],
+        "aliases": [
+            "公斂陽"
+        ],
+        "category": "魯國人",
+        "relation": "魯國孟孫氏家臣。勇武有力，曾多次識破陽虎陰謀。但在「墮三都」時，他勸說孟懿子拒絕拆除成邑，導致墮三都失敗。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/公斂處父"
+    },
+    {
+        "id": "shaozhengmao",
+        "goBy": "少正卯",
+        "surname": "",
+        "cadet": "",
+        "name": "卯",
+        "style": "",
+        "searchKeys": [
+            "少正卯"
+        ],
+        "aliases": [],
+        "category": "魯國人",
+        "relation": "魯國大夫。在魯定公時期極具影響力，多人稱其曾吸引走孔子的弟子。傳說孔子代理宰相職務七天後即將其處死，理由是其「心達而險」等五大罪狀。但這件事實在很可疑。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/少正卯"
     }
 ]

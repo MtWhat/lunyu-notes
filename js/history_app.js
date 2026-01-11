@@ -113,7 +113,7 @@ function renderHistory(data, keyword = '') {
         // Links to Lunyu (Remove margin for top-row integration)
         const linksHtml = item.links.map(link => {
             return `<a href="index.html?q=${encodeURIComponent(link.ref)}" class="inline-block text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded border border-indigo-100 hover:bg-indigo-600 hover:text-white transition-colors">
-                📖 參照論語 ${link.ref}
+                📖 ${link.ref}
             </a>`;
         }).join('');
 
