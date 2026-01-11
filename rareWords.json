@@ -11,7 +11,6 @@
     "肱": { "zhuyin": "ㄍㄨㄥ", "definition": "手臂從肘到肩的部分。" },
     "葸": { "zhuyin": "ㄒㄧˇ", "definition": "畏懼、退縮的樣子。" },
     "斐": { "zhuyin": "ㄈㄟˇ", "definition": "有文采的樣子。" },
-    "鑽": { "zhuyin": "ㄗㄨㄢ", "definition": "穿孔。鑽燧改火：古人鑽木取火。" },
     "柙": { "zhuyin": "ㄒㄧㄚˊ", "definition": "關獸的木籠。" },
     "櫝": { "zhuyin": "ㄉㄨˊ", "definition": "木櫃、木匣。" },
     "兕": { "zhuyin": "ㄙˋ", "definition": "雌性的犀牛。" },
@@ -154,5 +153,9 @@
     "縕": {
         "zhuyin": "ㄨㄣˋ",
         "definition": "用舊棉絮紡織而成的布。"
+    },
+    "憖": {
+        "zhuyin": "一ㄣˋ",
+        "definition": "願意。"
     }
 }
