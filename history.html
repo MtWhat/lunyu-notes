@@ -53,27 +53,25 @@
 
         .timeline-item {
             position: relative;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
         .timeline-dot {
             position: absolute;
-            left: -1.0375rem; /* Exactly on the 2px border (left border of container is at margin-left 1.5rem + 2rem padding) Wait. */
-            /* Container border is left-border of .timeline-container.
-               .timeline-container margin-left is 1.5rem.
-               The .timeline-item is inside .timeline-container.
-               So the dot at -2rem (padding-left) is right on the line. */
-            left: -2.375rem; /* -2rem padding + half of dot width (12px/2=6px=0.375rem) */
-            top: 1.5rem;
-            width: 12px;
-            height: 12px;
+            left: -2.1875rem; /* -2rem padding + half of (width 8px = 0.5rem - 0.25rem offset?) Wait. Dot is 8px wide. Container left border is at 0. */
+            /* If item is at 0, padding-left 2rem. Line is at -2rem.
+               Dot left: -2rem - (width/2) = -2rem - 4px = -2rem - 0.25rem = -2.25rem. */
+            left: -2.25rem;
+            top: 2rem;
+            width: 8px;
+            height: 2px;
             background-color: #78716c;
-            border-radius: 50%;
-            border: 2px solid #f5f5f0;
+            /* border-radius: 50%; */
             z-index: 10;
         }
         @media (min-width: 768px) {
             .timeline-dot {
-                left: -4.375rem; /* -4rem padding */
+                left: -4.375rem; /* -4rem padding - (12px/2=6px=0.375rem) = -4.375rem */
+                width: 12px;
             }
         }
 

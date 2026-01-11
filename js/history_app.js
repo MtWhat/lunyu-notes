@@ -145,8 +145,8 @@ function renderHistory(data, keyword = '') {
         itemDiv.innerHTML = `
             <div class="timeline-dot"></div>
             ${markerHtml}
-            <div class="verse-card bg-white p-6 rounded shadow-sm border-l-4 border-stone-300 hover:shadow-md transition-shadow relative">
-                <div class="flex flex-wrap items-center gap-3 mb-3">
+            <div class="verse-card bg-white p-4 rounded shadow-sm border-l-4 border-stone-300 hover:shadow-md transition-shadow relative">
+                <div class="flex flex-wrap items-center gap-3 mb-2">
                     <div class="text-xs font-mono text-stone-400">#${item.id}</div>
                     <div class="flex flex-wrap gap-2 items-center">
                         ${linksHtml}
