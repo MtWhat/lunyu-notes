@@ -1,5 +1,6 @@
 // js/history_app.js
 
+let hlLastEntryId = null;
 let hlActiveCharFilter = null;
 let hlActiveCategoryFilter = 'all';
 
@@ -90,6 +91,7 @@ function renderHistory(data, keyword = '') {
 
     data.forEach(item => {
         const itemDiv = document.createElement('div');
+        itemDiv.id = `history-item-${item.id}`;
         itemDiv.className = 'timeline-item';
 
         // Age/Year Marker
@@ -139,7 +141,7 @@ function renderHistory(data, keyword = '') {
             }
 
             const tagDisplay = name === matchedName ? name : `${name} (${matchedName})`;
-            return `<span class="char-tag ${categoryClass}" onclick="filterByChar('${name}')">${tagDisplay}</span>`;
+            return `<span class="char-tag ${categoryClass}" onclick="filterByChar('${name}', ${item.id})">${tagDisplay}</span>`;
         }).join(' ');
 
         itemDiv.innerHTML = `
@@ -171,7 +173,8 @@ function renderHistory(data, keyword = '') {
     updateFloatingAge();
 }
 
-function filterByChar(charName) {
+function filterByChar(charName, sourceId = null) {
+    if (sourceId) hlLastEntryId = sourceId;
     hlActiveCharFilter = charName;
     if (hlSearchInput) hlSearchInput.value = '';
 
@@ -184,10 +187,17 @@ function filterByChar(charName) {
     const charData = charactersDB.find(c => c.goBy === charName);
     if (charData && charData.relation && hlCharacterBio) {
         hlCharacterBio.innerHTML = `
-            <div class="flex items-center gap-2 mb-1">
-                <span class="font-bold text-lg text-stone-800">${charData.goBy}</span>
+            <div class="flex justify-between items-center mb-1">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-lg text-stone-800">${charData.goBy}</span>
+                </div>
+                <button onclick="clearFilter()" class="text-stone-400 hover:text-stone-600 p-1" title="結束人物過濾">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
-            <div>${charData.relation}</div>
+            <div class="max-h-[3rem] overflow-y-auto pr-1 text-sm leading-relaxed">${charData.relation}</div>
         `;
         hlCharacterBio.classList.remove('hidden');
     } else if (hlCharacterBio) {
@@ -196,6 +206,29 @@ function filterByChar(charName) {
 
     closeCharacterModal();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function clearFilter() {
+    hlActiveCharFilter = null;
+    if (hlSearchInput) hlSearchInput.value = '';
+    if (hlCharacterBio) hlCharacterBio.classList.add('hidden');
+    renderHistory(HISTORY_DATA);
+
+    if (hlLastEntryId) {
+        const target = document.getElementById(`history-item-${hlLastEntryId}`);
+        if (target) {
+            setTimeout(() => {
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // Note: the card inside the item should probably be highlighted
+                const card = target.querySelector('.verse-card');
+                if (card) {
+                    card.classList.add('ring-2', 'ring-stone-400', 'ring-offset-4');
+                    setTimeout(() => card.classList.remove('ring-2', 'ring-stone-400', 'ring-offset-4'), 2000);
+                }
+            }, 100);
+        }
+        hlLastEntryId = null;
+    }
 }
 
 function openCharacterModal() {

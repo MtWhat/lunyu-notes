@@ -1,5 +1,6 @@
 // js/app.js
 
+let lastEntryId = null;
 let activeCharFilter = null;
 let activeHashtagFilter = null;
 let activeIdiomFilter = null;
@@ -184,6 +185,7 @@ function render(results, keyword = '') {
 
     results.forEach(item => {
         const card = document.createElement('div');
+        card.id = `verse-${item.globalId}`;
         card.className = 'verse-card bg-white p-6 rounded shadow-md border-l-4 border-stone-400 hover:shadow-lg transition-shadow relative';
 
         let displayText = item.rubyText;
@@ -213,7 +215,7 @@ function render(results, keyword = '') {
             }
 
             const tagDisplay = name === matchedName ? name : `${name} (${matchedName})`;
-            return `<span class="char-tag ${categoryClass} ${activeCharFilter === name ? 'active' : ''}" onclick="filterByChar('${name}')">${tagDisplay}</span>`;
+            return `<span class="char-tag ${categoryClass} ${activeCharFilter === name ? 'active' : ''}" onclick="filterByChar('${name}', ${item.globalId})">${tagDisplay}</span>`;
         }).join(' ');
 
         const hashtagsHtml = item.manualTags.map(tag => {
@@ -289,7 +291,8 @@ async function explainVerse(btn, citation, text) {
 }
 
 // Filtering functions
-function filterByChar(charName) {
+function filterByChar(charName, sourceId = null) {
+    if (sourceId) lastEntryId = sourceId;
     activeCharFilter = charName;
     activeHashtagFilter = null;
     activeIdiomFilter = null;
@@ -304,11 +307,18 @@ function filterByChar(charName) {
         const wikiLink = charData.wikipedia ? `<a href="${charData.wikipedia}" target="_blank" class="text-stone-500 hover:text-stone-700 ml-2" title="維基百科"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></a>` : '';
 
         characterBio.innerHTML = `
-            <div class="flex items-center gap-2 mb-1">
-                <span class="font-bold text-lg text-stone-800">${charData.goBy}</span>
-                ${wikiLink}
+            <div class="flex justify-between items-center mb-1">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-lg text-stone-800">${charData.goBy}</span>
+                    ${wikiLink}
+                </div>
+                <button onclick="clearFilter()" class="text-stone-400 hover:text-stone-600 p-1" title="結束人物過濾">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
-            <div>${charData.relation}</div>
+            <div class="max-h-[3rem] overflow-y-auto pr-1 text-sm leading-relaxed">${charData.relation}</div>
         `;
         characterBio.classList.remove('hidden');
     } else {
@@ -375,6 +385,18 @@ function clearFilter() {
 
     updateMainIndicator();
     render(flatIndex);
+
+    if (lastEntryId) {
+        const target = document.getElementById(`verse-${lastEntryId}`);
+        if (target) {
+            setTimeout(() => {
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                target.classList.add('ring-2', 'ring-stone-400', 'ring-offset-4');
+                setTimeout(() => target.classList.remove('ring-2', 'ring-stone-400', 'ring-offset-4'), 2000);
+            }, 100);
+        }
+        lastEntryId = null;
+    }
 }
 
 function resetSearch() {
