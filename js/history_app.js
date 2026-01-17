@@ -1,5 +1,20 @@
 // js/history_app.js
 
+function updateHeaderSearchState() {
+    const header = document.getElementById('mainHeader');
+    if (!header) return;
+
+    const hasSearchText = hlSearchInput && hlSearchInput.value.trim().length > 0;
+    const isExpanded = document.getElementById('searchInputWrapper')?.classList.contains('w-full');
+    const hasCharFilter = !!hlActiveCharFilter;
+
+    if (hasSearchText || isExpanded || hasCharFilter) {
+        header.classList.add('is-searching');
+    } else {
+        header.classList.remove('is-searching');
+    }
+}
+
 let hlLastEntryId = null;
 let hlActiveCharFilter = null;
 let hlActiveCategoryFilter = 'all';
@@ -33,6 +48,7 @@ function initApp() {
                 (item.year && String(item.year).includes(keyword))
             );
             renderHistory(filtered, keyword);
+            updateHeaderSearchState();
         });
 
         if (searchClearBtn) {
@@ -41,6 +57,7 @@ function initApp() {
                 searchClearBtn.classList.add('hidden');
                 hlSearchInput.focus();
                 renderHistory(HISTORY_DATA);
+                updateHeaderSearchState();
             });
         }
     }
@@ -205,6 +222,7 @@ function filterByChar(charName, sourceId = null) {
     }
 
     closeCharacterModal();
+    updateHeaderSearchState();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -213,6 +231,7 @@ function clearFilter() {
     if (hlSearchInput) hlSearchInput.value = '';
     if (hlCharacterBio) hlCharacterBio.classList.add('hidden');
     renderHistory(HISTORY_DATA);
+    updateHeaderSearchState();
 
     if (hlLastEntryId) {
         const target = document.getElementById(`history-item-${hlLastEntryId}`);

@@ -2,7 +2,7 @@
 
 // 資料設定：難字表 & 人物資料庫
 let rareWordsMap = {};
-let rarePhrasesMap = {};
+let synonymsMap = {};
 let charactersDB = [];
 
 // 羅馬數字轉換表
@@ -21,13 +21,13 @@ let globalCounter = 0;
 
 async function loadData() {
     try {
-        const [rWords, rPhrases, chars] = await Promise.all([
+        const [rWords, synonyms, chars] = await Promise.all([
             fetch('rareWords.json').then(r => r.json()),
-            fetch('rarePhrases.json').then(r => r.json()),
+            fetch('synonyms.json').then(r => r.json()),
             fetch('characters.json').then(r => r.json())
         ]);
         rareWordsMap = rWords;
-        rarePhrasesMap = rPhrases;
+        synonymsMap = synonyms;
         charactersDB = chars;
         // initApp() is in app.js, make sure it's available or we handle initialization differently.
         if (typeof initApp === 'function') {
@@ -57,7 +57,7 @@ function processTextWithRuby(text) {
 
     // 預先準備所有要替換的模式，按長度降序排列 (確保「盍徹乎」優先於「盍」)
     const allPatterns = [
-        ...Object.keys(rarePhrasesMap),
+        ...Object.keys(synonymsMap),
         ...Object.keys(rareWordsMap)
     ].sort((a, b) => b.length - a.length);
 
@@ -76,8 +76,8 @@ function processTextWithRuby(text) {
         // 使用 replace 的回調函數確保每個部分只被替換一次
         return token.replace(regex, (match) => {
             // 優先檢查詞組
-            if (rarePhrasesMap[match]) {
-                const parts = rarePhrasesMap[match];
+            if (synonymsMap[match]) {
+                const parts = synonymsMap[match];
                 let rubyHtml = "<ruby>";
                 for(let i=0; i<parts.length; i+=2) {
                     const char = parts[i];
