@@ -265,21 +265,83 @@ function renderCharacterCards() {
         ? charactersDB
         : charactersDB.filter(char => char.category === hlActiveCategoryFilter);
 
+    const categoryColors = {
+        '孔門諸賢': { bg: 'bg-amber-100', text: 'text-amber-800', activeBg: 'bg-amber-600', activeText: 'text-white', border: 'border-amber-200' },
+        '魯國人': { bg: 'bg-lime-100', text: 'text-lime-800', activeBg: 'bg-lime-600', activeText: 'text-white', border: 'border-lime-200' },
+        '外國人': { bg: 'bg-sky-100', text: 'text-sky-800', activeBg: 'bg-sky-600', activeText: 'text-white', border: 'border-sky-200' },
+        '古人': { bg: 'bg-slate-100', text: 'text-slate-800', activeBg: 'bg-slate-600', activeText: 'text-white', border: 'border-slate-200' },
+        '其他': { bg: 'bg-stone-100', text: 'text-stone-600', activeBg: 'bg-stone-600', activeText: 'text-white', border: 'border-stone-200' },
+        'all': { bg: 'bg-stone-200', text: 'text-stone-800', activeBg: 'bg-stone-800', activeText: 'text-white', border: 'border-stone-300' }
+    };
+
     const container = document.getElementById('characterCardContainer');
     if (!container) return;
 
+    if (filteredChars.length === 0) {
+        container.innerHTML = '<div class="text-white text-xl w-full text-center">沒有找到相關人物</div>';
+        return;
+    }
+
     container.innerHTML = filteredChars.map(char => {
+        const colors = categoryColors[char.category] || categoryColors['其他'];
+        const cardBgClass = colors.bg;
+        const borderColor = colors.border;
+        const colorClass = `${colors.bg} ${colors.text}`;
+
+        const wikiLink = char.wikipedia ?
+            `<a href="${char.wikipedia}" target="_blank" class="text-stone-500 hover:text-stone-800 transition-colors" title="維基百科" onclick="event.stopPropagation()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+            </a>` : '';
+
+        const hasBoth = char.surname && char.cadet;
+        const surnameClass = hasBoth ? "text-stone-400" : "";
+
+        const surnameStr = char.surname ? `<span class="mr-0.5 ${surnameClass}">${char.surname}</span><span class="text-stone-400 text-[0.7rem] mr-2">姓</span>` : '';
+        const cadetStr = char.cadet ? `<span class="mr-0.5">${char.cadet}</span><span class="text-stone-400 text-[0.7rem] mr-2">氏</span>` : '';
+        const nameStr = char.name ? `<span class="text-stone-400 text-[0.7rem] mr-0.5">名</span><span class="mr-2">${char.name}</span>` : '';
+        const styleStr = char.style ? `<span class="text-stone-400 text-[0.7rem] mr-0.5">字</span><span>${char.style}</span>` : '';
+
+        const nameDisplayHtml = `<div class="flex flex-wrap items-baseline text-sm font-bold text-stone-700 mt-1">
+            ${surnameStr}${cadetStr}${nameStr}${styleStr}
+        </div>`;
+
+        const aliasesHtml = (char.aliases && char.aliases.length > 0)
+            ? `<div class="text-xs text-stone-500 mt-1">又稱: ${char.aliases.join('、')}</div>`
+            : '';
+
+        const imageHtml = char.picture ? `
+            <div class="card-image-container">
+                <div class="w-full h-full flex flex-col justify-center items-center ${colorClass} opacity-80">
+                    <img src="${char.picture}" alt="${char.goBy}" class="w-full h-full object-cover">
+                </div>
+            </div>` : '';
+
         return `
-        <div class="pokemon-card bg-white border-2 border-stone-200">
-            <div class="card-header">
-                <span class="font-bold text-xl text-stone-800 font-serif">${char.goBy}</span>
+        <div class="pokemon-card ${cardBgClass} border-2 ${borderColor}">
+            <div class="card-header flex-col items-start !pb-2">
+                <div class="flex justify-between w-full items-center">
+                    <span class="font-bold text-xl text-stone-800 font-serif">${char.goBy}</span>
+                    ${wikiLink}
+                </div>
+                ${nameDisplayHtml}
+                ${aliasesHtml}
             </div>
-            ${char.picture ? `<div class="card-image-container"><img src="${char.picture}" class="w-full h-full object-cover"></div>` : ''}
-            <div class="card-content">
-                <p class="text-stone-700 text-sm">${char.relation || "暫無簡介"}</p>
+
+            ${imageHtml}
+
+            <div class="card-content scrollbar-hide pt-2">
+                <p class="text-stone-700 text-sm leading-relaxed text-justify">
+                    ${char.relation || "暫無簡介"}
+                </p>
             </div>
-            <div class="card-footer">
-                <button onclick="filterByChar('${char.goBy}')" class="text-xs bg-stone-800 text-white px-3 py-1 rounded-full">查看年表及條目</button>
+
+            <div class="card-footer mt-auto bg-white/40 border-t ${borderColor}">
+                <span class="text-xs font-mono text-stone-500">NO.${String(filteredChars.indexOf(char) + 1).padStart(3, '0')}</span>
+                <button onclick="filterByChar('${char.goBy}')" class="text-xs ${colors.activeBg} text-white px-3 py-1 rounded-full hover:opacity-90 transition-opacity">
+                    查看年表及條目
+                </button>
             </div>
         </div>
         `;
