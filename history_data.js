@@ -403,7 +403,7 @@ const HISTORY_DATA = [
         "links": [
             {
                 "text": "鳥獸不可與同群",
-                "ref": "XVIII-6"
+                "ref": "鳥獸不可與同群"
             }
         ]
     },
