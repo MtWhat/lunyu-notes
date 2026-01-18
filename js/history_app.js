@@ -64,6 +64,23 @@ function initApp() {
 
     // Scroll listener for floating age
     window.addEventListener('scroll', updateFloatingAge);
+
+    // URL ID Support
+    const urlParams = new URLSearchParams(window.location.search);
+    const entryId = urlParams.get('id');
+    if (entryId) {
+        setTimeout(() => {
+            const target = document.getElementById(`history-item-${entryId}`);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const card = target.querySelector('.verse-card');
+                if (card) {
+                    card.classList.add('ring-2', 'ring-stone-400', 'ring-offset-4');
+                    setTimeout(() => card.classList.remove('ring-2', 'ring-stone-400', 'ring-offset-4'), 3000);
+                }
+            }
+        }, 300);
+    }
 }
 
 function updateFloatingAge() {

@@ -20,7 +20,24 @@ const idiomListContainer = document.getElementById('idiomListContainer');
 // Note: searchInput is defined in ui.js scope if we used modules, but in raw scripts it shares global scope.
 // However, I will use document.getElementById inside functions to be safe and avoid relying on load order for variable assignment (though functions render fine).
 
+let historyLinksMap = {};
+
 function initApp() {
+    // Build reverse mapping from History links
+    if (typeof HISTORY_DATA !== 'undefined') {
+        HISTORY_DATA.forEach(entry => {
+            entry.links.forEach(link => {
+                if (!historyLinksMap[link.ref]) {
+                    historyLinksMap[link.ref] = [];
+                }
+                historyLinksMap[link.ref].push({
+                    id: entry.id,
+                    text: link.text
+                });
+            });
+        });
+    }
+
     lunyuData.forEach(chapterData => {
         chapterData.verses.forEach((verseData, index) => {
             globalCounter++;
@@ -42,6 +59,17 @@ function initApp() {
             const charTags = identifyCharacters(verseText);
             const rubyText = processTextWithRuby(verseText);
 
+            // Find history links that point to this verse text or sub-phrases
+            const historyLinks = [];
+            Object.keys(historyLinksMap).forEach(ref => {
+                if (verseText.includes(ref)) {
+                    // It can map to multiple history entries
+                    historyLinksMap[ref].forEach(linkInfo => {
+                        historyLinks.push(linkInfo);
+                    });
+                }
+            });
+
             flatIndex.push({
                 globalId: globalCounter,
                 citation: `${chapterData.chapter} ${chapterData.roman}-${index + 1}`,
@@ -53,6 +81,7 @@ function initApp() {
                 manualTags: manualTags,
                 idioms: idioms,
                 translation: translation,
+                historyLinks: historyLinks,
                 tags: [...charTags]
             });
         });
@@ -226,6 +255,12 @@ function render(results, keyword = '') {
              return `<span class="hashtag !bg-emerald-100 !text-emerald-800 hover:!bg-emerald-600 hover:!text-white ${activeIdiomFilter === idiom ? '!bg-emerald-600 !text-white' : ''}" onclick="filterByIdiom('${idiom}')">💬 ${idiom}</span>`;
         }).join(' ');
 
+        const historyLinksHtml = item.historyLinks.map(link => {
+            return `<a href="history.html?id=${link.id}" class="inline-block text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded border border-amber-100 hover:bg-amber-600 hover:text-white transition-colors">
+                ⏳ ${link.text}
+            </a>`;
+        }).join(' ');
+
         card.innerHTML = `
             <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-3">
                 <div class="flex flex-col gap-1 w-full">
@@ -236,6 +271,7 @@ function render(results, keyword = '') {
                         ${charTagsHtml}
                         ${hashtagsHtml}
                         ${idiomsHtml}
+                        ${historyLinksHtml}
                     </div>
                 </div>
             <div class="flex gap-2 self-start sm:self-auto flex-shrink-0">
