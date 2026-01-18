@@ -125,7 +125,8 @@
             font-size: 0.875rem;
             font-family: 'Noto Sans TC', sans-serif;
             z-index: 100;
-            pointer-events: none; /* Prevent tooltip from interfering with clicks */
+            pointer-events: auto; /* Enable interaction for links */
+            cursor: default;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             max-width: 250px;
             display: none;
@@ -206,6 +207,20 @@
         /* Show translations when parent has this class */
         .show-translations .translation-text {
             display: block;
+        }
+
+        /* Hyperlinks in Tooltips and Notes */
+        #tooltip a, .translation-text a {
+            text-decoration: underline;
+            color: #3b82f6; /* blue-500 */
+            transition: color 0.2s;
+        }
+        #tooltip a:hover, .translation-text a:hover {
+            color: #2563eb; /* blue-600 */
+        }
+        #tooltip a:active, #tooltip a:visited,
+        .translation-text a:active, .translation-text a:visited {
+            color: #1d4ed8; /* blue-700 */
         }
 
         /* Hide scrollbar for Chrome, Safari and Opera */

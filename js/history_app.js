@@ -195,7 +195,7 @@ function renderHistory(data, keyword = '') {
                     ${displayText}
                 </div>
                 ${item.note ? `
-                <div class="mt-4 p-3 bg-amber-50 border-l-2 border-amber-200 text-sm text-stone-600 font-sans">
+                <div class="mt-4 p-3 bg-amber-50 border-l-2 border-amber-200 text-sm text-stone-600 font-sans history-note">
                     ${processTextWithRuby(item.note)}
                 </div>` : ''}
             </div>

@@ -100,9 +100,9 @@ function processTextWithRuby(text) {
                 const safeDefinition = info.definition ? escapeJS(info.definition) : "";
 
                 if (zhuyin) {
-                    return `<ruby class="rare-char" onclick="showTooltip(event, this, '${safeMatch}', '${safeZhuyin}', '${safeDefinition}')">${match}<rt>${zhuyin}</rt></ruby>`;
+                    return `<ruby class="rare-char" onclick="showTooltip(event, this, '${safeMatch}', '${safeZhuyin}')">${match}<rt>${zhuyin}</rt></ruby>`;
                 } else {
-                    return `<span class="rare-char" onclick="showTooltip(event, this, '${safeMatch}', '', '${safeDefinition}')">${match}</span>`;
+                    return `<span class="rare-char" onclick="showTooltip(event, this, '${safeMatch}', '')">${match}</span>`;
                 }
             }
 
