@@ -1,5 +1,6 @@
 // js/app.js
 
+let lastEntryId = null;
 let activeCharFilter = null;
 let activeHashtagFilter = null;
 let activeIdiomFilter = null;
@@ -19,7 +20,24 @@ const idiomListContainer = document.getElementById('idiomListContainer');
 // Note: searchInput is defined in ui.js scope if we used modules, but in raw scripts it shares global scope.
 // However, I will use document.getElementById inside functions to be safe and avoid relying on load order for variable assignment (though functions render fine).
 
+let historyLinksMap = {};
+
 function initApp() {
+    // Build reverse mapping from History links
+    if (typeof HISTORY_DATA !== 'undefined') {
+        HISTORY_DATA.forEach(entry => {
+            entry.links.forEach(link => {
+                if (!historyLinksMap[link.ref]) {
+                    historyLinksMap[link.ref] = [];
+                }
+                historyLinksMap[link.ref].push({
+                    id: entry.id,
+                    text: link.text
+                });
+            });
+        });
+    }
+
     lunyuData.forEach(chapterData => {
         chapterData.verses.forEach((verseData, index) => {
             globalCounter++;
@@ -41,6 +59,17 @@ function initApp() {
             const charTags = identifyCharacters(verseText);
             const rubyText = processTextWithRuby(verseText);
 
+            // Find history links that point to this verse text or sub-phrases
+            const historyLinks = [];
+            Object.keys(historyLinksMap).forEach(ref => {
+                if (verseText.includes(ref)) {
+                    // It can map to multiple history entries
+                    historyLinksMap[ref].forEach(linkInfo => {
+                        historyLinks.push(linkInfo);
+                    });
+                }
+            });
+
             flatIndex.push({
                 globalId: globalCounter,
                 citation: `${chapterData.chapter} ${chapterData.roman}-${index + 1}`,
@@ -52,6 +81,7 @@ function initApp() {
                 manualTags: manualTags,
                 idioms: idioms,
                 translation: translation,
+                historyLinks: historyLinks,
                 tags: [...charTags]
             });
         });
@@ -59,6 +89,21 @@ function initApp() {
 
     // Initial sort
     sortData(flatIndex, currentSortType);
+
+    // URL Query support
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+    if (query) {
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.value = query;
+            const filtered = flatIndex.filter(item => item.rawText.includes(query) || item.shortCitation.includes(query) || (item.idioms.includes(query)) || (item.manualTags.includes(query)));
+            render(filtered, query);
+            updateMainIndicator();
+            return; // Skip default render
+        }
+    }
+
     render(flatIndex);
 }
 
@@ -121,7 +166,10 @@ searchInputRef.addEventListener('input', (e) => {
     updateMainIndicator();
 
     let baseList = activeCharFilter
-        ? flatIndex.filter(item => item.tags.includes(activeCharFilter))
+        ? flatIndex.filter(item => item.tags.some(t => {
+            const name = (typeof t === 'object' && t !== null) ? t.goBy : t;
+            return name === activeCharFilter;
+          }))
         : flatIndex;
 
     if (!keyword) {
@@ -142,7 +190,10 @@ searchClearBtn.addEventListener('click', () => {
     updateMainIndicator();
 
     let baseList = activeCharFilter
-        ? flatIndex.filter(item => item.tags.includes(activeCharFilter))
+        ? flatIndex.filter(item => item.tags.some(t => {
+            const name = (typeof t === 'object' && t !== null) ? t.goBy : t;
+            return name === activeCharFilter;
+          }))
         : flatIndex;
     render(baseList);
 });
@@ -163,6 +214,7 @@ function render(results, keyword = '') {
 
     results.forEach(item => {
         const card = document.createElement('div');
+        card.id = `verse-${item.globalId}`;
         card.className = 'verse-card bg-white p-6 rounded shadow-md border-l-4 border-stone-400 hover:shadow-lg transition-shadow relative';
 
         let displayText = item.rubyText;
@@ -175,7 +227,13 @@ function render(results, keyword = '') {
         }
 
         const charTagsHtml = item.charTags.map(tag => {
-            const charData = charactersDB.find(c => c.goBy === tag);
+            // Defensive: handle both string (legacy/bug) and object (new) formats
+            const name = (typeof tag === 'object' && tag !== null) ? tag.goBy : tag;
+            const matchedName = (typeof tag === 'object' && tag !== null) ? tag.matched : tag;
+
+            if (!name) return ""; // Skip if name is still undefined
+
+            const charData = charactersDB.find(c => c.goBy === name);
             let categoryClass = '';
             if (charData) {
                 if (charData.category === '孔門諸賢') categoryClass = 'tag-confucian';
@@ -185,7 +243,8 @@ function render(results, keyword = '') {
                 else if (charData.category === '外國人') categoryClass = 'tag-foreign';
             }
 
-            return `<span class="char-tag ${categoryClass} ${activeCharFilter === tag ? 'active' : ''}" onclick="filterByChar('${tag}')">${tag}</span>`;
+            const tagDisplay = name === matchedName ? name : `${name} (${matchedName})`;
+            return `<span class="char-tag ${categoryClass} ${activeCharFilter === name ? 'active' : ''}" onclick="filterByChar('${name}', ${item.globalId})">${tagDisplay}</span>`;
         }).join(' ');
 
         const hashtagsHtml = item.manualTags.map(tag => {
@@ -194,6 +253,12 @@ function render(results, keyword = '') {
 
         const idiomsHtml = item.idioms.map(idiom => {
              return `<span class="hashtag !bg-emerald-100 !text-emerald-800 hover:!bg-emerald-600 hover:!text-white ${activeIdiomFilter === idiom ? '!bg-emerald-600 !text-white' : ''}" onclick="filterByIdiom('${idiom}')">💬 ${idiom}</span>`;
+        }).join(' ');
+
+        const historyLinksHtml = item.historyLinks.map(link => {
+            return `<a href="history.html?id=${link.id}" class="inline-block text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded border border-amber-100 hover:bg-amber-600 hover:text-white transition-colors">
+                ⏳ ${link.text}
+            </a>`;
         }).join(' ');
 
         card.innerHTML = `
@@ -206,6 +271,7 @@ function render(results, keyword = '') {
                         ${charTagsHtml}
                         ${hashtagsHtml}
                         ${idiomsHtml}
+                        ${historyLinksHtml}
                     </div>
                 </div>
             <div class="flex gap-2 self-start sm:self-auto flex-shrink-0">
@@ -261,7 +327,8 @@ async function explainVerse(btn, citation, text) {
 }
 
 // Filtering functions
-function filterByChar(charName) {
+function filterByChar(charName, sourceId = null) {
+    if (sourceId) lastEntryId = sourceId;
     activeCharFilter = charName;
     activeHashtagFilter = null;
     activeIdiomFilter = null;
@@ -276,11 +343,18 @@ function filterByChar(charName) {
         const wikiLink = charData.wikipedia ? `<a href="${charData.wikipedia}" target="_blank" class="text-stone-500 hover:text-stone-700 ml-2" title="維基百科"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></a>` : '';
 
         characterBio.innerHTML = `
-            <div class="flex items-center gap-2 mb-1">
-                <span class="font-bold text-lg text-stone-800">${charData.goBy}</span>
-                ${wikiLink}
+            <div class="flex justify-between items-center mb-1">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-lg text-stone-800">${charData.goBy}</span>
+                    ${wikiLink}
+                </div>
+                <button onclick="clearFilter()" class="text-stone-400 hover:text-stone-600 p-1" title="結束人物過濾">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
-            <div>${charData.relation}</div>
+            <div class="max-h-[3rem] overflow-y-auto pr-1 text-sm leading-relaxed">${charData.relation}</div>
         `;
         characterBio.classList.remove('hidden');
     } else {
@@ -294,7 +368,10 @@ function filterByChar(charName) {
          filterCharacterList('all');
     }
 
-    const filtered = flatIndex.filter(item => item.charTags.includes(charName));
+    const filtered = flatIndex.filter(item => item.charTags.some(t => {
+        const name = (typeof t === 'object' && t !== null) ? t.goBy : t;
+        return name === charName;
+    }));
     render(filtered);
 
     closeCharacterModal();
@@ -344,6 +421,18 @@ function clearFilter() {
 
     updateMainIndicator();
     render(flatIndex);
+
+    if (lastEntryId) {
+        const target = document.getElementById(`verse-${lastEntryId}`);
+        if (target) {
+            setTimeout(() => {
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                target.classList.add('ring-2', 'ring-stone-400', 'ring-offset-4');
+                setTimeout(() => target.classList.remove('ring-2', 'ring-stone-400', 'ring-offset-4'), 2000);
+            }, 100);
+        }
+        lastEntryId = null;
+    }
 }
 
 function resetSearch() {

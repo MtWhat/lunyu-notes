@@ -97,6 +97,8 @@ function expandSearch() {
     searchInputWrapper.classList.remove('w-0', 'opacity-0');
     searchInputWrapper.classList.add('w-full', 'opacity-100');
     searchContainer.classList.add('flex-grow'); // Allows container to take available space
+    const header = document.getElementById('mainHeader');
+    if (header) header.classList.add('is-searching');
     setTimeout(() => searchInput.focus(), 50);
 }
 
@@ -104,6 +106,12 @@ function collapseSearch() {
     searchInputWrapper.classList.remove('w-full', 'opacity-100');
     searchInputWrapper.classList.add('w-0', 'opacity-0');
     searchContainer.classList.remove('flex-grow');
+
+    // Only remove background if search input is empty
+    if (!searchInput.value.trim()) {
+        const header = document.getElementById('mainHeader');
+        if (header) header.classList.remove('is-searching');
+    }
 }
 
 function checkCollapseSearch() {

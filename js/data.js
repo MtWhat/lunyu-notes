@@ -2,7 +2,7 @@
 
 // 資料設定：難字表 & 人物資料庫
 let rareWordsMap = {};
-let rarePhrasesMap = {};
+let synonymsMap = {};
 let charactersDB = [];
 
 // 羅馬數字轉換表
@@ -21,13 +21,13 @@ let globalCounter = 0;
 
 async function loadData() {
     try {
-        const [rWords, rPhrases, chars] = await Promise.all([
+        const [rWords, synonyms, chars] = await Promise.all([
             fetch('rareWords.json').then(r => r.json()),
-            fetch('rarePhrases.json').then(r => r.json()),
+            fetch('synonyms.json').then(r => r.json()),
             fetch('characters.json').then(r => r.json())
         ]);
         rareWordsMap = rWords;
-        rarePhrasesMap = rPhrases;
+        synonymsMap = synonyms;
         charactersDB = chars;
         // initApp() is in app.js, make sure it's available or we handle initialization differently.
         if (typeof initApp === 'function') {
@@ -45,53 +45,88 @@ async function loadData() {
 }
 
 function processTextWithRuby(text) {
+    if (!text) return "";
     let processed = text;
 
-    // 1. 處理詞組 (優先)
-    for (const [phrase, parts] of Object.entries(rarePhrasesMap)) {
-        if (processed.includes(phrase)) {
-            let rubyHtml = "<ruby>";
-            for(let i=0; i<parts.length; i+=2) {
-                rubyHtml += `${parts[i]}<rt>${parts[i+1]}</rt>`;
+    // 1. 處理刪除線 (~~文字~~)
+    processed = processed.replace(/~~([\s\S]*?)~~/g, '<s>$1</s>');
+
+    // 2. 將文本分割為 HTML 標籤和純文本段
+    // 這能防止在已經替換好的 HTML 屬性或標籤內容中進行二次替換
+    const tokens = processed.split(/(<[^>]+>)/g);
+
+    // 預先準備所有要替換的模式，按長度降序排列 (確保「盍徹乎」優先於「盍」)
+    const allPatterns = [
+        ...Object.keys(synonymsMap),
+        ...Object.keys(rareWordsMap)
+    ].sort((a, b) => b.length - a.length);
+
+    if (allPatterns.length === 0) return processed;
+
+    // 構建正則表達式，對特殊字符進行轉義
+    const escapedPatterns = allPatterns.map(p => p.replace(/[.*+?^${}()|[\]\\?]/g, '\\$&'));
+    const regex = new RegExp(escapedPatterns.join('|'), 'g');
+
+    const result = tokens.map(token => {
+        if (token.startsWith('<') && token.endsWith('>')) {
+            return token; // 標籤不處理
+        }
+
+        // 僅處理純文本段
+        // 使用 replace 的回調函數確保每個部分只被替換一次
+        return token.replace(regex, (match) => {
+            // 優先檢查詞組
+            if (synonymsMap[match]) {
+                const parts = synonymsMap[match];
+                let rubyHtml = "<ruby>";
+                for(let i=0; i<parts.length; i+=2) {
+                    const char = parts[i];
+                    const rb = parts[i+1];
+                    rubyHtml += `${char}<rt>${rb}</rt>`;
+                }
+                rubyHtml += "</ruby>";
+                return rubyHtml;
             }
-            rubyHtml += "</ruby>";
-            processed = processed.split(phrase).join(rubyHtml);
-        }
-    }
 
-    // 2. 處理單字 (排除已經在 ruby 標籤內的字)
-    for (const [char, info] of Object.entries(rareWordsMap)) {
-         // 簡單的正則：替換不在 < > 內的字
-         const regex = new RegExp(`(?<!<[^>]*)(${char})(?![^<]*>)`, 'g');
+            // 否則檢查難字
+            if (rareWordsMap[match]) {
+                const info = rareWordsMap[match];
+                const zhuyin = info.zhuyin || "";
 
-        const zhuyin = info.zhuyin || "";
-        const definition = info.definition ? info.definition.replace(/'/g, "\\'") : "";
+                // 徹底轉義屬性值，防止單引號或反斜槓破壞 JS 字串
+                const escapeJS = (str) => str.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+                const safeMatch = escapeJS(match);
+                const safeZhuyin = escapeJS(zhuyin);
+                const safeDefinition = info.definition ? escapeJS(info.definition) : "";
 
-        let replacement = "";
-        if (zhuyin) {
-            replacement = `<ruby class="rare-char" onclick="showTooltip(event, this, '${char}', '${zhuyin}', '${definition}')">${char}<rt>${zhuyin}</rt></ruby>`;
-        } else {
-            replacement = `<span class="rare-char" onclick="showTooltip(event, this, '${char}', '', '${definition}')">${char}</span>`;
-        }
+                if (zhuyin) {
+                    return `<ruby class="rare-char" onclick="showTooltip(event, this, '${safeMatch}', '${safeZhuyin}', '${safeDefinition}')">${match}<rt>${zhuyin}</rt></ruby>`;
+                } else {
+                    return `<span class="rare-char" onclick="showTooltip(event, this, '${safeMatch}', '', '${safeDefinition}')">${match}</span>`;
+                }
+            }
 
-         processed = processed.replace(regex, replacement);
-    }
+            return match; //  fallback
+        });
+    });
 
-    return processed;
+    return result.join('');
 }
 
 function identifyCharacters(text) {
-    const tags = new Set();
+    const tags = new Map();
     charactersDB.forEach(char => {
-        const searchKeys = [...char.searchKeys];
+        const searchKeys = char.searchKeys || [];
         for (const alias of searchKeys) {
             if (text.includes(alias)) {
-                tags.add(char.goBy);
+                if (!tags.has(char.goBy)) {
+                    tags.set(char.goBy, alias);
+                }
                 break;
             }
         }
     });
-    return Array.from(tags);
+    return Array.from(tags.entries()).map(([goBy, matched]) => ({ goBy, matched }));
 }
 
 function sortData(data, sortType) {
