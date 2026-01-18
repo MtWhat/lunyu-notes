@@ -976,15 +976,15 @@
         "id": "menggongchuo",
         "goBy": "孟公綽",
         "surname": "姬",
-        "cadet": "孟",
-        "name": "公綽",
+        "cadet": "孟孫",
+        "name": "",
         "style": "",
         "searchKeys": [
             "公綽"
         ],
         "aliases": [],
         "category": "魯國人",
-        "relation": "孟孫氏人。孔子讚揚過他。",
+        "relation": "孟孫氏人，曾在魯襄公25年時，安撫襄公無須擔心率齊軍進伐魯國北境的崔杼。孔子讚揚過孟公綽。",
         "wikipedia": "https://zh.wikipedia.org/wiki/孟公綽"
     },
     {
@@ -2102,5 +2102,20 @@
         "category": "魯國人",
         "relation": "魯國大夫。在魯定公時期極具影響力，多人稱其曾吸引走孔子的弟子。傳說孔子代理宰相職務七天後即將其處死，理由是其「心達而險」等五大罪狀。但這件事實在很可疑。",
         "wikipedia": "https://zh.wikipedia.org/wiki/少正卯"
+    },
+    {
+        "id": "qijiangong",
+        "goBy": "齊簡公",
+        "surname": "姜",
+        "cadet": "",
+        "name": "壬",
+        "style": "",
+        "searchKeys": [
+            "簡公"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "齊國君主。即位後任用闞止與田恆，兩家鬥爭，最後田恆殺掉闞止以及齊簡公。孔子因此建議魯哀公發兵討伐田恆，但被拒絕。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/齊簡公"
     }
 ]

@@ -257,7 +257,7 @@ function render(results, keyword = '') {
 
         const historyLinksHtml = item.historyLinks.map(link => {
             return `<a href="history.html?id=${link.id}" class="inline-block text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded border border-amber-100 hover:bg-amber-600 hover:text-white transition-colors">
-                ⏳ ${link.text}
+                📅 ${link.text}
             </a>`;
         }).join(' ');
 
