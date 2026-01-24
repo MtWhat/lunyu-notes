@@ -22,9 +22,9 @@ let globalCounter = 0;
 async function loadData() {
     try {
         const [rWords, synonyms, chars] = await Promise.all([
-            fetch('rareWords.json').then(r => r.json()),
-            fetch('synonyms.json').then(r => r.json()),
-            fetch('characters.json').then(r => r.json())
+            fetch('data/rareWords.json').then(r => r.json()),
+            fetch('data/synonyms.json').then(r => r.json()),
+            fetch('data/characters.json').then(r => r.json())
         ]);
         rareWordsMap = rWords;
         synonymsMap = synonyms;
@@ -36,10 +36,15 @@ async function loadData() {
             console.error("initApp function not found. Ensure app.js is loaded.");
         }
     } catch (e) {
-        console.error("Failed to load data:", e);
+        console.error("Failed to load data from data/ directory:", e);
+        // More detailed logging to identify the culprit
+        console.error("Error details:", {
+            message: e.message,
+            stack: e.stack
+        });
         const contentList = document.getElementById('contentList');
         if (contentList) {
-             contentList.innerHTML = '<div class="text-center text-red-500 py-10">資料載入失敗，請檢查網路連線或檔案路徑。</div>';
+            contentList.innerHTML = `<div class="text-center text-red-500 py-10">資料載入失敗：${e.message}<br>請檢查網路連線或 data/ 目錄下的 JSON 檔案。</div>`;
         }
     }
 }

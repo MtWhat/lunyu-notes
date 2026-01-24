@@ -52,7 +52,9 @@ function initApp() {
             } else {
                 verseText = verseData.text;
                 manualTags = verseData.tags || [];
-                idioms = verseData.idiom || [];
+                // Defensive: ensure idiom is always an array
+                const rawIdiom = verseData.idiom || [];
+                idioms = Array.isArray(rawIdiom) ? rawIdiom : [rawIdiom];
                 translation = verseData.translation || "";
             }
 
@@ -97,7 +99,7 @@ function initApp() {
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
             searchInput.value = query;
-            const filtered = flatIndex.filter(item => item.rawText.includes(query) || item.shortCitation.includes(query) || (item.idioms.includes(query)) || (item.manualTags.includes(query)));
+            const filtered = flatIndex.filter(item => item.rawText.includes(query) || item.shortCitation.includes(query) || (Array.isArray(item.idioms) && item.idioms.includes(query)) || (item.manualTags.includes(query)));
             render(filtered, query);
             updateMainIndicator();
             return; // Skip default render
@@ -251,7 +253,7 @@ function render(results, keyword = '') {
             return `<span class="hashtag ${activeHashtagFilter === tag ? 'active' : ''}" onclick="filterByHashtag('${tag}')">#${tag}</span>`;
         }).join(' ');
 
-        const idiomsHtml = item.idioms.map(idiom => {
+        const idiomsHtml = (Array.isArray(item.idioms) ? item.idioms : []).map(idiom => {
              return `<span class="hashtag !bg-emerald-100 !text-emerald-800 hover:!bg-emerald-600 hover:!text-white ${activeIdiomFilter === idiom ? '!bg-emerald-600 !text-white' : ''}" onclick="filterByIdiom('${idiom}')">💬 ${idiom}</span>`;
         }).join(' ');
 
@@ -403,7 +405,7 @@ function filterByIdiom(idiom) {
 
     updateMainIndicator();
 
-    const filtered = flatIndex.filter(item => item.idioms.includes(idiom));
+    const filtered = flatIndex.filter(item => Array.isArray(item.idioms) && item.idioms.includes(idiom));
     render(filtered);
 
     closeIdiomModal();
@@ -600,7 +602,9 @@ function openHashtagModal() {
 function openIdiomModal() {
     const allIdioms = new Set();
     flatIndex.forEach(item => {
-        item.idioms.forEach(idiom => allIdioms.add(idiom));
+        if (Array.isArray(item.idioms)) {
+            item.idioms.forEach(idiom => allIdioms.add(idiom));
+        }
     });
 
     if (allIdioms.size === 0) {

@@ -30,7 +30,7 @@
     "硜": { "zhuyin": "ㄎㄥ", "definition": "敲擊石頭的聲音。" },
     "鮮": { "zhuyin": "ㄒㄧㄢˇ", "definition": "少。" },
     "誄": { "zhuyin": "ㄌㄟˇ", "definition": "敘述死者生前事蹟，並表示哀悼。" },
-    "雎": { "zhuyin": "ㄐㄩ", "definition": "關雎：水鳥名，即魚鷹。" },
+    "雎": { "zhuyin": "ㄐㄩ", "definition": "雎鳩：一種一夫一妻的水鳥。" },
     "侗": { "zhuyin": "ㄊㄨㄥˊ", "definition": "無知、幼稚的樣子。" },
     "愿": { "zhuyin": "ㄩㄢˋ", "definition": "謹慎、老實。" },
     "悾": { "zhuyin": "ㄎㄨㄥ", "definition": "誠懇的樣子。" },
@@ -201,5 +201,12 @@
     "縲絏": {
         "zhuyin": "ㄌㄟˊ ㄒㄧㄝˋ",
         "definition": "古代用以捆綁罪犯的黑色繩索。後比喻監獄。《史記》寫作「纍紲」。"
+    },
+    "悝": {
+        "zhuyin": "ㄎㄨㄟ"
+    },
+    "舞雩": {
+        "zhuyin": "ㄨˇ ㄩˊ",
+        "definition": "祈雨用的舞台。"
     }
 }
