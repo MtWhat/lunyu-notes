@@ -6,6 +6,22 @@ let activeHashtagFilter = null;
 let activeIdiomFilter = null;
 let currentSortType = 'hashtag';
 let activeCategoryFilter = 'all';
+let speakerCounts = {};
+
+const TARGET_SPEAKERS = ['子貢', '子夏', '曾子', '子張', '子路', '顏回', '孔子'];
+
+// Simple function to pre-calculate global speaker counts
+function updateSpeakerCounts() {
+    speakerCounts = {};
+    if (typeof flatIndex === 'undefined') return;
+    flatIndex.forEach(item => {
+        if (item.speakers && Array.isArray(item.speakers)) {
+            item.speakers.forEach(s => {
+                speakerCounts[s] = (speakerCounts[s] || 0) + 1;
+            });
+        }
+    });
+}
 
 // DOM Elements
 const contentList = document.getElementById('contentList');
@@ -84,10 +100,14 @@ function initApp() {
                 idioms: idioms,
                 translation: translation,
                 historyLinks: historyLinks,
+                speakers: identifySpeakers(verseText),
                 tags: [...charTags]
             });
         });
     });
+
+    // Calculate initial counts
+    updateSpeakerCounts();
 
     // Initial sort
     sortData(flatIndex, currentSortType);
@@ -107,6 +127,156 @@ function initApp() {
     }
 
     render(flatIndex);
+}
+
+function render(results, keyword = '') {
+    contentList.innerHTML = '';
+    const speakerNav = document.getElementById('speakerNav');
+    if (speakerNav) speakerNav.classList.add('hidden');
+
+    if (results.length === 0) {
+        contentList.innerHTML = '<div class="text-center text-gray-500 py-10 font-sans">找不到相關條目。</div>';
+        resultCount.textContent = '無搜尋結果';
+        return;
+    }
+
+    resultCount.textContent = `共 ${results.length} 條`;
+
+    if (currentSortType === 'speaker') {
+        renderSpeakerMode(results, keyword);
+        return;
+    }
+
+    const fragment = document.createDocumentFragment();
+    results.forEach(item => {
+        fragment.appendChild(createVerseCard(item, keyword));
+    });
+    contentList.appendChild(fragment);
+}
+
+function renderSpeakerMode(results, keyword = '') {
+    // Ensure speaker counts are up to date
+    if (Object.keys(speakerCounts).length === 0) updateSpeakerCounts();
+
+    const speakerGroups = {};
+    const others = [];
+
+    results.forEach(item => {
+        let matched = false;
+        if (item.speakers && item.speakers.length > 0) {
+            // Filter target speakers that meet the minimum entry requirement (>=3)
+            const validTargetSpeakers = item.speakers.filter(s =>
+                TARGET_SPEAKERS.includes(s) && (speakerCounts[s] || 0) >= 3
+            );
+
+            if (validTargetSpeakers.length > 0) {
+                // Priority goes to the order in TARGET_SPEAKERS
+                const prioritySpeaker = TARGET_SPEAKERS.find(ts => validTargetSpeakers.includes(ts));
+                if (prioritySpeaker) {
+                    if (!speakerGroups[prioritySpeaker]) speakerGroups[prioritySpeaker] = [];
+                    speakerGroups[prioritySpeaker].push(item);
+                    matched = true;
+                }
+            }
+        }
+
+        if (!matched) {
+            others.push(item);
+        }
+    });
+
+    const activeSpeakers = TARGET_SPEAKERS.filter(s => speakerGroups[s]);
+
+    // Render Navigation
+    renderSpeakerNav(activeSpeakers, others.length > 0);
+
+    const fragment = document.createDocumentFragment();
+
+    activeSpeakers.forEach(speaker => {
+        const divider = document.createElement('div');
+        divider.id = `speaker-section-${speaker}`;
+        divider.className = 'speaker-divider w-full mt-12 mb-8';
+        divider.innerHTML = `
+            <span>
+                ${speaker}
+                <small class="speaker-count-badge font-sans">${speakerGroups[speaker].length}</small>
+            </span>
+        `;
+        fragment.appendChild(divider);
+
+        speakerGroups[speaker].forEach(item => {
+            fragment.appendChild(createVerseCard(item, keyword));
+        });
+    });
+
+    if (others.length > 0) {
+        const othersDivider = document.createElement('div');
+        othersDivider.id = `speaker-section-others`;
+        othersDivider.className = 'speaker-divider w-full mt-12 mb-8';
+        othersDivider.innerHTML = `
+            <span>
+                其他
+                <small class="speaker-count-badge font-sans">${others.length}</small>
+            </span>
+        `;
+        fragment.appendChild(othersDivider);
+        others.forEach(item => {
+            fragment.appendChild(createVerseCard(item, keyword));
+        });
+    }
+
+    contentList.appendChild(fragment);
+}
+
+function renderSpeakerNav(activeSpeakers, hasOthers) {
+    const nav = document.getElementById('speakerNav');
+    if (!nav) return;
+    nav.innerHTML = '';
+    nav.classList.remove('hidden');
+    nav.className = "flex flex-wrap gap-2 justify-center py-4 bg-stone-100/50 rounded-xl mb-6 border border-stone-200/50 mx-4";
+
+    activeSpeakers.forEach(speaker => {
+        const btn = document.createElement('button');
+        const charData = charactersDB.find(c => c.goBy === speaker);
+        let themeClasses = "bg-stone-200 text-stone-700 hover:bg-stone-800 hover:text-white";
+
+        if (charData && charData.category === '孔門諸賢') {
+            themeClasses = "bg-amber-100 text-amber-800 hover:bg-amber-600 hover:text-white";
+        }
+
+        btn.className = `px-4 py-2 rounded-full text-sm font-bold font-sans transition-all transform hover:scale-105 shadow-sm active:scale-95 ${themeClasses}`;
+        btn.textContent = speaker;
+        btn.onclick = () => {
+            const el = document.getElementById(`speaker-section-${speaker}`);
+            if (el) {
+                const headerOffset = document.getElementById('mainHeader').offsetHeight + 40;
+                const elementPosition = el.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        };
+        nav.appendChild(btn);
+    });
+
+    if (hasOthers) {
+        const othersBtn = document.createElement('button');
+        othersBtn.className = "px-4 py-2 rounded-full text-sm font-bold font-sans transition-all transform hover:scale-105 shadow-sm active:scale-95 bg-stone-300 text-stone-600 hover:bg-stone-700 hover:text-white";
+        othersBtn.textContent = "其他";
+        othersBtn.onclick = () => {
+            const el = document.getElementById('speaker-section-others');
+            if (el) {
+                const headerOffset = document.getElementById('mainHeader').offsetHeight + 40;
+                const elementPosition = el.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+            }
+        };
+        nav.appendChild(othersBtn);
+    }
 }
 
 function handleSortChange(sortType) {
@@ -201,98 +371,82 @@ searchClearBtn.addEventListener('click', () => {
 });
 
 
-function render(results, keyword = '') {
-    contentList.innerHTML = '';
+function createVerseCard(item, keyword = '') {
+    const card = document.createElement('div');
+    card.id = `verse-${item.globalId}`;
+    card.className = 'verse-card bg-white p-6 rounded shadow-md border-l-4 border-stone-400 hover:shadow-lg transition-shadow relative';
 
-    if (results.length === 0) {
-        contentList.innerHTML = '<div class="text-center text-gray-500 py-10 font-sans">找不到相關條目。</div>';
-        resultCount.textContent = '無搜尋結果';
-        return;
+    let displayText = item.rubyText;
+
+    if (keyword) {
+        try {
+            const regex = new RegExp(`(?![^<]+>)(${keyword})`, 'gi');
+            displayText = displayText.replace(regex, `<span class="highlight">$1</span>`);
+        } catch(e) {}
     }
 
-    resultCount.textContent = `共 ${results.length} 條`;
+    const charTagsHtml = item.charTags.map(tag => {
+        // Defensive: handle both string (legacy/bug) and object (new) formats
+        const name = (typeof tag === 'object' && tag !== null) ? tag.goBy : tag;
+        const matchedName = (typeof tag === 'object' && tag !== null) ? tag.matched : tag;
 
-    const fragment = document.createDocumentFragment();
+        if (!name) return ""; // Skip if name is still undefined
 
-    results.forEach(item => {
-        const card = document.createElement('div');
-        card.id = `verse-${item.globalId}`;
-        card.className = 'verse-card bg-white p-6 rounded shadow-md border-l-4 border-stone-400 hover:shadow-lg transition-shadow relative';
-
-        let displayText = item.rubyText;
-
-        if (keyword) {
-            try {
-                const regex = new RegExp(`(?![^<]+>)(${keyword})`, 'gi');
-                displayText = displayText.replace(regex, `<span class="highlight">$1</span>`);
-            } catch(e) {}
+        const charData = charactersDB.find(c => c.goBy === name);
+        let categoryClass = '';
+        if (charData) {
+            if (charData.category === '孔門諸賢') categoryClass = 'tag-confucian';
+            else if (charData.category === '其他') categoryClass = 'tag-other';
+            else if (charData.category === '古人') categoryClass = 'tag-ancient';
+            else if (charData.category === '魯國人') categoryClass = 'tag-lu';
+            else if (charData.category === '外國人') categoryClass = 'tag-foreign';
         }
 
-        const charTagsHtml = item.charTags.map(tag => {
-            // Defensive: handle both string (legacy/bug) and object (new) formats
-            const name = (typeof tag === 'object' && tag !== null) ? tag.goBy : tag;
-            const matchedName = (typeof tag === 'object' && tag !== null) ? tag.matched : tag;
+        const tagDisplay = name === matchedName ? name : `${name} (${matchedName})`;
+        return `<span class="char-tag ${categoryClass} ${activeCharFilter === name ? 'active' : ''}" onclick="filterByChar('${name}', ${item.globalId})">${tagDisplay}</span>`;
+    }).join(' ');
 
-            if (!name) return ""; // Skip if name is still undefined
+    const hashtagsHtml = item.manualTags.map(tag => {
+        return `<span class="hashtag ${activeHashtagFilter === tag ? 'active' : ''}" onclick="filterByHashtag('${tag}')">#${tag}</span>`;
+    }).join(' ');
 
-            const charData = charactersDB.find(c => c.goBy === name);
-            let categoryClass = '';
-            if (charData) {
-                if (charData.category === '孔門諸賢') categoryClass = 'tag-confucian';
-                else if (charData.category === '其他') categoryClass = 'tag-other';
-                else if (charData.category === '古人') categoryClass = 'tag-ancient';
-                else if (charData.category === '魯國人') categoryClass = 'tag-lu';
-                else if (charData.category === '外國人') categoryClass = 'tag-foreign';
-            }
+    const idiomsHtml = (Array.isArray(item.idioms) ? item.idioms : []).map(idiom => {
+         return `<span class="hashtag !bg-emerald-100 !text-emerald-800 hover:!bg-emerald-600 hover:!text-white ${activeIdiomFilter === idiom ? '!bg-emerald-600 !text-white' : ''}" onclick="filterByIdiom('${idiom}')">💬 ${idiom}</span>`;
+    }).join(' ');
 
-            const tagDisplay = name === matchedName ? name : `${name} (${matchedName})`;
-            return `<span class="char-tag ${categoryClass} ${activeCharFilter === name ? 'active' : ''}" onclick="filterByChar('${name}', ${item.globalId})">${tagDisplay}</span>`;
-        }).join(' ');
+    const historyLinksHtml = item.historyLinks.map(link => {
+        return `<a href="history.html?id=${link.id}" class="inline-block text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded border border-amber-100 hover:bg-amber-600 hover:text-white transition-colors">
+            📅 ${link.text}
+        </a>`;
+    }).join(' ');
 
-        const hashtagsHtml = item.manualTags.map(tag => {
-            return `<span class="hashtag ${activeHashtagFilter === tag ? 'active' : ''}" onclick="filterByHashtag('${tag}')">#${tag}</span>`;
-        }).join(' ');
-
-        const idiomsHtml = (Array.isArray(item.idioms) ? item.idioms : []).map(idiom => {
-             return `<span class="hashtag !bg-emerald-100 !text-emerald-800 hover:!bg-emerald-600 hover:!text-white ${activeIdiomFilter === idiom ? '!bg-emerald-600 !text-white' : ''}" onclick="filterByIdiom('${idiom}')">💬 ${idiom}</span>`;
-        }).join(' ');
-
-        const historyLinksHtml = item.historyLinks.map(link => {
-            return `<a href="history.html?id=${link.id}" class="inline-block text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded border border-amber-100 hover:bg-amber-600 hover:text-white transition-colors">
-                📅 ${link.text}
-            </a>`;
-        }).join(' ');
-
-        card.innerHTML = `
-            <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-3">
-                <div class="flex flex-col gap-1 w-full">
-                    <div class="text-sm font-bold text-stone-600 font-sans tracking-wide select-all">
-                        <span class="serial-num mr-2">#${item.globalId}</span> ${item.citation}
-                    </div>
-                    <div class="flex flex-wrap gap-2 mt-1">
-                        ${charTagsHtml}
-                        ${hashtagsHtml}
-                        ${idiomsHtml}
-                        ${historyLinksHtml}
-                    </div>
+    card.innerHTML = `
+        <div class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-3">
+            <div class="flex flex-col gap-1 w-full">
+                <div class="text-sm font-bold text-stone-600 font-sans tracking-wide select-all">
+                    <span class="serial-num mr-2">#${item.globalId}</span> ${item.citation}
                 </div>
-            <div class="flex gap-2 self-start sm:self-auto flex-shrink-0">
-                    ${item.translation ? `
-                    <button onclick="toggleEntryTranslation(this)" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded transition-colors flex items-center gap-1 font-sans border border-stone-200 whitespace-nowrap">
-                        📖 顯示註解
-                    </button>` : ''}
-                    <button onclick="explainVerse(this, '${item.citation}', '${item.rawText.replace(/'/g, "\\'")}')" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded transition-colors flex items-center gap-1 font-sans border border-stone-200 whitespace-nowrap">
-                        ✨ AI 白話解讀
-                    </button>
+                <div class="flex flex-wrap gap-2 mt-1">
+                    ${charTagsHtml}
+                    ${hashtagsHtml}
+                    ${idiomsHtml}
+                    ${historyLinksHtml}
                 </div>
             </div>
-            <div class="text-xl leading-loose text-gray-800 tracking-wide mt-2 pl-1 border-l-2 border-stone-100 break-words text-justify">${displayText}</div>
-            ${item.translation ? `<div class="translation-text">${item.translation}</div>` : ''}
-        `;
-        fragment.appendChild(card);
-    });
-
-    contentList.appendChild(fragment);
+        <div class="flex gap-2 self-start sm:self-auto flex-shrink-0">
+                ${item.translation ? `
+                <button onclick="toggleEntryTranslation(this)" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded transition-colors flex items-center gap-1 font-sans border border-stone-200 whitespace-nowrap">
+                    📖 顯示註解
+                </button>` : ''}
+                <button onclick="explainVerse(this, '${item.citation}', '${item.rawText.replace(/'/g, "\\'")}')" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded transition-colors flex items-center gap-1 font-sans border border-stone-200 whitespace-nowrap">
+                    ✨ AI 白話解讀
+                </button>
+            </div>
+        </div>
+        <div class="text-xl leading-loose text-gray-800 tracking-wide mt-2 pl-1 border-l-2 border-stone-100 break-words text-justify">${displayText}</div>
+        ${item.translation ? `<div class="translation-text">${item.translation}</div>` : ''}
+    `;
+    return card;
 }
 
 async function explainVerse(btn, citation, text) {

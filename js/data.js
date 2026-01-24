@@ -134,6 +134,47 @@ function identifyCharacters(text) {
     return Array.from(tags.entries()).map(([goBy, matched]) => ({ goBy, matched }));
 }
 
+function identifySpeakers(text) {
+    const speakers = new Set();
+    const characters = identifyCharacters(text);
+
+    // Support multiple speaking segments: [Intro]「...」[Segment1]「...」[Segment2]
+    const parts = text.split(/「|」/);
+
+    // We are interested in segments that are NOT inside quotation marks.
+    // parts[0] is intro. parts[2], parts[4], etc. are segments between/after quotations.
+    for (let i = 0; i < parts.length; i += 2) {
+        const segment = parts[i];
+        if (!segment) continue;
+
+        characters.forEach(char => {
+            const escaped = char.matched.replace(/[.*+?^${}()|[\]\\?]/g, '\\$&');
+            const speakerRegex = new RegExp(escaped + '.*?(?:曰|問|對|謂|語)');
+            if (speakerRegex.test(segment)) {
+                speakers.add(char.goBy);
+            }
+        });
+
+        // Special case for "子" referring to Confucius
+        // Pattern: [Start or Punctuation]子[Speaking Verb]
+        if (/(?:^|[，。；？！])子[曰謂語對]/.test(segment)) {
+              speakers.add("孔子");
+        }
+
+        // Handle "孔子對曰" etc. if not already found
+        if (/孔子.*?(?:曰|問|對|謂|語)/.test(segment)) {
+            speakers.add("孔子");
+        }
+    }
+
+    // Fallback: If no speaker identified but "子曰" is present anywhere (defensive)
+    if (speakers.size === 0 && text.includes("子曰")) {
+        speakers.add("孔子");
+    }
+
+    return Array.from(speakers);
+}
+
 function sortData(data, sortType) {
     if (sortType === 'random') {
         // Fisher-Yates Shuffle
@@ -178,6 +219,10 @@ function sortData(data, sortType) {
         for (let i = 0; i < data.length; i++) {
             data[i] = sorted[i];
         }
+    } else if (sortType === 'speaker') {
+        // For the speaker mode, we primarily want verses to be in their traditional order
+        // because the grouping logic in app.js will handle the speaker-specific duplication.
+        data.sort((a, b) => a.globalId - b.globalId);
     }
 }
 
