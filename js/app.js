@@ -8,7 +8,7 @@ let currentSortType = 'hashtag';
 let activeCategoryFilter = 'all';
 let speakerCounts = {};
 
-const TARGET_SPEAKERS = ['子貢', '子夏', '曾子', '子張', '子路', '顏回', '孔子'];
+const TARGET_SPEAKERS = ['子貢', '子夏', '子張', '曾子', '子路', '顏回', '孔子'];
 
 // Simple function to pre-calculate global speaker counts
 function updateSpeakerCounts() {
@@ -188,7 +188,7 @@ function renderSpeakerMode(results, keyword = '') {
     const activeSpeakers = TARGET_SPEAKERS.filter(s => speakerGroups[s]);
 
     // Render Navigation
-    renderSpeakerNav(activeSpeakers, others.length > 0);
+    renderSpeakerNav(activeSpeakers, others.length > 0, speakerGroups, others.length);
 
     const fragment = document.createDocumentFragment();
 
@@ -228,7 +228,7 @@ function renderSpeakerMode(results, keyword = '') {
     contentList.appendChild(fragment);
 }
 
-function renderSpeakerNav(activeSpeakers, hasOthers) {
+function renderSpeakerNav(activeSpeakers, hasOthers, speakerGroups, othersCount) {
     const nav = document.getElementById('speakerNav');
     if (!nav) return;
     nav.innerHTML = '';
@@ -245,7 +245,7 @@ function renderSpeakerNav(activeSpeakers, hasOthers) {
         }
 
         btn.className = `px-4 py-2 rounded-full text-sm font-bold font-sans transition-all transform hover:scale-105 shadow-sm active:scale-95 ${themeClasses}`;
-        btn.textContent = speaker;
+        btn.textContent = `${speaker} (${speakerGroups[speaker].length})`;
         btn.onclick = () => {
             const el = document.getElementById(`speaker-section-${speaker}`);
             if (el) {
@@ -265,7 +265,7 @@ function renderSpeakerNav(activeSpeakers, hasOthers) {
     if (hasOthers) {
         const othersBtn = document.createElement('button');
         othersBtn.className = "px-4 py-2 rounded-full text-sm font-bold font-sans transition-all transform hover:scale-105 shadow-sm active:scale-95 bg-stone-300 text-stone-600 hover:bg-stone-700 hover:text-white";
-        othersBtn.textContent = "其他";
+        othersBtn.textContent = `其他 (${othersCount})`;
         othersBtn.onclick = () => {
             const el = document.getElementById('speaker-section-others');
             if (el) {
