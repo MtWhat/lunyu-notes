@@ -233,34 +233,35 @@
             color: blue;
         }
 
-        /* Translation Styling */
-        .translation-text {
+        /* Translation Styling (Now Note) */
+        .verse-note {
             font-family: 'Noto Sans TC', sans-serif;
             color: #57534e; /* stone-600 */
-            font-size: 1rem;
-            margin-top: 0.75rem;
-            padding-top: 0.75rem;
-            border-top: 1px dashed #d6d3d1; /* stone-300 */
+            font-size: 0.875rem; /* text-sm */
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background-color: #fffbeb; /* bg-amber-50 */
+            border-left: 2px solid #fde68a; /* border-amber-200 */
             line-height: 1.6;
             display: none; /* Default hidden */
         }
 
-        /* Show translations when parent has this class */
-        .show-translations .translation-text {
+        /* Show notes when parent has this class */
+        .show-notes .verse-note {
             display: block;
         }
 
         /* Hyperlinks in Tooltips and Notes */
-        #tooltip a, .translation-text a {
+        #tooltip a, .verse-note a {
             text-decoration: underline;
             color: #3b82f6; /* blue-500 */
             transition: color 0.2s;
         }
-        #tooltip a:hover, .translation-text a:hover {
+        #tooltip a:hover, .verse-note a:hover {
             color: #2563eb; /* blue-600 */
         }
         #tooltip a:active, #tooltip a:visited,
-        .translation-text a:active, .translation-text a:visited {
+        .verse-note a:active, .verse-note a:visited {
             color: #1d4ed8; /* blue-700 */
         }
 

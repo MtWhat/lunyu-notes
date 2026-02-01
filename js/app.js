@@ -61,7 +61,7 @@ function initApp() {
             let verseText = "";
             let manualTags = [];
             let idioms = [];
-            let translation = "";
+            let note = "";
 
             if (typeof verseData === 'string') {
                 verseText = verseData;
@@ -71,7 +71,7 @@ function initApp() {
                 // Defensive: ensure idiom is always an array
                 const rawIdiom = verseData.idiom || [];
                 idioms = Array.isArray(rawIdiom) ? rawIdiom : [rawIdiom];
-                translation = verseData.translation || "";
+                note = verseData.note || "";
             }
 
             const charTags = identifyCharacters(verseText);
@@ -98,7 +98,7 @@ function initApp() {
                 charTags: charTags,
                 manualTags: manualTags,
                 idioms: idioms,
-                translation: translation,
+                note: note,
                 historyLinks: historyLinks,
                 speakers: identifySpeakers(verseText),
                 tags: [...charTags]
@@ -119,7 +119,7 @@ function initApp() {
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
             searchInput.value = query;
-            const filtered = flatIndex.filter(item => item.rawText.includes(query) || item.shortCitation.includes(query) || (Array.isArray(item.idioms) && item.idioms.includes(query)) || (item.manualTags.includes(query)));
+            const filtered = flatIndex.filter(item => item.rawText.includes(query) || item.shortCitation.includes(query) || (Array.isArray(item.idioms) && item.idioms.includes(query)) || (item.manualTags.includes(query)) || (item.note && item.note.includes(query)));
             render(filtered, query);
             updateMainIndicator();
             return; // Skip default render
@@ -434,7 +434,7 @@ function createVerseCard(item, keyword = '') {
                 </div>
             </div>
         <div class="flex gap-2 self-start sm:self-auto flex-shrink-0">
-                ${item.translation ? `
+                ${item.note ? `
                 <button onclick="toggleEntryTranslation(this)" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded transition-colors flex items-center gap-1 font-sans border border-stone-200 whitespace-nowrap">
                     📖 顯示註解
                 </button>` : ''}
@@ -444,7 +444,7 @@ function createVerseCard(item, keyword = '') {
             </div>
         </div>
         <div class="text-xl leading-loose text-gray-800 tracking-wide mt-2 pl-1 border-l-2 border-stone-100 break-words text-justify">${displayText}</div>
-        ${item.translation ? `<div class="translation-text">${item.translation}</div>` : ''}
+        ${item.note ? `<div class="verse-note mt-4 p-3 bg-amber-50 border-l-2 border-amber-200 text-sm text-stone-600 font-sans">${processTextWithRuby(item.note)}</div>` : ''}
     `;
     return card;
 }

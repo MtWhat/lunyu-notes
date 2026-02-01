@@ -4,7 +4,7 @@
 
 function toggleEntryTranslation(btn) {
     const card = btn.closest('.verse-card');
-    const translationDiv = card.querySelector('.translation-text');
+    const translationDiv = card.querySelector('.verse-note');
 
     if (translationDiv) {
         if (translationDiv.style.display === 'block') {

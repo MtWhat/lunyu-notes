@@ -191,7 +191,7 @@ function sortData(data, sortType) {
         const others = [];
 
         data.forEach(item => {
-            if (item.translation && item.translation.trim().length > 0) {
+            if (item.note && item.note.trim().length > 0) {
                 withTranslation.push(item);
             } else if (item.manualTags && item.manualTags.length > 0) {
                 withTags.push(item);
