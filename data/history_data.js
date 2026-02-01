@@ -625,7 +625,7 @@ const HISTORY_DATA = [
         "year": -483,
         "links": [
         ],
-        "note": "孔子的兒子孔鯉逝世，享年40歲。不過也<a href='https://ocw.aca.ntu.edu.tw/uploads/course_item_file/file/6139/104S102_AA07L01.pdf'>有人</a>認為孔鯉享年僅40歲。"
+        "note": "孔子的兒子孔鯉逝世，享年50歲。不過也<a href='https://ocw.aca.ntu.edu.tw/uploads/course_item_file/file/6139/104S102_AA07L01.pdf'>有人</a>認為孔鯉享年僅40歲。"
     },
     {
         "id": 58,
