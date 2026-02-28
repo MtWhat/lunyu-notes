@@ -4,7 +4,7 @@
 
 function toggleEntryTranslation(btn) {
     const card = btn.closest('.verse-card');
-    const translationDiv = card.querySelector('.translation-text');
+    const translationDiv = card.querySelector('.verse-note');
 
     if (translationDiv) {
         if (translationDiv.style.display === 'block') {
@@ -24,8 +24,11 @@ function toggleEntryTranslation(btn) {
 // Tooltip Logic
 const tooltip = document.getElementById('tooltip');
 
-function showTooltip(event, element, char, zhuyin, definition) {
+function showTooltip(event, element, char, zhuyin) {
     event.stopPropagation(); // Prevent bubbling
+
+    const info = rareWordsMap[char] || {};
+    const definition = info.definition || "";
 
     let zhuyinHtml = "";
     if (zhuyin && zhuyin !== "undefined") {
@@ -68,6 +71,13 @@ function showTooltip(event, element, char, zhuyin, definition) {
 
 function hideTooltip() {
     if(tooltip) tooltip.style.display = 'none';
+}
+
+// Prevent tooltip from closing when clicking inside it
+if (tooltip) {
+    tooltip.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
 }
 
 // Close tooltip when clicking anywhere else

@@ -22,9 +22,9 @@ let globalCounter = 0;
 async function loadData() {
     try {
         const [rWords, synonyms, chars] = await Promise.all([
-            fetch('rareWords.json').then(r => r.json()),
-            fetch('synonyms.json').then(r => r.json()),
-            fetch('characters.json').then(r => r.json())
+            fetch('data/rareWords.json').then(r => r.json()),
+            fetch('data/synonyms.json').then(r => r.json()),
+            fetch('data/characters.json').then(r => r.json())
         ]);
         rareWordsMap = rWords;
         synonymsMap = synonyms;
@@ -36,10 +36,15 @@ async function loadData() {
             console.error("initApp function not found. Ensure app.js is loaded.");
         }
     } catch (e) {
-        console.error("Failed to load data:", e);
+        console.error("Failed to load data from data/ directory:", e);
+        // More detailed logging to identify the culprit
+        console.error("Error details:", {
+            message: e.message,
+            stack: e.stack
+        });
         const contentList = document.getElementById('contentList');
         if (contentList) {
-             contentList.innerHTML = '<div class="text-center text-red-500 py-10">資料載入失敗，請檢查網路連線或檔案路徑。</div>';
+            contentList.innerHTML = `<div class="text-center text-red-500 py-10">資料載入失敗：${e.message}<br>請檢查網路連線或 data/ 目錄下的 JSON 檔案。</div>`;
         }
     }
 }
@@ -100,9 +105,9 @@ function processTextWithRuby(text) {
                 const safeDefinition = info.definition ? escapeJS(info.definition) : "";
 
                 if (zhuyin) {
-                    return `<ruby class="rare-char" onclick="showTooltip(event, this, '${safeMatch}', '${safeZhuyin}', '${safeDefinition}')">${match}<rt>${zhuyin}</rt></ruby>`;
+                    return `<ruby class="rare-char" onclick="showTooltip(event, this, '${safeMatch}', '${safeZhuyin}')">${match}<rt>${zhuyin}</rt></ruby>`;
                 } else {
-                    return `<span class="rare-char" onclick="showTooltip(event, this, '${safeMatch}', '', '${safeDefinition}')">${match}</span>`;
+                    return `<span class="rare-char" onclick="showTooltip(event, this, '${safeMatch}', '')">${match}</span>`;
                 }
             }
 
@@ -129,6 +134,47 @@ function identifyCharacters(text) {
     return Array.from(tags.entries()).map(([goBy, matched]) => ({ goBy, matched }));
 }
 
+function identifySpeakers(text) {
+    const speakers = new Set();
+    const characters = identifyCharacters(text);
+
+    // Support multiple speaking segments: [Intro]「...」[Segment1]「...」[Segment2]
+    const parts = text.split(/「|」/);
+
+    // We are interested in segments that are NOT inside quotation marks.
+    // parts[0] is intro. parts[2], parts[4], etc. are segments between/after quotations.
+    for (let i = 0; i < parts.length; i += 2) {
+        const segment = parts[i];
+        if (!segment) continue;
+
+        characters.forEach(char => {
+            const escaped = char.matched.replace(/[.*+?^${}()|[\]\\?]/g, '\\$&');
+            const speakerRegex = new RegExp(escaped + '.*?(?:曰|問|對|謂|語)');
+            if (speakerRegex.test(segment)) {
+                speakers.add(char.goBy);
+            }
+        });
+
+        // Special case for "子" referring to Confucius
+        // Pattern: [Start or Punctuation]子[Speaking Verb]
+        if (/(?:^|[，。；？！])子[曰謂語對]/.test(segment)) {
+              speakers.add("孔子");
+        }
+
+        // Handle "孔子對曰" etc. if not already found
+        if (/孔子.*?(?:曰|問|對|謂|語)/.test(segment)) {
+            speakers.add("孔子");
+        }
+    }
+
+    // Fallback: If no speaker identified but "子曰" is present anywhere (defensive)
+    if (speakers.size === 0 && text.includes("子曰")) {
+        speakers.add("孔子");
+    }
+
+    return Array.from(speakers);
+}
+
 function sortData(data, sortType) {
     if (sortType === 'random') {
         // Fisher-Yates Shuffle
@@ -145,7 +191,7 @@ function sortData(data, sortType) {
         const others = [];
 
         data.forEach(item => {
-            if (item.translation && item.translation.trim().length > 0) {
+            if (item.note && item.note.trim().length > 0) {
                 withTranslation.push(item);
             } else if (item.manualTags && item.manualTags.length > 0) {
                 withTags.push(item);
@@ -173,6 +219,10 @@ function sortData(data, sortType) {
         for (let i = 0; i < data.length; i++) {
             data[i] = sorted[i];
         }
+    } else if (sortType === 'speaker') {
+        // For the speaker mode, we primarily want verses to be in their traditional order
+        // because the grouping logic in app.js will handle the speaker-specific duplication.
+        data.sort((a, b) => a.globalId - b.globalId);
     }
 }
 

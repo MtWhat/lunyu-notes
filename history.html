@@ -205,6 +205,8 @@
             z-index: 100;
             display: none;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            pointer-events: auto; /* Enable interaction for links */
+            cursor: default;
         }
 
         .rare-char {
@@ -216,6 +218,20 @@
             text-decoration: line-through;
             color: #a8a29e;
             opacity: 0.7;
+        }
+
+        /* Hyperlinks in Tooltips and History Notes */
+        #tooltip a, .history-note a {
+            text-decoration: underline;
+            color: #3b82f6; /* blue-500 */
+            transition: color 0.2s;
+        }
+        #tooltip a:hover, .history-note a:hover {
+            color: #9ccedc; /* blue-600 */
+        }
+        #tooltip a:active, #tooltip a:visited,
+        .history-note a:active, .history-note a:visited {
+            color: #4b72dc; /* blue-700 */
         }
 
         /* Floating Age Label */
@@ -493,8 +509,8 @@
         <div id="aiChatResponse" class="hidden"></div>
     </div>
 
-    <script src="lunyu_data.js"></script>
-    <script src="history_data.js"></script>
+    <script src="data/lunyu_data.js"></script>
+    <script src="data/history_data.js"></script>
     <script src="js/api.js"></script>
     <script src="js/data.js"></script>
     <script src="js/ui.js"></script>

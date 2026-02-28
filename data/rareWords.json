@@ -13,9 +13,9 @@
     "斐": { "zhuyin": "ㄈㄟˇ", "definition": "有文采的樣子。" },
     "柙": { "zhuyin": "ㄒㄧㄚˊ", "definition": "關獸的木籠。" },
     "櫝": { "zhuyin": "ㄉㄨˊ", "definition": "木櫃、木匣。" },
-    "兕": { "zhuyin": "ㄙˋ", "definition": "雌性的犀牛。" },
+    "匵": { "zhuyin": "ㄉㄨˊ", "definition": "通「櫝」字。木櫃、木匣。" },
+    "兕": { "zhuyin": "ㄙˋ", "definition": "早期觀點認為是犀牛，但<a href='https://case.ntu.edu.tw/blog/?p=44378'>2024《報科學》的文章</a> 指出：兕應為已滅絕的牛科動物<a href='https://zh.wikipedia.org/wiki/聖水牛'>聖水牛</a>。" },
     "蘧": { "zhuyin": "ㄑㄩˊ", "definition": "姓氏。蘧伯玉，衛國賢大夫。" },
-    "樊": { "zhuyin": "ㄈㄢˊ", "definition": "姓氏。樊遲，孔子弟子。" },
     "廋": { "zhuyin": "ㄙㄡ", "definition": "隱藏、藏匿。" },
     "桴": { "zhuyin": "ㄈㄨˊ", "definition": "竹、木編成的筏。" },
     "悌": { "zhuyin": "ㄊㄧˋ", "definition": "敬愛兄長。" },
@@ -30,7 +30,7 @@
     "硜": { "zhuyin": "ㄎㄥ", "definition": "敲擊石頭的聲音。" },
     "鮮": { "zhuyin": "ㄒㄧㄢˇ", "definition": "少。" },
     "誄": { "zhuyin": "ㄌㄟˇ", "definition": "敘述死者生前事蹟，並表示哀悼。" },
-    "雎": { "zhuyin": "ㄐㄩ", "definition": "關雎：水鳥名，即魚鷹。" },
+    "雎": { "zhuyin": "ㄐㄩ", "definition": "雎鳩：一種一夫一妻的水鳥。" },
     "侗": { "zhuyin": "ㄊㄨㄥˊ", "definition": "無知、幼稚的樣子。" },
     "愿": { "zhuyin": "ㄩㄢˋ", "definition": "謹慎、老實。" },
     "悾": { "zhuyin": "ㄎㄨㄥ", "definition": "誠懇的樣子。" },
@@ -185,7 +185,7 @@
     },
     "陵轢": {
         "zhuyin": "ㄌㄧㄥˊ ㄌㄧˋ",
-        "definition": "欺凌、壓迫、踐踏。"
+        "definition": "或作「輘轢」，戰車(chariot)輪子輾過去的意思，引申為欺凌、壓迫、踐踏。"
     },
     "紇": {
         "zhuyin": "ㄏㄜˊ"
@@ -201,5 +201,12 @@
     "縲絏": {
         "zhuyin": "ㄌㄟˊ ㄒㄧㄝˋ",
         "definition": "古代用以捆綁罪犯的黑色繩索。後比喻監獄。《史記》寫作「纍紲」。"
+    },
+    "悝": {
+        "zhuyin": "ㄎㄨㄟ"
+    },
+    "舞雩": {
+        "zhuyin": "ㄨˇ ㄩˊ",
+        "definition": "祈雨用的舞台。"
     }
 }

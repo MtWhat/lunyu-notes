@@ -976,15 +976,15 @@
         "id": "menggongchuo",
         "goBy": "孟公綽",
         "surname": "姬",
-        "cadet": "孟",
-        "name": "公綽",
+        "cadet": "孟孫",
+        "name": "",
         "style": "",
         "searchKeys": [
             "公綽"
         ],
         "aliases": [],
         "category": "魯國人",
-        "relation": "孟孫氏人。孔子讚揚過他。",
+        "relation": "孟孫氏人，曾在魯襄公25年時，安撫襄公無須擔心率齊軍進伐魯國北境的崔杼。孔子讚揚過孟公綽。",
         "wikipedia": "https://zh.wikipedia.org/wiki/孟公綽"
     },
     {
@@ -1330,8 +1330,8 @@
     {
         "id": "zifujingbo",
         "goBy": "子服景伯",
-        "surname": "姬",
-        "cadet": "子服",
+        "surname": "",
+        "cadet": "",
         "name": "何",
         "style": "",
         "searchKeys": [
@@ -1339,7 +1339,7 @@
         ],
         "aliases": [],
         "category": "魯國人",
-        "relation": "魯國大夫。諡號「景」。《論語》中，他兩度向孔子報告所聽到的孔門壞話，感覺他跟孔子麻吉麻吉。",
+        "relation": "魯國大夫。諡號「景」。《論語》中，他兩度向孔子報告所聽到的孔門壞話，感覺他跟孔門弟子麻吉麻吉。",
         "wikipedia": "https://zh.wikipedia.org/wiki/子服景伯"
     },
     {
@@ -1772,21 +1772,6 @@
         "wikipedia": "https://zh.wikipedia.org/wiki/楚靈王"
     },
     {
-        "id": "bigan",
-        "goBy": "比干",
-        "surname": "子",
-        "cadet": "",
-        "name": "比干",
-        "style": "",
-        "searchKeys": [
-            "比干"
-        ],
-        "aliases": [],
-        "category": "古人",
-        "relation": "商朝末年的忠臣，紂王的叔父。傳說因直言進諫被紂王剖心而死。孔子稱「殷有三仁」，比干其一也。",
-        "wikipedia": "https://zh.wikipedia.org/wiki/比干"
-    },
-    {
         "id": "zhuzhaowang",
         "goBy": "楚昭王",
         "surname": "羋",
@@ -1896,6 +1881,51 @@
         "category": "其他",
         "relation": "《論語·微子》中提到的隱逸之士。與虞仲相似。孔子稱讚他們「隱居放言，行中清，廢中權」。",
         "wikipedia": ""
+    },
+    {
+        "id": "weizi",
+        "goBy": "微子",
+        "surname": "子",
+        "cadet": "",
+        "name": "啟",
+        "style": "",
+        "searchKeys": [
+            "微子"
+        ],
+        "aliases": ["微子啟"],
+        "category": "古人",
+        "relation": "根據<a href='https://ctext.org/shiji/song-wei-zi-shi-jia/zh'>《史記》</a>，微子是商紂王的庶兄，帝乙的長子。因非嫡出而沒繼位。封地在「微」，故稱「微子」。微子屢諫紂王不聽，所以離開朝廷。周武王伐紂滅商後，微子「肉袒面縛，左牽羊，右把茅」來請罪，被武王赦免。商朝舊部的領導人武庚加入管蔡之亂兵敗被殺後，周公旦改封微子到宋國，代替武庚延續殷商血脈。",
+        "wikipedia": "https://zh.wikipedia.org/zh-tw/微子"
+    },
+    {
+        "id": "jizi",
+        "goBy": "箕子",
+        "surname": "子",
+        "cadet": "",
+        "name": "胥餘",
+        "style": "",
+        "searchKeys": [
+            "箕子"
+        ],
+        "aliases": [],
+        "category": "古人",
+        "relation": "<a href='https://ctext.org/shiji/song-wei-zi-shi-jia/zh'>《史記》</a>說箕子是周王的親戚。維基說箕子是帝乙的弟弟、紂王的叔叔。因為向紂王進諫遭拒而被囚禁。商朝滅亡後，《史記》說「於是武王乃封箕子於朝鮮而不臣也。」實際上很可能是被趕去統治圈外的呼呼嘿嘿地方去了。",
+        "wikipedia": "https://zh.wikipedia.org/zh-tw/箕子"
+    },
+    {
+        "id": "bigan",
+        "goBy": "比干",
+        "surname": "子",
+        "cadet": "",
+        "name": "比干",
+        "style": "",
+        "searchKeys": [
+            "比干"
+        ],
+        "aliases": [],
+        "category": "古人",
+        "relation": "商朝末年的忠臣，紂王的叔父。傳說因直言進諫被紂王剖心而死。這段故事後來被改編進《封神演義》中。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/比干"
     },
     {
         "id": "zhaoyang",
@@ -2102,5 +2132,20 @@
         "category": "魯國人",
         "relation": "魯國大夫。在魯定公時期極具影響力，多人稱其曾吸引走孔子的弟子。傳說孔子代理宰相職務七天後即將其處死，理由是其「心達而險」等五大罪狀。但這件事實在很可疑。",
         "wikipedia": "https://zh.wikipedia.org/wiki/少正卯"
+    },
+    {
+        "id": "qijiangong",
+        "goBy": "齊簡公",
+        "surname": "姜",
+        "cadet": "",
+        "name": "壬",
+        "style": "",
+        "searchKeys": [
+            "簡公"
+        ],
+        "aliases": [],
+        "category": "外國人",
+        "relation": "齊國君主。即位後任用闞止與田恆，兩家鬥爭，最後田恆殺掉闞止以及齊簡公。孔子因此建議魯哀公發兵討伐田恆，但被拒絕。",
+        "wikipedia": "https://zh.wikipedia.org/wiki/齊簡公"
     }
 ]
